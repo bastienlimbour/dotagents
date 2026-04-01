@@ -1,11 +1,11 @@
 ---
 name: prompt-engineering
-description: Designs, rewrites, reviews, and debugs prompts, system instructions, agent rules, and output contracts for LLM workflows. Use when working on prompt engineering, LLM prompts, prompt templates, system prompts, context engineering, agent instructions, rules files, prompt evaluation, prompt debugging, or output schema design. Not intended for general copywriting, non-LLM documentation, or model API integration unless prompt design is the core task.
+description: Designs, rewrites, reviews, and debugs prompts, system instructions, agent rules, agent skills, and output contracts for LLM workflows. Use when working on prompt engineering, LLM prompts, prompt templates, system prompts, context engineering, agent instructions, agent skills, SKILL.md bodies, workflow-style reference files, prompt evaluation, prompt debugging, or output schema design. Not intended for general copywriting, non-LLM documentation, or model API integration unless prompt design is the core task. For skill-specific concerns, focus on instruction quality rather than metadata, directory structure, or bundled resource layout.
 ---
 
 # Prompt Engineering
 
-## When to use
+## When to use this skill
 
 - Designing a new prompt, system prompt, or instruction set
 - Rewriting or improving an existing prompt
@@ -15,7 +15,7 @@ description: Designs, rewrites, reviews, and debugs prompts, system instructions
 - Context engineering for complex or multi-step LLM tasks
 - Evaluating prompt quality or building prompt test cases
 
-## When not to use
+## When not to use this skill
 
 - General copywriting or content writing not targeting an LLM
 - Writing documentation, READMEs, or changelogs
@@ -43,6 +43,7 @@ Determine the task type, then follow the matching path:
 | **Rewrite** an existing prompt | Workflow step 1, with the existing prompt as input |
 | **Review / Debug** a failing prompt | Read [prompt-debugging.md](references/prompt-debugging.md) for the failure taxonomy, then apply the rewriting heuristics |
 | **Write agent instructions** | Read [agent-instructions.md](references/agent-instructions.md) for agent anatomy and persistent instruction patterns |
+| **Write or improve a skill** | Apply this workflow to the `SKILL.md` body and instruction-like reference files; handle metadata, frontmatter, directory structure, progressive disclosure, and bundled resources separately |
 
 ## Workflow
 

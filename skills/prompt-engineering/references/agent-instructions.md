@@ -58,6 +58,16 @@ Rules files (AGENTS.md, .cursorrules, CLAUDE.md) are persistent agent instructio
 
 Good rules answer: which tools are preferred, which changes require approval, where tests live, what must be preserved for compatibility, how the agent verifies success.
 
+## Skills (SKILL.md)
+
+Skills are a specialized format for agent instructions that adds:
+
+- **Discovery metadata**: YAML frontmatter (`name`, `description`) for automatic matching.
+- **Progressive disclosure**: The body loads on activation; bundled references load on demand.
+- **Bundled resources**: Scripts, reference files, and assets packaged alongside the instructions.
+
+The `SKILL.md` body and any instruction-like reference files are prompts, so all principles in this guide apply. Treat prompt quality and skill structure as separate concerns: use this guide for objectives, constraints, uncertainty handling, output contracts, and verification; handle metadata, directory structure, bundled resources, and discovery optimization separately.
+
 ## Workflow design
 
 ### When to use workflows
