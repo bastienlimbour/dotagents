@@ -27,20 +27,20 @@ Use this checklist to perform a final audit of a skill before deployment. Every 
 * [ ] **Table of Contents Exists:** Long reference files include a table of contents for navigability.
 * [ ] **Table of Contents Accuracy:** Table of contents matches the actual file content.
 
-## 4. Logic & Instructions (SKILL.md)
+## 4. Logic & Instructions
 
 * [ ] **Lean Context:** The `SKILL.md` file is under 500 lines.
 * [ ] **Imperative Mood:** Instructions use direct commands (e.g., "Extract," "Run," "Validate").
 * [ ] **Deterministic Steps:** The workflow is a numbered, chronological sequence with clear decision trees.
-* [ ] **Scope Boundaries:** `SKILL.md` clearly defines scope, "when to use", and "when not to use" boundaries.
+* [ ] **Scope Boundaries:** `SKILL.md` clearly defines scope, "when to use this skill", and "when not to use this skill" boundaries.
 * [ ] **Progressive Disclosure:** Large schemas, templates, or rule sets are stored in `references/` or `assets/` and each actionable bundled file is referenced from `SKILL.md` with clear "when to read" guidance.
-* [ ] **Specific Terminology:** Uses domain-native terms consistently (e.g., "component" instead of "file").
+* [ ] **Specific Terminology:** Uses domain-native terms consistently across the skill (e.g., "component" instead of "file").
 * [ ] **No Time-Sensitive Information:** Content does not depend on dates, versions, or external state that will go stale.
 * [ ] **Concrete Examples:** Examples are concrete (not abstract) and only included when they improve judgment or formatting.
-* [ ] **MCP Tool References:** MCP tools are referenced using fully qualified names (`ServerName:tool_name`).
+* [ ] **MCP Tool References:** MCP tools are referenced using fully qualified names e.g. `ServerName:tool_name` (if the skill uses MCP tools)
 * [ ] **Feedback Loops:** Quality-critical tasks include a verification or feedback step.
 
-## 5. Scripts & Determinism
+## 5. Scripts & Determinism (skip if no scripts are included)
 
 * [ ] **CLI Design:** Scripts in `scripts/` are designed as tiny CLIs that take arguments.
 * [ ] **Feedback Loop:** Scripts provide descriptive `stdout` for success and `stderr` for failure, with explicit error handling, fallbacks, and helpful messages to allow agent self-correction.
@@ -53,10 +53,10 @@ Use this checklist to perform a final audit of a skill before deployment. Every 
 
 ## 6. Error Handling
 
-* [ ] **Edge Cases:** The `SKILL.md` includes an "Error Handling" section addressing common failure states or missing configurations.
+* [ ] **Edge Cases:** The `SKILL.md` includes an "Error Handling" or "Troubleshooting" section addressing common failure states or missing configurations.
 * [ ] **Validation:** The `SKILL.md` includes a step to run validation scripts where applicable.
 
-## 7. Testing (if the environment supports it)
+## 7. Testing (skip if the environment doesn't support it)
 
 * [ ] **Positive Trigger:** Skill triggers on obvious, expected queries.
 * [ ] **Negative Trigger:** Skill does NOT trigger on unrelated queries.

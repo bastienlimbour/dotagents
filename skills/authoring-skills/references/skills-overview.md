@@ -13,7 +13,7 @@
 
 Agent Skills are a lightweight, open format for extending AI agent capabilities with specialized knowledge, domain expertise, new capabilities, and repeatable workflows
 
-A skill is a folder containing a `SKILL.md` file with YAML frontmatter (metadata) and Markdown instructions that gives an agent the knowledge and instructions to perform a specific task. Skills can also bundle scripts, templates, and reference materials.
+A skill is a folder containing a `SKILL.md` file with YAML frontmatter (metadata) and Markdown instructions that gives an agent the knowledge and instructions to perform a specific task. Skills can also bundle scripts, reference files, and assets.
 
 ## Directory structure
 
@@ -29,7 +29,7 @@ skill-name/
 
 Do not include additional files like `README.md`, `LICENSE`, `CONTRIBUTING.md`, etc. inside the skill folder. All documentation belongs in `SKILL.md` or `references/`.
 
-Prefer the standard folders above. For complex workflows, store step-by-step guides in `references/` instead of creating ad hoc folders such as `steps/`.
+Prefer the standard folders above. For complex workflows, store complex step-by-step guides in `references/` instead of creating ad hoc folders such as `steps/`.
 
 Well-designed Skills are small, composable, and easy to discover.
 
@@ -41,7 +41,7 @@ Skills load content in three stages to manage context efficiently:
 2. **Activation** (< 5000 tokens recommended): When a task matches, the agent reads the full `SKILL.md` body.
 3. **Execution** (as needed): The agent follows instructions and loads referenced files (`scripts/`, `references/`, `assets/`) only when required.
 
-Keep `SKILL.md` under 500 lines. Move detailed content to separate files.
+Keep `SKILL.md` under 500 lines. Move detailed content to separate reference files.
 
 This approach keeps agents fast while giving them access to more context on demand.
 
@@ -69,12 +69,13 @@ Invalid: `PDF-Processing` (uppercase), `-pdf` (leading hyphen), `pdf--processing
 - 1–1024 characters
 - State what the skill does and when to use it
 - Include keywords that help agents match tasks to this skill
+- Write in third person
 
-Good: `Extracts text and tables from PDF files, fills PDF forms, and merges multiple PDFs. Use when working with PDF documents or when the user mentions PDFs, forms, or document extraction.`
+Good: `Extracts text and tables from PDF files, fills PDF forms, and merges multiple PDFs. Use when working with PDF documents or when the user mentions PDFs, forms, or document extraction. Do not use for other document types than PDF.`
 
 Poor: `Helps with PDFs.`
 
-Do NOT put long workflows, caveats, or examples in frontmatter.
+Do NOT put long workflows, caveats, or examples in description.
 
 #### Security restrictions
 
@@ -160,11 +161,10 @@ Static resources used in outputs: templates, images, data files, tables, schemas
 
 Reference other skill files using relative paths from the skill root:
 
-```markdown
+````markdown
 See [the reference guide](references/REFERENCE.md) for details.
 
-Run the extraction script:
-scripts/extract.py
-```
+Run the extraction script: `python scripts/extract.py`
+````
 
 Keep references one level deep from `SKILL.md`. Avoid deeply nested reference chains.

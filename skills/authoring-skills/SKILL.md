@@ -1,6 +1,6 @@
 ---
 name: authoring-skills
-description: Creates, edits, improves, and audits agent skills (SKILL.md files with optional bundled resources). Use when the user asks to write a new skill, refactor or improve an existing skill, review a skill for quality, or needs help with skill structure, metadata, or content organization. Not intended for general documentation, non-agentic library code, writing AGENTS.md or README.md files, or writing scripts unrelated to a skill's bundled resources.
+description: Creates, edits, improves, and audits agent skills (SKILL.md files with optional bundled resources). Use when creating new skills, working on existing skills or when the user asks to write a new skill, refactor or improve an existing skill, review a skill for quality, or needs help with skill structure, metadata, content organization, or any skill related task. Don't use for general documentation, writing AGENTS.md or README.md files, or writing scripts unrelated to a skill's bundled resources.
 ---
 
 # Authoring Skills
@@ -8,14 +8,14 @@ description: Creates, edits, improves, and audits agent skills (SKILL.md files w
 ## When to use this skill
 
 - Writing a new skill
-- Refactoring or improving an existing skill
+- Editing, refactoring or improving an existing skill
 - Reviewing a skill for quality
-- Helping with skill structure, metadata, or content organization
+- Helping with skill structure, metadata, content organization, or any skill related task
 
 ## When not to use this skill
 
 - General documentation writing that isn't a skill
-- Writing `AGENTS.md` rules or `.cursorrules`
+- Writing `AGENTS.md` rules or `.cursorrules` files
 - Writing scripts unrelated to a skill's bundled resources
 
 ## Quick start
@@ -102,9 +102,15 @@ For each resource file:
 - Add a table of contents if longer than ~100 lines
 - Include only content the agent cannot reliably produce on its own
 
+For reference files that contain workflows, procedures, decision trees, or other instructions the agent will follow, apply prompt engineering best practices: clear objectives, explicit constraints, uncertainty handling, output contracts when needed, and verification steps.
+
 ### Step 6: Write or update SKILL.md
 
-Write the body of the skill in `SKILL.md`. Follow the best practices in [skills-best-practices.md](references/skills-best-practices.md) and structure the body with:
+Write the body of the skill in `SKILL.md`.
+
+The body is an instruction set an LLM agent will follow, so it is also a prompt. Apply prompt engineering best practices to the skill body: objective, constraints, output contract, uncertainty handling, and verification.
+
+Follow the best practices in [skills-best-practices.md](references/skills-best-practices.md) and structure the body with:
 
 1. A top-level heading matching the skill name
 2. "When to use" and "When not to use" scope boundaries
@@ -116,13 +122,19 @@ Keep the body under 500 lines. Move detailed content to reference files.
 
 ### Step 7: Quality check
 
-Read and evaluate against the [quality checklist](references/checklist.md). Verify every applicable item.
+Read and evaluate against the [skills checklist](references/skills-checklist.md). Verify every applicable item.
 
-For **audit** mode, organize findings as:
+Also verify that the instructions in `SKILL.md` body and any instruction-like reference files follow the prompt-engineering best practices.
+
+Organize findings as:
 
 - **Pass** — items meeting quality standards
 - **Fail** — items that need fixing, with specific recommendations
 - **N/A** — items that don't apply to this skill
+
+For **create** and **edit/improve** modes, iterate until the quality checklist is passing.
+
+For **audit** mode, present the findings and recommendations.
 
 ### Step 8: Test triggering and execution (if possible)
 

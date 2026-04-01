@@ -122,6 +122,19 @@ Do not modify the command or add additional flags.
 
 Do not over-constrain exploratory work, and do not under-specify dangerous work.
 
+### Writing effective instructions
+
+The body of a `SKILL.md` and any reference files containing workflows or procedures are instruction sets an LLM agent will follow. They are prompts. Apply prompt engineering principles when writing them:
+
+- **Lead with the objective**: State what the agent must accomplish in the first few lines.
+- **Make constraints explicit**: State boundaries, priorities, and non-goals. Explain why when it improves judgment.
+- **Say what to do, not only what to avoid**: Positive instructions are more reliable than pure prohibitions. Replace `Do not produce verbose output` with `Respond in at most 5 bullet points, one sentence each`.
+- **Handle uncertainty**: Specify what to do when information is missing or a step is ambiguous - ask, use a default, or skip with a note.
+- **Define the output**: When the skill produces a deliverable, specify the exact structure, format, or schema.
+- **Add verification**: Define how the agent knows it is done and what to check before finishing.
+
+These principles matter anywhere the skill contains instructions the agent must follow, including `SKILL.md`, workflows, procedures, decision trees, and similar reference content.
+
 ## Naming and discovery
 
 Name and description in the YAML frontmatter of the `SKILL.md` file are used for discovery.
