@@ -22,7 +22,9 @@ Choose the simplest body type that reliably solves the task:
 - **Task-based**: Best for tool collections or grouped capabilities.
 - **Reference-based**: Best for standards, specifications, and domain knowledge.
 
-There are no format restrictions for the `SKILL.md` body. Use the sections that fit the skill. Common useful sections you can pick from:
+There are no format restrictions for the `SKILL.md` body. Feel free to mix, adapt, or combine the above body types as needed to match the task requirements.
+
+Use the sections that fit the skill. Common useful sections you can pick from are:
 
 - **Overview** (1-2 sentences explaining what this skill does and why it matters)
 - **When to use** (list 2-5 use cases for using this skill and 2-5 use cases for when not to use it)
