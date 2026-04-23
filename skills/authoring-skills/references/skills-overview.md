@@ -32,8 +32,8 @@ This approach keeps agents fast while giving them access to more context on dema
 To make this approach effective, we need to:
 
 - Write good descriptions
-- Keep `SKILL.md` under 100 lines
-- Move detailed content to separate reference files
+- Keep `SKILL.md` under 500 lines
+- Move detailed content to separate reference files with clear "when to read" guidance
 
 ## SKILL.md file
 

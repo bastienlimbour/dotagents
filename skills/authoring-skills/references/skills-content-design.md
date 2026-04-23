@@ -4,8 +4,7 @@ Design guidance for writing the Markdown body of `SKILL.md` and organizing its b
 
 ## Table of contents
 
-- [Body types](#body-types)
-- [Body sections](#body-sections)
+- [SKILL.md body](#skillmd-body)
 - [Context optimization](#context-optimization)
 - [Calibrating control](#calibrating-control)
 - [Progressive disclosure patterns](#progressive-disclosure-patterns)
@@ -14,7 +13,7 @@ Design guidance for writing the Markdown body of `SKILL.md` and organizing its b
 - [Common patterns](#common-patterns)
 - [Content guidelines](#content-guidelines)
 
-## Body types
+## SKILL.md body
 
 Choose the simplest body type that reliably solves the task:
 
@@ -23,11 +22,7 @@ Choose the simplest body type that reliably solves the task:
 - **Task-based**: Best for tool collections or grouped capabilities.
 - **Reference-based**: Best for standards, specifications, and domain knowledge.
 
-The body is a prompt. Apply prompt engineering best practices. It should answer: "Now that this skill has triggered, what should the agent do first, and where should it go next?"
-
-## Body sections
-
-There are no format restrictions. Use the sections that fit the skill. Common useful sections:
+There are no format restrictions for the `SKILL.md` body. Use the sections that fit the skill. Common useful sections you can pick from:
 
 - **Overview** (1-2 sentences explaining what this skill does and why it matters)
 - **When to use** (list 2-5 use cases for using this skill and 2-5 use cases for when not to use it)
@@ -39,6 +34,8 @@ There are no format restrictions. Use the sections that fit the skill. Common us
 - **Troubleshooting** (common errors, causes, and fixes)
 - **Gotchas** (environment-specific facts that defy reasonable assumptions)
 - **Verification / Validation** (how to verify the output is correct)
+
+The body is a prompt. Apply prompt engineering best practices. It should answer: "Now that this skill has triggered, what should the agent do first, and where should it go next?"
 
 ## Context optimization
 
@@ -86,7 +83,7 @@ Favor concise, stepwise guidance over exhaustive documentation. Overly detailed 
 
 ### Use progressive disclosure for large skills
 
-Keep `SKILL.md` focused — under 100 lines, featuring only essential instructions. Move detailed guides and reference material to separate `references/` files. Direct the agent to load specific files only when needed (e.g., "See `references/api-errors.md` if the API returns a non-200 status code") rather than referencing all details up front. This helps agents use extra context only when relevant, improving efficiency and clarity.
+Keep `SKILL.md` focused — under 500 lines, featuring only essential instructions. Move detailed guides and reference material to separate `references/` files. Direct the agent to load specific files only when needed (e.g., "See `references/api-errors.md` if the API returns a non-200 status code") rather than referencing all details up front. This helps agents use extra context only when relevant, improving efficiency and clarity.
 
 ## Calibrating control
 
@@ -237,6 +234,23 @@ For simple edits, modify the XML directly.
 
 ## Organizing reference files
 
+### When to add scripts
+
+Add utility scripts when:
+
+- The operation is deterministic (validation, formatting).
+- The same code would be generated repeatedly.
+- Errors need explicit handling.
+
+### When to split files
+
+Split into separate files when:
+
+- `SKILL.md` exceeds 500 lines
+- Content has distinct domains (e.g. finance vs sales schemas)
+- Advanced features are rarely needed (e.g. rarely used API methods)
+- Checklists are long enough to justify separate files (>= 15 checklist items)
+
 ### Keep references one level deep from `SKILL.md`
 
 Deeply nested references (A → B → C) cause agents to partially read files or miss content:
@@ -272,7 +286,7 @@ When referencing other files in `SKILL.md`:
 
 ### Add a table of contents
 
-Add a table of contents to reference files longer than ~100 lines so agents can see the full scope with partial reads:
+Add a table of contents to reference files longer than ~500 lines so agents can see the full scope with partial reads:
 
 ```markdown
 # API Reference

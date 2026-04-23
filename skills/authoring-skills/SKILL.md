@@ -5,7 +5,7 @@ description: Creates, edits, improves, and audits agent skills (SKILL.md files w
 
 # Authoring Skills
 
-## When to use this skill
+## When to use
 
 **Use this skill when:**
 
@@ -76,7 +76,7 @@ Litmus test: "If an agent sees a hundred skill descriptions, would this one acti
 Read [skills-content-design.md](references/skills-content-design.md) before designing the skill content.
 
 1. Choose the simplest body type that reliably solves the task.
-2. Write the `SKILL.md` Markdown body as a prompt: lead with objective, make constraints explicit, say what to do, handle uncertainty, define output, and include verification.
+2. Write the `SKILL.md` Markdown body with concise instructions as a prompt: lead with objective, make constraints explicit, say what to do, handle uncertainty, define output, and include verification.
 3. Decide on bundled resources and move detail out of `SKILL.md` as needed:
     - `references/`: Long workflows, domain rules, schemas.
     - `scripts/`: Add only when executable code is more reliable than instructions.
