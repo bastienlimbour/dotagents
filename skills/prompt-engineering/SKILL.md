@@ -1,11 +1,13 @@
 ---
 name: prompt-engineering
-description: Designs, rewrites, reviews, and debugs prompts, system instructions, agent rules, agent skills, and output contracts for LLM workflows. Use when working on prompt engineering, LLM prompts, prompt templates, system prompts, context engineering, agent instructions, agent skills, SKILL.md bodies, workflow-style reference files, prompt evaluation, prompt debugging, or output schema design. Not intended for general copywriting, non-LLM documentation, or model API integration unless prompt design is the core task. For skill-specific concerns, focus on instruction quality rather than metadata, directory structure, or bundled resource layout.
+description: Designs, rewrites, reviews, and debugs prompts, system instructions, agent rules, and output contracts for LLM workflows. Use when working on prompt engineering, LLM prompts, prompt templates, system prompts, context engineering, agent instructions, prompt evaluation, prompt debugging, or output schema design. Not intended for general copywriting, non-LLM documentation, or model API integration unless prompt design is the core task.
 ---
 
 # Prompt Engineering
 
 ## When to use this skill
+
+**Use this skill when:**
 
 - Designing a new prompt, system prompt, or instruction set
 - Rewriting or improving an existing prompt
@@ -15,7 +17,7 @@ description: Designs, rewrites, reviews, and debugs prompts, system instructions
 - Context engineering for complex or multi-step LLM tasks
 - Evaluating prompt quality or building prompt test cases
 
-## When not to use this skill
+**Do NOT use this skill when:**
 
 - General copywriting or content writing not targeting an LLM
 - Writing documentation, READMEs, or changelogs
@@ -26,14 +28,12 @@ description: Designs, rewrites, reviews, and debugs prompts, system instructions
 
 1. **Be precise.** Follow the exact task, not a guessed variation.
 2. **Be explicit.** State the audience, format, inclusions, and exclusions. Do not make the model guess.
-3. **Say what to do, not only what to avoid.** Positive instructions beat pure prohibitions. Replace `Do not be too long` with `Respond in at most 5 points, one sentence each`.
-4. **Do not guess.** If required information is missing: ask one targeted question, state the limitation, or use a tool.
-5. **Optimize for completion.** Execute, verify, then summarize. If blocked, attempt recovery before stopping.
-6. **Verify before concluding.** Check requirements, format, and factual grounding before returning the final answer.
-7. **Resolve conflicts by:** (1) priority, (2) specificity, (3) recency.
-8. **Iterate with evidence.** Define success first. If a change does not improve measurable behavior, remove it.
+3. **Do not guess.** If required information is missing: ask one targeted question, state the limitation, or use a tool.
+4. **Optimize for completion.** Execute, verify, then summarize. If blocked, attempt recovery before stopping.
+5. **Resolve conflicts by:** (1) priority, (2) specificity, (3) recency.
+6. **Iterate with evidence.** Define success first. If a change does not improve measurable behavior, remove it.
 
-## Quick start
+## Task routing
 
 Determine the task type, then follow the matching path:
 
@@ -43,7 +43,6 @@ Determine the task type, then follow the matching path:
 | **Rewrite** an existing prompt | Workflow step 1, with the existing prompt as input |
 | **Review / Debug** a failing prompt | Read [prompt-debugging.md](references/prompt-debugging.md) for the failure taxonomy, then apply the rewriting heuristics |
 | **Write agent instructions** | Read [agent-instructions.md](references/agent-instructions.md) for agent anatomy and persistent instruction patterns |
-| **Write or improve a skill** | Apply this workflow to the `SKILL.md` body and instruction-like reference files; handle metadata, frontmatter, directory structure, progressive disclosure, and bundled resources separately |
 
 ## Workflow
 
@@ -103,7 +102,7 @@ For agent instructions, also check:
 - [ ] Approval boundaries are set for risky actions.
 - [ ] Stop conditions and escalation rules are explicit.
 
-See [prompt-debugging.md](references/prompt-debugging.md) for the full review checklist, failure taxonomy, and evaluation set design.
+See [prompt-debugging.md](references/prompt-debugging.md) for the failure taxonomy, rewriting heuristics, anti-patterns, and evaluation set design.
 
 ## Key references
 

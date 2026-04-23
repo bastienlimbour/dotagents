@@ -1,26 +1,12 @@
 # Prompt Patterns and Output Design
 
-## Contents
+## Table of contents
 
-- Prompt anatomy
 - Full template
 - Minimal template
 - Common patterns (generation, editing, extraction, analysis, transformation, planning)
 - Output design rules
 - Context engineering
-
-## Prompt anatomy
-
-Every prompt is an execution contract built from these parts. Use the smallest combination that succeeds.
-
-| Section | Purpose |
-| --- | --- |
-| **Objective** | What the model must do. Lead with a direct action verb. |
-| **Context** | Minimum background needed — only what matters. |
-| **Constraints** | Hard boundaries, non-goals, important preferences. Explain why when it improves judgment. |
-| **Output contract** | Exact structure, format, length, tone, or schema. |
-| **Examples** | Only when behavior is easier to show than describe. |
-| **Uncertainty** | What to do when information is missing or ambiguous. |
 
 ## Full template
 
@@ -81,11 +67,11 @@ Context
 <essential background only>
 
 Constraints
-- <hard requirement>
-- <non-goal>
+- [hard requirement]
+- [non-goal]
 
 Output
-<the exact shape of the answer you want>
+[the exact shape of the answer you want]
 
 If the provided information is insufficient, say so instead of guessing.
 ```
@@ -95,30 +81,30 @@ If the provided information is insufficient, say so instead of guessing.
 ### Generation
 
 ```text
-Write <artifact> for <audience>.
+Write [artifact] for [audience].
 
 Context
-<background, purpose, important facts>
+[background, purpose, important facts]
 
 Constraints
-- Preserve these ideas: <...>
-- Avoid these mistakes: <...>
-- Tone: <...>
-- Length: <...>
+- Preserve these ideas: [...]
+- Avoid these mistakes: [...]
+- Tone: [...]
+- Length: [...]
 
 Output
-Return <sections, format, or schema>.
+Return [sections, format, or schema].
 ```
 
 ### Editing / Rewriting
 
 ```text
-Rewrite the text below for <audience or purpose>.
+Rewrite the text below for [audience or purpose].
 
 Goals
 - Preserve meaning
-- Improve <clarity / precision / brevity>
-- Keep these terms unchanged: <...>
+- Improve [clarity / precision / brevity]
+- Keep these terms unchanged: [...]
 
 Text
 """
@@ -135,8 +121,8 @@ Return the revised text only.
 Extract the requested fields from the source text.
 
 Fields
-- <field 1>
-- <field 2>
+- [field 1]
+- [field 2]
 
 Rules
 - Use only information present in the source
@@ -157,8 +143,8 @@ Return valid JSON matching this shape:
 
 ```text
 Review the material below against these criteria:
-- <criterion 1>
-- <criterion 2>
+- [criterion 1]
+- [criterion 2]
 
 Output
 Return:
@@ -170,13 +156,13 @@ Return:
 ### Transformation
 
 ```text
-Transform the input from <source form> into <target form>.
+Transform the input from [source form] into [target form].
 
 Preserve
-- <facts that must survive>
+- [facts that must survive]
 
 Change
-- <what should be reformatted or normalized>
+- [what should be reformatted or normalized]
 
 Output
 Return only the transformed result.
@@ -188,10 +174,10 @@ Return only the transformed result.
 Create an execution plan for the task below.
 
 Task
-<goal>
+[goal]
 
 Constraints
-- <limitation>
+- [limitation]
 
 Output
 Return:

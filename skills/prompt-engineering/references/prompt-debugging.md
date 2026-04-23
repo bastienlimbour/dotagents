@@ -1,13 +1,12 @@
 # Prompt Debugging, Evaluation, and Rewriting
 
-## Contents
+## Table of contents
 
 - Define success criteria first
 - Failure taxonomy
 - Rewriting heuristics
 - Anti-patterns
 - Building evaluation sets
-- Prompt review checklist
 
 ## Define success criteria first
 
@@ -83,25 +82,4 @@ Test prompts with structured cases:
 4. **Edge cases**: Missing context, malformed data, conflicting constraints.
 5. **Adversarial cases**: Attempts to break format, override instructions, or inject malicious directions.
 
-For skills or agent rules, add trigger evaluation: 3 prompts that should trigger, 2 that should not, 1 boundary case.
-
-## Prompt review checklist
-
-### Before sending a prompt
-
-- [ ] Is the objective precise and in the first few lines?
-- [ ] Is the context sufficient but not excessive?
-- [ ] Are constraints explicit?
-- [ ] Is the output format defined and testable?
-- [ ] Is uncertainty handling specified?
-- [ ] Is the completion criterion clear?
-- [ ] Can the model admit uncertainty safely?
-- [ ] Are examples helping rather than adding noise?
-
-### Additional checks for agent instructions
-
-- [ ] Is tool usage clearly defined?
-- [ ] Are approval boundaries set for risky actions?
-- [ ] Are stop conditions and escalation rules explicit?
-- [ ] Is there conflicting or redundant guidance to remove?
-- [ ] Is the best prompt the smallest one that reliably meets the success criteria?
+For agent rules, add trigger evaluation: 3 prompts that should trigger, 2 that should not, 1 boundary case.
