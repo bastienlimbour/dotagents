@@ -34,7 +34,7 @@ Use this checklist for a final skill audit before deployment. Every item must pa
 
 ## 5. Logic & Instructions
 
-* [ ] `SKILL.md` under 500 lines.
+* [ ] `SKILL.md` under 100 lines.
 * [ ] Instructions use imperative mood and direct commands (e.g., "Extract", "Run", "Validate").
 * [ ] Workflows use numbered, chronological steps with clear decision trees.
 * [ ] Specific terminology consistent throughout (e.g., "component" not "file").

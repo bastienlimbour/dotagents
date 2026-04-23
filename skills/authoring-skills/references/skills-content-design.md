@@ -86,7 +86,7 @@ Favor concise, stepwise guidance over exhaustive documentation. Overly detailed 
 
 ### Use progressive disclosure for large skills
 
-Keep `SKILL.md` focused — under 500 lines, featuring only essential instructions. Move detailed guides and reference material to separate `references/` files. Direct the agent to load specific files only when needed (e.g., "See `references/api-errors.md` if the API returns a non-200 status code") rather than referencing all details up front. This helps agents use extra context only when relevant, improving efficiency and clarity.
+Keep `SKILL.md` focused — under 100 lines, featuring only essential instructions. Move detailed guides and reference material to separate `references/` files. Direct the agent to load specific files only when needed (e.g., "See `references/api-errors.md` if the API returns a non-200 status code") rather than referencing all details up front. This helps agents use extra context only when relevant, improving efficiency and clarity.
 
 ## Calibrating control
 
