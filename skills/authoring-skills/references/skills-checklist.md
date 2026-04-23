@@ -1,63 +1,69 @@
 # Agent Skill Validation Checklist
 
-Use this checklist to perform a final audit of a skill before deployment. Every item must pass to ensure the skill is discoverable, lean, and deterministic.
+Use this checklist for a final skill audit before deployment. Every item must pass for validity.
 
 ## 1. General
 
-* [ ] **Language:** All files are written in English.
+* [ ] All files written in English.
 
-## 2. Metadata & Discovery
+## 2. Frontmatter, Metadata & Discovery
 
-* [ ] **Naming Format:** The `name` field is 1-64 characters, lowercase, and contains only numbers or single hyphens.
-* [ ] **Naming Semantics:** The `name` is consistent with the skill's purpose.
-* [ ] **Directory Match:** The `name` field exactly matches the parent directory name.
-* [ ] **Description Length:** The description is under 1,024 characters.
-* [ ] **Trigger Optimization:** The description is specific, includes key terms, and covers both use cases ("Use when...") and negative triggers ("Don't use for...").
-* [ ] **Third-Person Tone:** The description avoids "I", "me", "my", "you", or "your".
+* [ ] `name` under 64 characters, lowercase, uses alphanumeric or single hyphens only.
+* [ ] `name` matches skill purpose.
+* [ ] Root directory name matches `name` exactly.
+* [ ] `description` under 1024 characters.
+* [ ] `description` is specific, includes key terms, covers use cases ("Use when..."), and exclusions if needed ("Do NOT use when...").
+* [ ] `description` in third person; avoids "I", "me", "my", "you", "your".
+* [ ]  No XML angle brackets (`<`, `>`) in YAML frontmatter.
 
 ## 3. File Structure & Paths
 
-* [ ] **Flat Hierarchy:** All files in `scripts/`, `references/`, and `assets/` are exactly one level deep (no nested subfolders).
-* [ ] **Standard Folders:** Only `scripts/`, `references/`, and `assets/` are used.
-* [ ] **No Human Docs:** The directory contains NO `README.md`, `CHANGELOG.md`, or `INSTALLATION_GUIDE.md`.
-* [ ] **Forward Slashes:** All file paths in `SKILL.md` use forward slashes (`/`) regardless of the operating system.
-* [ ] **No Reference Chains:** `SKILL.md` links directly to actionable bundled files instead of routing the agent through reference-to-reference indirection to reach core instructions.
-* [ ] **Descriptive Filenames:** Bundled file names clearly convey their content at a glance.
-* [ ] **Content Splitting:** Long content is split across multiple reference files rather than crammed into one.
-* [ ] **Table of Contents Exists:** Long reference files include a table of contents for navigability.
-* [ ] **Table of Contents Accuracy:** Table of contents matches the actual file content.
+* [ ] Standard folder structure is used: `SKILL.md`, `scripts/`, `references/`, `assets/`.
+* [ ] Directory does NOT contain human files like `README.md`, `CHANGELOG.md`, `INSTALLATION_GUIDE.md`.
+* [ ] File paths in `SKILL.md` use forward slashes (`/`).
+* [ ] Filenames are descriptive and clear at a glance.
+* [ ] Long content is split across multiple reference files.
 
-## 4. Logic & Instructions
+## 4. Bundled Files & References (skip if the skill doesn't have bundled files or references)
 
-* [ ] **Lean Context:** The `SKILL.md` file is under 500 lines.
-* [ ] **Imperative Mood:** Instructions use direct commands (e.g., "Extract," "Run," "Validate").
-* [ ] **Deterministic Steps:** The workflow is a numbered, chronological sequence with clear decision trees.
-* [ ] **Scope Boundaries:** `SKILL.md` clearly defines scope, "when to use this skill", and "when not to use this skill" boundaries.
-* [ ] **Progressive Disclosure:** Large schemas, templates, or rule sets are stored in `references/` or `assets/` and each actionable bundled file is referenced from `SKILL.md` with clear "when to read" guidance.
-* [ ] **Specific Terminology:** Uses domain-native terms consistently across the skill (e.g., "component" instead of "file").
-* [ ] **No Time-Sensitive Information:** Content does not depend on dates, versions, or external state that will go stale.
-* [ ] **Concrete Examples:** Examples are concrete (not abstract) and only included when they improve judgment or formatting.
-* [ ] **MCP Tool References:** MCP tools are referenced using fully qualified names e.g. `ServerName:tool_name` (if the skill uses MCP tools)
-* [ ] **Feedback Loops:** Quality-critical tasks include a verification or feedback step.
+* [ ] Bundled files are referenced only one level deep from `SKILL.md` (no deep indirection; e.g., SKILL.md → reference.md → actual info).
+* [ ] Bundled files are referenced using relative paths from `SKILL.md` (e.g. [reference.md](references/reference.md)).
+* [ ] Bundled files are referenced from `SKILL.md` with clear "when to read" guidance.
+* [ ] Long reference files (~500 lines) include a table of contents.
+* [ ] Table of contents in reference files is up to date and matches current file content.
 
-## 5. Scripts & Determinism (skip if no scripts are included)
+## 5. Logic & Instructions
 
-* [ ] **CLI Design:** Scripts in `scripts/` are designed as tiny CLIs that take arguments.
-* [ ] **Feedback Loop:** Scripts provide descriptive `stdout` for success and `stderr` for failure, with explicit error handling, fallbacks, and helpful messages to allow agent self-correction.
-* [ ] **No Library Code:** Scripts are single-purpose; complex logic is offloaded to the repository's standard CLI or external tools.
-* [ ] **Safety:** Scripts do not perform critical or irreversible actions without validation or confirmation.
-* [ ] **Scope:** Script scope is limited to relevant files and expected directories.
-* [ ] **No Magic Numbers:** All constants are documented or extracted into named variables.
-* [ ] **Dependencies:** Required packages are listed with install commands.
-* [ ] **Tested:** Scripts are tested and verified as working.
+* [ ] `SKILL.md` under 500 lines.
+* [ ] Instructions use imperative mood and direct commands (e.g., "Extract", "Run", "Validate").
+* [ ] Workflows use numbered, chronological steps with clear decision trees.
+* [ ] Specific terminology consistent throughout (e.g., "component" not "file").
+* [ ] No time-sensitive content. Content does not depend on dates, versions, or changing external state.
+* [ ] Examples are concrete, included only if they aid judgment or formatting.
+* [ ] Quality-critical tasks include verification or feedback steps.
 
-## 6. Error Handling
+## 6. MCP Tools (skip if the skill doesn't use MCP tools)
 
-* [ ] **Edge Cases:** The `SKILL.md` includes an "Error Handling" or "Troubleshooting" section addressing common failure states or missing configurations.
-* [ ] **Validation:** The `SKILL.md` includes a step to run validation scripts where applicable.
+* [ ] MCP tools referenced with fully qualified names (e.g., `ServerName:tool_name`) if used.
 
-## 7. Testing (skip if the environment doesn't support it)
+## 7. Scripts & Determinism (skip if the skill doesn't use scripts or executable code)
 
-* [ ] **Positive Trigger:** Skill triggers on obvious, expected queries.
-* [ ] **Negative Trigger:** Skill does NOT trigger on unrelated queries.
-* [ ] **End-to-End Run:** Ran the skill against a real or simulated use case and verified output quality.
+* [ ] Scripts in `scripts/` are tiny CLIs accepting arguments.
+* [ ] Scripts implement feedback loops for agent self-correction (use descriptive `stdout` for success, `stderr` for failure, explicit error handling, fallbacks, and helpful messages).
+* [ ] Each script single-purpose; complex logic handled by repo’s main CLI or external tools.
+* [ ] No critical/irreversible actions without validation or confirmation.
+* [ ] Scripts limited to relevant files and expected directories.
+* [ ] All constants documented or extracted into named variables (no magic numbers).
+* [ ] Required packages are listed with install commands.
+* [ ] Scripts tested and verified working.
+
+## 8. Error Handling
+
+* [ ] `SKILL.md` includes "Error Handling", "Edge Cases", or "Troubleshooting" section for common failures or missing configs.
+* [ ] `SKILL.md` includes step to run validation scripts or a checklist if relevant.
+
+## 9. Testing (skip if not applicable)
+
+* [ ] Skill triggers on obvious, expected queries.
+* [ ] Skill does NOT trigger on unrelated queries.
+* [ ] Ran the skill against a real or simulated use case and verified output quality.

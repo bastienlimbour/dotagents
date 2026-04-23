@@ -1,164 +1,93 @@
 ---
 name: authoring-skills
-description: Creates, edits, improves, and audits agent skills (SKILL.md files with optional bundled resources). Use when creating new skills, working on existing skills or when the user asks to write a new skill, refactor or improve an existing skill, review a skill for quality, or needs help with skill structure, metadata, content organization, or any skill related task. Don't use for general documentation, writing AGENTS.md or README.md files, or writing scripts unrelated to a skill's bundled resources.
+description: Creates, edits, improves, and audits agent skills (SKILL.md files with optional bundled resources). Use when creating new skills or working on existing skills (editing, refactoring, reviewing or improving an existing skill). Use when the user needs help with skill structure, metadata, content organization, or any skill related task.
 ---
 
 # Authoring Skills
 
 ## When to use this skill
 
-- Writing a new skill
-- Editing, refactoring or improving an existing skill
-- Reviewing a skill for quality
-- Helping with skill structure, metadata, content organization, or any skill related task
+**Use this skill when:**
 
-## When not to use this skill
+- Creating a new agent skill
+- Editing, refactoring, or improving an existing skill
+- Reviewing or auditing a skill for quality
+- Any agent skill related task
 
-- General documentation writing that isn't a skill
-- Writing `AGENTS.md` rules or `.cursorrules` files
-- Writing scripts unrelated to a skill's bundled resources
+**Do NOT use this skill when:**
 
-## Quick start
+- Writing prompts that are not packaged as a skill
+- Writing general documentation, README, or other non-skill related content
+- Authoring agents rules, hooks, settings, or other non-skill configurations
 
-1. Read [skills-overview.md](references/skills-overview.md) to understand what are skills and how they work.
-2. Read [skills-best-practices.md](references/skills-best-practices.md) to understand the best practices for authoring skills.
-3. Determine the mode (create, edit/improve, audit)
-4. Follow the matching workflow.
+## Process
 
-| Mode | Trigger | Workflow entry point |
-| ---- | ------- | ----------- |
-| **Create** | User wants a new skill | Step 1 → full workflow |
-| **Edit / Improve** | User wants to change or improve an existing skill | Read existing skill + all bundled files → Step 1 → full workflow |
-| **Audit** | User wants a quality review of an existing skill | Read existing skill + all bundled files → Step 7 → Step 9 |
+Follow the steps and track your progress with this todolist:
 
-## Workflow
+- [ ] Step 0 - Determine intent
+- [ ] Step 1 - Gather context and requirements
+- [ ] Step 2 - Design the trigger surface
+- [ ] Step 3 - Design the skill content
+- [ ] Step 4 - Check quality
 
-Track progress with this todolist:
+Each step loads its own reference files. Do not preload reference files from other steps.
 
-```text
-Skill authoring progress:
-- [ ] Step 1: Gather requirements
-- [ ] Step 2: Decide on bundled resources
-- [ ] Step 3: Design the trigger surface (frontmatter)
-- [ ] Step 4: Plan the skill architecture
-- [ ] Step 5: Write bundled resources (if any)
-- [ ] Step 6: Write SKILL.md
-- [ ] Step 7: Quality check
-- [ ] Step 8: Test triggering and execution (if possible)
-- [ ] Step 9: Review and refine with the user
-```
+### Step 0 - Determine intent
 
-### Step 1: Gather requirements
+Read [skills-overview.md](references/skills-overview.md) if unfamiliar with agent skills.
 
-Clarify these before writing anything:
+Confirm with the user (or infer) which path applies:
 
-- **Task**: What specific job does this skill perform?
-- **Use cases**: Define 2-3 concrete use cases, each with trigger phrases the user might say and the expected outcome.
-- **Domain**: What domain knowledge is involved?
-- **Scope**: What is in and out of scope? One job per skill.
-- **Success criteria**: What does a good result look like?
-- **Inputs**: What does the agent receive (files, prompts, context)?
-- **Outputs**: What does the agent produce?
+- **Creating a new skill**: Run Steps 1 to 4 in order.
+- **Modifying (editing or improving) an existing skill**: If gaps are known, run only relevant Steps 1 to 3, then Step 4. If gaps are unknown ("improve this skill"), start with Step 4 to identify gaps, address in Steps 1 to 3, then run Step 4 again.
+- **Auditing a skill**: Quality review only. Run Step 4, report findings, then apply changes only if the user confirms.
 
-If the request is underspecified, ask clarifying questions.
+Update the progress tracking todolist with the relevant steps.
 
-For **edit** mode, read the existing skill and all bundled files first to understand current state.
+### Step 1 - Gather context and requirements
 
-### Step 2: Decide on bundled resources
+Read [scope-and-expertise.md](references/scope-and-expertise.md) before gathering context and requirements.
 
-Determine if the skill needs bundled resources (references, scripts, assets, quality checklist).
+1. Clarify the context and requirements:
+    - What task or domain does the skill cover?
+    - What specific use cases should it handle?
+    - When should the skill be triggered and when should it not (in and out of scope)?
+    - What inputs does the skill need to handle the task (prompts, data, files, context, etc.)?
+    - What outputs does the skill produce (create/edit files, generate text, run commands, etc.)?
+    - What are the constraints and non-goals (what must never happen, tools to avoid, style rules)?
+    - What are the success criteria (expected outcome of the skill, what does a good result look like)?
+    - What source material is available to create the skill (docs, runbooks, past conversations, code patterns, gotchas, preferred tools, output templates)?
+2. If anything is unclear or underspecified, ask clarifying questions until everything is clear.
+3. If the user cannot provide domain-specific context or material, flag the risk and propose alternatives (co-perform the task once to extract a pattern, narrow the scope, or use existing artifacts).
 
-Default: no bundled resources. Add them only when needed.
+### Step 2 - Design the trigger surface
 
-If anything is unclear about the bundled resources requirements, ask the user for clarification before continuing.
+Read [naming-and-discovery.md](references/naming-and-discovery.md) before designing the trigger surface.
 
-### Step 3: Design the trigger surface (frontmatter)
-
-1. Choose a `name`.
-2. Write a `description`.
-3. Create the skill directory matching the `name`.
-4. Create `SKILL.md` with the YAML frontmatter.
+1. Choose a `name` that clearly describes the skill purpose.
+2. Draft a `description` that states what the skill does and when to use it.
+3. For new skills, create the skill directory matching the `name` (global skills in `~/.agents/skills/<name>/`, project skills in `.agents/skills/<name>/`).
+4. Create the `SKILL.md` file and add the YAML frontmatter with the `name` and `description` fields.
 
 Litmus test: "If an agent sees a hundred skill descriptions, would this one activate for the right tasks and stay silent for the wrong ones?"
 
-### Step 4: Plan the skill architecture
+### Step 3 - Design the skill content
 
-Choose the simplest body type that reliably solves the task:
+Read [skills-content-design.md](references/skills-content-design.md) before designing the skill content.
 
-- **Workflow-based**: multi-step processes with sequential steps and validation loops.
-- **Task-based**: grouped capabilities or tool collections.
-- **Reference-based**: standards, specifications, or domain knowledge.
+1. Choose the simplest body type that reliably solves the task.
+2. Write the `SKILL.md` Markdown body as a prompt: lead with objective, make constraints explicit, say what to do, handle uncertainty, define output, and include verification.
+3. Decide on bundled resources and move detail out of `SKILL.md` as needed:
+    - `references/`: Long workflows, domain rules, schemas.
+    - `scripts/`: Add only when executable code is more reliable than instructions.
+    - `assets/`: Templates, data files, or images used in outputs.
 
-Decide the progressive disclosure strategy: what goes inline in SKILL.md vs. in reference files. Keep references one level deep from SKILL.md.
+If the skill uses MCP tools, also read [mcp-best-practices.md](references/mcp-best-practices.md).
 
-### Step 5: Write bundled resources (if needed)
+If the skill uses scripts or executable code, also read [scripts-best-practices.md](references/scripts-best-practices.md).
 
-Write resources **before** SKILL.md so the main file can reference them accurately.
+### Step 4 - Check quality
 
-For each resource file:
+Run every applicable item in [skills-checklist.md](references/skills-checklist.md). Fix failures and re-check until all pass.
 
-- Keep it focused on a single topic
-- Use a descriptive filename
-- Add a table of contents if longer than ~100 lines
-- Include only content the agent cannot reliably produce on its own
-
-For reference files that contain workflows, procedures, decision trees, or other instructions the agent will follow, apply prompt engineering best practices: clear objectives, explicit constraints, uncertainty handling, output contracts when needed, and verification steps.
-
-### Step 6: Write or update SKILL.md
-
-Write the body of the skill in `SKILL.md`.
-
-The body is an instruction set an LLM agent will follow, so it is also a prompt. Apply prompt engineering best practices to the skill body: objective, constraints, output contract, uncertainty handling, and verification.
-
-Follow the best practices in [skills-best-practices.md](references/skills-best-practices.md) and structure the body with:
-
-1. A top-level heading matching the skill name
-2. "When to use" and "When not to use" scope boundaries
-3. A quick start section (the shortest path to value)
-4. The core workflow or instructions
-5. References to bundled files with clear "when to read" guidance
-
-Keep the body under 500 lines. Move detailed content to reference files.
-
-### Step 7: Quality check
-
-Read and evaluate against the [skills checklist](references/skills-checklist.md). Verify every applicable item.
-
-Also verify that the instructions in `SKILL.md` body and any instruction-like reference files follow the prompt-engineering best practices.
-
-Organize findings as:
-
-- **Pass** — items meeting quality standards
-- **Fail** — items that need fixing, with specific recommendations
-- **N/A** — items that don't apply to this skill
-
-For **create** and **edit/improve** modes, iterate until the quality checklist is passing.
-
-For **audit** mode, present the findings and recommendations.
-
-### Step 8: Test triggering and execution (if possible)
-
-If the environment allows testing, verify:
-
-- **Triggering**: Does the skill activate for expected queries and stay silent for unrelated ones?
-- **Execution**: Does the skill produce correct, complete output on a real or simulated use case?
-
-Skip this step if the environment doesn't support live testing.
-
-### Step 9: Review and refine with the user
-
-Present the result with:
-
-- Summary of what was created, changed, or found
-- The completed quality checklist (pass/fail/n/a for each item)
-- Trade-offs or decisions worth noting
-
-Iterate based on feedback until the user is satisfied. When refining, read agent execution traces (not just final outputs) to identify vague instructions that cause unproductive steps, instructions that don't apply to the task at hand, or options presented without a clear default.
-
-## Troubleshooting and Error Handling
-
-- **Request is underspecified**: Ask targeted questions before drafting the skill. Do not invent domain expertise, hidden constraints, or success criteria.
-- **Bundled file is missing or mismatched**: Stop and fix the broken path, filename, or reference before continuing. Keep `SKILL.md` and bundled resources in sync.
-- **Guidance conflicts across files**: Prefer the stricter runtime or checklist constraint, then update the conflicting reference files so the skill teaches one consistent rule.
-- **Environment cannot support live testing**: Mark trigger or execution checks as not tested, state the limitation explicitly, and use a concrete simulated example when possible.
-- **The skill is getting too large or vague**: Split the content into smaller focused references, tighten the scope, or recommend multiple composable skills instead of one broad skill.
+For audits, report failing items with suggested fixes and stop. Do not rewrite the skill unless the user confirms.
