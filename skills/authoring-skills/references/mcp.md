@@ -1,12 +1,14 @@
-# Best practices for MCP tools
+# MCP tools
+
+Read this file ONLY if the skill uses MCP tools.
 
 ## MCP tool references
 
 If the skill uses MCP tools, use fully qualified names (`ServerName:tool_name`) to avoid "tool not found" errors:
 
 ```markdown
-Use the BigQuery:bigquery_schema tool to retrieve table schemas.
-Use the GitHub:create_issue tool to create issues.
+Use the `BigQuery:bigquery_schema` tool to retrieve table schemas.
+Use the `GitHub:create_issue` tool to create issues.
 ```
 
 ## MCP-enhanced skill patterns

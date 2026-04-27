@@ -1,16 +1,18 @@
 # Skills Overview
 
-## What is a skill
+Read this file ONLY if you are unfamiliar with agent skills.
 
-Agent Skills extend AI agents with specialized knowledge, domain expertise, workflows, and capabilities. Each skill is a folder containing a `SKILL.md` (with YAML frontmatter: `name` and `description`) and Markdown instructions to perform a specific task or work on a domain. Optional files (scripts, references, assets) can be included. Skills may be simple instructions or full structured workflows.
+## What a skill is
+
+Agent Skills extend AI agents with specialized knowledge, domain expertise, workflows, and capabilities. A skill is a folder with a `SKILL.md` plus optional bundled files. The frontmatter in `SKILL.md` (`name` and `description`) handles discovery, the body tells the agent what to do.
 
 ## Directory structure
 
-A skill is a directory containing a `SKILL.md` file, and optional bundled files. The standard directory structure is:
+Standard directory structure:
 
 ```text
 skill-name/
-├── SKILL.md          # Required: metadata + instructions
+├── SKILL.md          # Required: frontmatter + instructions
 ├── references/       # Optional: documentation, additional files
 ├── scripts/          # Optional: executable code
 ├── assets/           # Optional: templates, resources
@@ -23,95 +25,64 @@ Do NOT include additional files like `README.md`, `CONTRIBUTING.md`, `LICENSE`, 
 
 Skills load content in three stages to manage context efficiently:
 
-1. **Discovery**: At startup, agents load the YAML frontmatter (`name` and `description`) from every skill (~100 tokens).
-2. **Activation**: When a task matches a skill's `description`, the agent loads the full `SKILL.md` body (< 5000 tokens).
-3. **Execution**: The agent follows instructions from `SKILL.md` and optionally loads referenced files as needed from `scripts/`, `references/`, `assets/` (unlimited tokens).
+1. **Discovery**: At startup, agent loads `name` and `description` from every skill (few tokens)
+2. **Activation**: When a task matches a skill's `description`, agent loads `SKILL.md` (moderate tokens)
+3. **Execution**: Agent loads referenced files only when needed (many tokens)
 
-This approach keeps agents fast while giving them access to more context on demand.
+This is called **progressive disclosure**, it keeps agents fast while giving them access to the relevant context when needed.
 
-To make this approach effective, we need to:
+To make this work:
 
-- Write good descriptions
-- Keep `SKILL.md` under 500 lines
-- Move detailed content to separate reference files with clear "when to read" guidance
+- write strong descriptions
+- keep `SKILL.md` focused
+- move rare detail into bundled files
+- tell the agent when to load each file
 
 ## SKILL.md file
 
-`SKILL.md` is the single required file in every skill. It contains two parts:
+`SKILL.md` is the only required file. It has two parts:
 
-- A **YAML frontmatter** with `name` and `description` metadata used for discovery.
-- A **Markdown body** with the skill's instructions.
+- **YAML frontmatter**: `name` and `description`
+- **Markdown body**: the skill instructions
 
-Skills may be simple instructions or full structured workflows — the body has no format restrictions.
+The body can be short instructions or a structured workflow. There is no single required shape.
 
 ## Optional directories
 
-### `references/`
+`SKILL.md` should stay short and focused. If the skill needs additional context, put it in the optional directories:
 
-Documentation too detailed for the main `SKILL.md` — long workflows, domain rules, schemas, API details, etc.
-
-Keep individual files focused and small. Agents load them on demand, so smaller files mean less context usage.
-
-### `scripts/`
-
-Executable code agents can run. Use scripts when executable logic improves reliability — validation, parsing, deterministic transforms, repetitive operations, etc.
-
-Supported languages depend on the agent implementation. Common options include Python, Bash, and JavaScript.
-
-Do NOT add scripts just because code is possible. Add them when code is the more reliable path.
-
-### `assets/`
-
-Static resources used in outputs: templates, images, data files, tables, schemas. Assets should not carry core instructions.
+- `references/`: for detailed documentation, domain knowledge, API details, etc.
+- `scripts/`: for executable helpers (when code is more reliable than instructions). Running a script is often cheaper than loading its contents into context.
+- `assets/`: for templates, images, tables, and static resources. Do not put core instructions in assets.
 
 ## File references
 
-Reference bundled files using relative paths from the `SKILL.md` file:
+Reference bundled files from `SKILL.md` using relative paths:
 
 ````markdown
 - See [the reference guide](references/REFERENCE.md) for details.
 - Run the extraction script: `python scripts/extract.py`
 ````
 
-Bundled files must be referenced from `SKILL.md`. Avoid deeply nested reference chains.
+Avoid deep reference chains, keep it one level deep.
 
 ## Example
 
-A minimal, complete `SKILL.md` example:
-
-```markdown
+````markdown
 ---
 name: writing-release-notes
-description: Generates release notes from git history and changelog entries. Use when the user asks to write, draft, or update release notes, or mentions a new release.
+description: Generates release notes from git history and changelog entries. Use when the user asks to draft or update release notes.
 ---
 
 # Writing Release Notes
 
-## When to use
+## Workflow
 
-**Use this skill when:**
-
-- Drafting release notes for a new version
-- Summarizing changes from git history or a changelog
-
-**Do NOT use this skill when:**
-
-- Writing general documentation or blog posts
-
-## Process
-
-1. Identify the version range (previous tag to current HEAD)
+1. Identify the version range
 2. Collect commits and changelog entries
-3. Group changes by category (features, fixes, breaking changes)
-4. Write release notes following the template in [release-template.md](references/release-template.md)
-5. Review with the user before finalizing
+3. Group changes by category
 
-## Rules
+## Advanced cases
 
-- ALWAYS use the release template
-- ALWAYS write the release notes in english
-
-## Output
-
-The output is a markdown file containing the release notes. The file is named `release-notes-<version>.md` and is placed in the `output/` directory. It must follow the [release template](references/release-template.md) format.
-```
+For release formatting rules, read [release-format.md](references/release-format.md).
+````

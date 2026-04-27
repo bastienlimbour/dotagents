@@ -1,9 +1,15 @@
 ---
 name: authoring-skills
-description: Creates, edits, improves, and audits agent skills (SKILL.md files with optional bundled resources). Use when creating new skills or working on existing skills (editing, refactoring, reviewing or improving an existing skill). Use when the user needs help with skill structure, metadata, content organization, or any skill related task.
+description: Creates, edits, improves, and audits agent skills. Use when creating a new agent skill, editing, refactoring, or improving an existing skill, designing skill discovery, organizing bundled resources in a skill, reviewing or auditing a skill.
 ---
 
 # Authoring Skills
+
+## Overview
+
+This skill outlines the process for creating, editing, improving, and auditing agent skills.
+
+If unfamiliar with agent skills, read [skills-overview.md](references/skills-overview.md).
 
 ## When to use
 
@@ -11,83 +17,97 @@ description: Creates, edits, improves, and audits agent skills (SKILL.md files w
 
 - Creating a new agent skill
 - Editing, refactoring, or improving an existing skill
-- Reviewing or auditing a skill for quality
-- Any agent skill related task
+- Designing a skill's trigger surface and discovery
+- Organizing a skill's bundled resources
+- Reviewing or auditing a skill for quality, structure, or discovery
 
-**Do NOT use this skill when:**
+**Do NOT use this skill for:**
 
-- Writing prompts that are not packaged as a skill
-- Writing general documentation, README, or other non-skill related content
-- Authoring agents rules, hooks, settings, or other non-skill configurations
+- Standalone prompts that are not packaged as a skill
+- General documentation, READMEs, or non-skill related content
+- Agent rules, hooks, settings, or other non-skill config
 
 ## Process
 
-Follow the steps and track your progress with this todolist:
+Follow the process below and track progress with a checklist:
 
-- [ ] Step 0 - Determine intent
-- [ ] Step 1 - Gather context and requirements
-- [ ] Step 2 - Design the trigger surface
-- [ ] Step 3 - Design the skill content
-- [ ] Step 4 - Check quality
+- [ ] Step 0: Determine the path
+- [ ] Step 1: Gather context and requirements
+- [ ] Step 2: Design the trigger surface
+- [ ] Step 3: Design the skill content
+- [ ] Step 4: Check quality
 
-Each step loads its own reference files. Do not preload reference files from other steps.
+Load only the reference files named in the current step. Do NOT preload other references.
 
-### Step 0 - Determine intent
-
-Read [skills-overview.md](references/skills-overview.md) if unfamiliar with agent skills.
+### Step 0: Determine the path
 
 Confirm with the user (or infer) which path applies:
 
-- **Creating a new skill**: Run Steps 1 to 4 in order.
-- **Modifying (editing or improving) an existing skill**: If gaps are known, run only relevant Steps 1 to 3, then Step 4. If gaps are unknown ("improve this skill"), start with Step 4 to identify gaps, address in Steps 1 to 3, then run Step 4 again.
-- **Auditing a skill**: Quality review only. Run Step 4, report findings, then apply changes only if the user confirms.
+- **Creating a new skill**: Run steps 1 to 4 in order.
+- **Modifying or improving an existing skill**: If gaps are known, run only relevant steps from step 1 to 3 and edit only the parts that need work. If gaps are unknown ("improve this skill"), run step 4 (to check quality and identify gaps) and then run steps 1 to 3 to fix them, then repeat step 4 to check again.
+- **Auditing a skill**: Run step 4 (quality review), report issues and findings to the user, then propose changes to fix them and apply only if the user agrees.
 
-Update the progress tracking todolist with the relevant steps.
+Update the progress checklist to reflect the path and steps chosen.
 
-### Step 1 - Gather context and requirements
+### Step 1: Gather context and requirements
 
-Read [scope-and-expertise.md](references/scope-and-expertise.md) before gathering context and requirements.
+Before gathering context and requirements, read [scope-and-expertise.md](references/scope-and-expertise.md).
 
-1. Clarify the context and requirements:
-    - What task or domain does the skill cover?
-    - What specific use cases should it handle?
-    - When should the skill be triggered and when should it not (in and out of scope)?
-    - What inputs does the skill need to handle the task (prompts, data, files, context, etc.)?
-    - What outputs does the skill produce (create/edit files, generate text, run commands, etc.)?
-    - What are the constraints and non-goals (what must never happen, tools to avoid, style rules)?
-    - What are the success criteria (expected outcome of the skill, what does a good result look like)?
-    - What source material is available to create the skill (docs, runbooks, past conversations, code patterns, gotchas, preferred tools, output templates)?
-2. If anything is unclear or underspecified, ask clarifying questions until everything is clear.
-3. If the user cannot provide domain-specific context or material, flag the risk and propose alternatives (co-perform the task once to extract a pattern, narrow the scope, or use existing artifacts).
+Clarify these key details:
 
-### Step 2 - Design the trigger surface
+- Task or domain to cover (preferably one clear repeatable job)
+- Specific use cases or scenarios to handle
+- Clear triggers and exclusions
+- Expected inputs and outputs
+- Constraints and non-goals
+- Success criteria
+- Real source material when available
 
-Read [naming-and-discovery.md](references/naming-and-discovery.md) before designing the trigger surface.
+If any of the above details are unclear, ask targeted questions to the user until every detail is clear.
 
-1. Choose a `name` that clearly describes the skill purpose.
-2. Draft a `description` that states what the skill does and when to use it.
-3. For new skills, create the skill directory matching the `name` (global skills in `~/.agents/skills/<name>/`, project skills in `.agents/skills/<name>/`).
-4. Create the `SKILL.md` file and add the YAML frontmatter with the `name` and `description` fields.
+### Step 2: Design the trigger surface
+
+Before designing the trigger surface, read [naming-and-discovery.md](references/naming-and-discovery.md).
+
+- choose a precise `name` that clearly describes the skill's purpose
+- draft a `description` that states what the skill does and when to use it
+- optimize `description` for correct activation, not completeness
+For new skills:
+- create the directory (matching the `name`)
+- create the `SKILL.md` file and add frontmatter with the `name` and `description`
 
 Litmus test: "If an agent sees a hundred skill descriptions, would this one activate for the right tasks and stay silent for the wrong ones?"
 
-### Step 3 - Design the skill content
+### Step 3: Design the skill content
 
-Read [skills-content-design.md](references/skills-content-design.md) before designing the skill content.
+Before writing the skill content, read [skill-body-patterns.md](references/skill-body-patterns.md).
 
-1. Choose the simplest body type that reliably solves the task.
-2. Write the `SKILL.md` Markdown body with concise instructions as a prompt: lead with objective, make constraints explicit, say what to do, handle uncertainty, define output, and include verification.
-3. Decide on bundled resources and move detail out of `SKILL.md` as needed:
-    - `references/`: Long workflows, domain rules, schemas.
-    - `scripts/`: Add only when executable code is more reliable than instructions.
-    - `assets/`: Templates, data files, or images used in outputs.
+Write the smallest skill that can do the job:
 
-If the skill uses MCP tools, also read [mcp-best-practices.md](references/mcp-best-practices.md).
+- pick the lightest body shape that fits the task
+- write the SKILL.md body instructions as a prompt, not as documentation
+- prefer numbered workflows, short rules, and explicit verification
+- keep `SKILL.md` focused and move rare detail to `references/`, `scripts/`, or `assets/`
+- do not force a default template; adapt the structure to the task
 
-If the skill uses scripts or executable code, also read [scripts-best-practices.md](references/scripts-best-practices.md).
+If the skill needs bundled files or `SKILL.md` is getting large, read [skill-files-and-disclosure.md](references/skill-files-and-disclosure.md).
 
-### Step 4 - Check quality
+If the skill uses MCP tools, read [mcp.md](references/mcp.md).
 
-Run every applicable item in [skills-checklist.md](references/skills-checklist.md). Fix failures and re-check until all pass.
+If the skill uses scripts, read [scripts.md](references/scripts.md).
 
-For audits, report failing items with suggested fixes and stop. Do not rewrite the skill unless the user confirms.
+### Step 4: Check quality
+
+When creating or modifying a skill:
+
+- check every relevant item in [checklist.md](references/checklist.md)
+- fix failures and re-check until all items pass
+- optionally test the skill on 2-3 representative tasks
+- note misses in activation, file navigation, or output quality
+- refine the skill and re-test until the issues are resolved
+
+When auditing a skill:
+
+- check every relevant item
+- report gaps with suggested fixes
+- stop unless the user asks for edits
