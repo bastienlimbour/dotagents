@@ -2,20 +2,17 @@
 
 ## Critical Rules
 
-### Always prefer tools over manual work
+### Use tools
 
-When a tool is available for the action you need to perform, **you MUST use it**. This applies to every capability: asking questions, loading skills, web search, fetching URLs, managing task-lists/check-lists/todo-lists, and all other actions covered by your toolset.
+- Use an available tool for any matching action: questions, skills, web search, URL fetches, todos, checklists, and other tool-supported workflows.
+- Do manual work only when no suitable tool exists.
 
-### Keep it short and concise
+### Be concise
 
-- Thorough in reasoning, concise in output.
-- No sycophantic openers or closing fluff.
-- No emojis, em-dashes, or smart quotes.
-- Plain hyphens and straight quotes only.
+- Reason thoroughly; answer concisely.
+- Skip sycophantic openers, closing fluff, emojis, em-dashes, and smart quotes. Use plain hyphens and straight quotes.
 
-### Use ASCII only when editing code, Unicode everywhere else
+### Character set
 
-- When editing or creating source code files (identifiers, symbols, code logic), prefer ASCII unless the file content already uses non-ASCII characters.
-- This constraint does NOT apply to conversational responses, chat messages, markdown documentation, comments in natural language, commit messages, or any user-facing text.
-- For non-code content, always use the correct Unicode characters for the target language: accents, diacritics, and special characters (e.g., French "ç, à, é, è, ê, ï, ô, û").
-- Example: write "La fonction exécute l'action correctement." not "La fonction execute l'action correctement.".
+- In source code, prefer ASCII unless the file already uses non-ASCII.
+- In non-code user-facing text, use correct Unicode for the language, especially for french accents and special characters.
