@@ -1,931 +1,830 @@
 # Workflow AI pour le développement de projets logiciels
 
-Ce projet est un **AI Coding Workflow** léger et modulaire, qui permet d’assister le développement d’un projet logiciel de l'exploration d'idées jusqu'à la validation du code livré. Il s'appuie sur des **agent skills** et une **mémoire sous forme de fichiers Markdown** qui cohabitent avec la documentation du projet.
+> [!NOTE]
+> Ce workflow n'est pas fait pour le Vibe Coding. Si vous ne maîtrisez pas les fondamentaux du développement logiciel, ce workflow n'est pas fait pour vous.
 
-Le workflow est basé sur le principe de **Spec-Driven Development** mais en version simplifié, humain-au-centre, sans boucles complexes.
-
-Il est conçu pour être utilisé par un développeur solo ou une petite équipe, assisté par un agent IA (OpenCode, Claude Code, Cursor, etc.).
-
----
-
-## Principes du workflow
-
-- **Spec-Driven / Spec-First :** on cadre et on planifie avant de coder. On ne code pas tant que la tâche n'est pas claire.
-- **Human in the loop :** le dev contrôle chaque étape. Pas d'automatisation obligatoire, pas de boucle autonome. Le dev valide explicitement avant de passer à l'étape suivante.
-- **Docs as memory :** la doc markdown du projet (`docs/`) est la mémoire du workflow, on ne se base pas  sur l’historique du chat. Cela évite les répétition et le débordement de contexte et permet de reprendre le travail dans une nouvelle session sans perte de contexte.
-- **One Skill per Step :** chaque étape est un skill autonome, portable et modulaire.
-- **Modulaire et flexible :** on peut entrer dans le workflow à n'importe quelle étape. Chaque skill est utilisable indépendamment. Le niveau de détail s’adapte au contexte : greenfield, grosse feature, micro-feature.
-- **Fast-path possible :** pour un fix ou une petite feature, `spec → implement` peut suffire.
-- **Tranche verticale :** on livre des incréments petits et complets plutôt qu'un gros chantier monolithique.
-- **Volontairement simple :** pas de boucle complexe, pas d'orchestration, pas de scripts obligatoires. Un livrable concret par étape.
+Workflow AI coding léger, modulaire et humain-au-centre. Il couvre le cadrage, le découpage, l'implémentation, la review et la validation d'un projet logiciel, sans chercher à automatiser tout le cycle. Il s'appuie sur des skills spécialisés et une mémoire de travail versionnée, dans le repo ou dans un tracker.
 
 ---
 
-## Pattern universel de chaque étape
+## Principes
 
-1. Le dev **lance un skill**
-2. L'agent lit les **documents d'entrée** ou les **instructions**
-3. L'agent réfléchit, pose des questions si nécessaire
-4. L'agent produit **un livrable** (Markdown ou code)
-5. Le dev relit, corrige, tranche les décisions
-6. Le livrable validé devient l'entrée de l'étape suivante
-
----
-
-## Gate humain systématique
-
-Le dev doit valider explicitement à chaque étape :
-
-- **Clarté :** est-ce que l’output est compréhensible sans relire tout l’historique du chat ?
-- **Justesse :** est-ce conforme à l’intention ?
-- **Scope :** est-ce bien limité, rien de superflu ?
-- **Décisions :** les arbitrages importants sont-ils explicites ?
-- **Go/No-Go :** cet output peut-il devenir l’entrée officielle de l’étape suivante ?
+- **Cadrage-first :** cadrer avant de coder, avec un niveau de formalisation proportionné au scope.
+- **Intention-driven :** activer les étapes selon le besoin, pas mécaniquement.
+- **Produit / technique / exécution séparés :** `prd.md` décrit le quoi, `tech-design.md` le comment, `tasks/` l'ordre de build.
+- **PRD fonctionnel, pas technique :** le PRD contient comportements, règles, edge cases et acceptance criteria, pas de détails d'implémentation.
+- **Preflight proportionné :** le plan d'implémentation immédiat vit dans le `Build Preflight`, parfois en quelques lignes.
+- **Une source de vérité par sujet :** éviter la double saisie concurrente entre Markdown, issues et tracker.
+- **Vertical slices par défaut :** découper en tranches vérifiables, pas en couches `DB -> API -> UI`.
+- **Doc utile seulement :** conserver les décisions durables et les documents utiles ; jeter les artefacts temporaires une fois consolidés.
 
 ---
 
-## Vue d’ensemble du workflow
+## Vue d'ensemble
 
-```mermaid
-flowchart LR
-    subgraph cadrage ["Cadrage"]
-        S01(Brainstorming) --> S02(Brief)
-        S02 --> S03(Validation)
-        S03 --> |Go| S04[PRD]
-        S03 .-> |Pivot| S02
-        S03 --> |No-Go| S05@{ shape: cross-circ, label: "Stop" }
-        S04 --> S06[Split]
-    end
+Le workflow distingue le flux principal et les skills transverses.
 
-    L01([Multiple tâches])
+- **Core workflow :** progression normale d'une initiative vers le build.
+- **On-demand skills :** skills activables hors séquence, selon contexte.
 
-    subgraph taskloop ["Pour chaque tache"]
-        S07(Implement) --> S08(Review)
-        S08 .-> |Corrections| S07
-    end
-
-    L02([Toutes tâches terminées])
-
-    subgraph finalisation ["Finalisation"]
-        S09(Capitalize)
-    end
-
-    S06 --- L01
-    L01 --> S07
-    S08 --> |Tâche suivante| L01
-    S08 --- L02
-    L02 --> S09
-
+```text
+Discovery : [brief] -> [validate]
+Product   : prd
+Technical : [tech-design]
+Execution : [slice] -> build -> review -> qa -> capitalize
 ```
 
-> `[...]` = étape optionnelle · `4. PRD` et `6. Implement` = étapes obligatoires · Flèches pointillées = boucles de retour
->
+### Core workflow
+
+| Étape | Skill | Statut | Artefact |
+| ----- | ----- | ------ | -------- |
+| Brief | `brief` | Optionnel | `brief.md` optionnel |
+| Validate | `validate` | Optionnel | `validation.md` optionnel |
+| PRD | `prd` | Requis sauf trivial | `prd.md` |
+| Tech Design | `tech-design` | Si impact technique non trivial | `tech-design.md` |
+| Slice | `slice` | Si multi-tâches | `tasks/*.md` |
+| Build | `implement` / `implement-tdd` | Requis | Code + compte rendu |
+| Review | `review` | Recommandé | Feedback |
+| QA | `qa` | À la demande | `qa.md` optionnel |
+| Capitalize | `capitalize` | Si décision durable ou doc à maintenir | Docs / ADRs / follow-ups |
+
+### On-demand skills
+
+| Skill | Rôle | Artefact |
+| ----- | ---- | -------- |
+| `brainstorm` | Ouvrir l'espace des options | `brainstorming.md` optionnel |
+| `grill-me` | Interview décisionnelle persistante | Synthèse ou intégration dans l'étape suivante |
+| `project-baseline` | Établir la baseline d'un projet existant | Docs projet mises à jour |
+| `ship-readiness` | Gate optionnel avant livraison importante | Checklist ou verdict `Go / No-Go` |
+
+### Règle mentale
+
+```text
+Brainstorm ouvre les options.
+Brief converge vers une direction.
+Grill Me rend les décisions explicites.
+Validate réduit le risque externe.
+PRD fixe ce qu'on construit.
+Tech Design fixe comment on le construit.
+Slice transforme PRD + Tech Design en tâches vérifiables.
+Build commence par un Preflight puis implémente.
+```
 
 ---
 
-## Exemple de structure d’un repo
+## Entrées rapides selon l'intention
+
+| Intention | Chemin recommandé |
+| --------- | ----------------- |
+| Exploration d'idées | `Brainstorm -> Brief -> [Grill Me] -> [Validate]` |
+| Gros projet / MVP from scratch | `[Brainstorm] -> Brief -> [Grill Me] -> [Validate] -> PRD -> Tech Design -> Slice -> per-task(Build -> Review -> [QA]) -> [Capitalize]` |
+| Grosse feature sur projet existant | `[Brief] -> PRD -> [Grill Me] -> [Tech Design] -> Slice -> per-task(Build -> Review -> [QA]) -> [Capitalize]` |
+| Feature moyenne multi-tâches | `PRD -> [Grill Me] -> [Tech Design Lite] -> Slice -> per-task(Build -> Review) -> [QA] -> [Capitalize]` |
+| Petite feature | `PRD minimal -> [Grill Me] -> Build -> [Review] -> [QA]` |
+| Fix / hotfix | `Build -> [Review] -> [QA]` |
+| Refactoring structurel | `Tech Design -> [Grill Me] -> Slice -> per-task(Build -> Review) -> [QA] -> Capitalize` |
+| Projet legacy / abandonné | `Project Baseline -> [PRD] ou [Tech Design]` |
+| Livraison importante | `... -> Review -> [QA] -> Ship Readiness` |
+
+---
+
+## Documentation et artefacts
+
+### Source de vérité
+
+Le workflow est **storage-agnostic**. Une initiative a un support actif principal. Les supports secondaires pointent, commentent ou automatisent, mais ne dupliquent pas le contenu.
+
+### Supports possibles
+
+- fichiers Markdown dans le repo
+- GitHub Issues / Sub-Issues
+- tracker type Linear, Jira, GitHub Projects
+
+Recommandation pratique :
+
+- travail collaboratif ou multi-agent : GitHub Issues ou tracker équivalent
+- travail solo ou local-first : Markdown dans le repo
+
+Robustesse pour un agent :
+
+1. Markdown versionné dans le repo
+2. GitHub Issues / tracker du même écosystème que le repo
+3. Outil externe séparé du repo
+
+Si le support est externe au repo, l'agent doit y accéder via CLI officielle ou serveur MCP.
+
+### Structure recommandée
+
+Ici le support principal est le Markdown versionné dans le repo, mais il peut être remplacé par un tracker (Github issues, Linear, Jira, etc.)
 
 ```text
 /
-├─ AGENTS.md
-├─ README.md
-├─ CONTRIBUTING.md
-├─ LICENSE.md
-├─ SECURITY.md
-├─ CHANGELOG.md
+├─ AGENTS.md, README.md, etc.
 │
 ├─ docs/
-│  ├─ README.md (doc index)
 │  ├─ architecture.md
 │  ├─ conventions.md
-│  ├─ deployments.md
-│  ├─ guidelines.md
-│  ├─ integrations.md
 │  ├─ testing-strategy.md
-│  ├─ release-process.md
-│  ├─ ... all other engineering documentation
-│  │
-│  ├─ decisions/ (ADR)
-│  │  ├─ 0001-typescript-only.md
-│  │  ├─ 0002-native-esm.md
-│  │  └─ 0003-monitoring.md
-│  │
+│  ├─ decisions/
+│  │  └─ 001-*.md
 │  ├─ product/
-│  │  └─ roadmap.md
-│  │
+│  │  └─ initiatives.md          (optionnel)
 │  └─ specs/
-│     ├─ 001-<initiative-a>/ (ex: mvp, v1)
-│     │  ├─ brainstorming.md
-│     │  ├─ brief.md
-│     │  ├─ validation.md
+│     ├─ 001-<initiative>/
+│     │  ├─ brainstorming.md     (optionnel)
+│     │  ├─ brief.md             (optionnel)
+│     │  ├─ validation.md        (optionnel)
 │     │  ├─ prd.md
+│     │  ├─ tech-design.md       (optionnel)
+│     │  ├─ qa.md                (optionnel)
 │     │  └─ tasks/
-│     │     ├─ 001-init-api.md
-│     │     ├─ 002-init-frontend.md
-│     │     ├─ 003-init-database-and-models.md
-│     │     ├─ 004-authentication.md
+│     │     ├─ 001-<task>.md
 │     │     └─ ...
-│     │
-│     ├─ 002-<initiative-b>/ (ex: dark-mode)
-│     │  └─ prd.md
-│     │
-│     └─ 003-<initiative-C>/ (ex: team-collaboration)
-│        ├─ prd.md
-│        └─ tasks/
-│           ├─ 001-invitations.md
-│           └─ 002-permissions.md
+│     └─ 002-<initiative>/
+│        └─ prd.md
 │
-├─ apps/
-│  ├─ web-app/
-│  │  ├─ AGENTS.md
-│  │  └─ README.md
-│  │
-│  ├─ mobile-app/
-│  │  ├─ AGENTS.md
-│  │  └─ README.md
-│  │
-│  └─ docs/
-│     ├─ AGENTS.md
-│     ├─ README.md
-│     │
-│     └─ content/
-│        ├─ getting-started/
-│        ├─ tutorial/
-│        └─ reference/
-│
-├─ packages/
-│  ├─ cli/
-│  │  ├─ AGENTS.md
-│  │  └─ README.md
-│  │
-│  └─ ui/
-│     ├─ AGENTS.md
-│     └─ README.md
-│
-└─ scripts/
+└─ apps/, packages/, scripts/, ...
 ```
 
-### Règles
+Règles de nommage :
 
-- **Toujours un dossier par initiative**, même pour une petite feature. La cohérence prime.
-- **Le nom du dossier** est descriptif, en kebab-case, sans numéro de séquence.
-- **Les fichiers de tâches** sont préfixés par un numéro d'ordre (`001-`, `002-`).
-- **Le dossier `tasks/`** n'est créé que si le PRD contient plusieurs tâches.
-- **Brief et validation sont supprimables** une fois le PRD créé — le dev décide.
-- **`current-state.md`** est au niveau de `docs/specs/`, pas dans un dossier d'initiative (il n'est lié à aucune initiative spécifique).
+- un dossier par initiative, en kebab-case, préfixé par `001-`, `002-`, ...
+- `tasks/` n'existe que si l'initiative a plusieurs tâches
+- un fichier par tâche, préfixé par `001-`, `002-`, ...
 
-### Ce qu'on ne crée PAS
+### Initiative Index
 
-- Pas de `feature-map.md` — la liste de tâches est dans le PRD
-- Pas de `architecture.md` séparé — les décisions techniques sont dans le PRD
-- Pas de `plan.md` — le plan reste dans le contexte de la session d'implémentation
-- Pas de `validation-report.md` post-implémentation — le feedback de review est appliqué directement
-- Pas de fichiers vides "au cas où"
+Un index est utile mais optionnel. Il peut vivre dans `docs/product/initiatives.md`, `docs/specs/index.md`, GitHub Projects, Linear, Jira, ou ne pas exister sur un petit projet.
 
----
+Son rôle :
 
-## La mémoire par couche (`docs/`)
+- lister les initiatives
+- indiquer leur statut
+- pointer vers PRD, tâches ou tickets
 
-- **Mémoire projet :** très durable, peu évolutive, centrée projet et engineering, source de vérité absolue
-  - `docs/architecture.md`, `docs/conventions.md`, `docs/decisions/**`, etc.
-- **Mémoire produit :** durable, peu évolutive et centrée produit
-  - `docs/product/**`
-- **Mémoire specs :** moins durable, très évolutive, centrée features
-  - `docs/specs/**`
+Exemple minimal :
 
-| Couche | Fichiers | Durabilité | Évolution |
-| --- | --- | --- | --- |
-| **Projet** | `architecture.md`, `conventions.md`, `decisions/` | Permanente | Rare |
-| **Produit** | `product/roadmap.md` | Longue durée | Assez rare |
-| **Specs** | `specs/NNN-initiative/prd.md`, `specs/NNN-initiative/tasks/NNN-task.md` | Par initiative / feature | Fréquente |
+```text
+En cours
+- 003-team-collaboration - PRD validé, 2/5 tâches terminées
 
----
+À venir
+- 004-gamification - brainstorming uniquement
 
-## Entrées dans le workflow selon l'intention
+Terminées
+- 001-mvp
+- 002-dark-mode
+```
 
-Le workflow n'est pas linéaire. On entre à l'étape qui correspond au contexte.
+### Boundaries documentaires
 
-| Intention | Chemin |
-| --- | --- |
-| **Gros projet / MVP from scratch** | [brainstorm] → brief → validation → PRD → decompose → per-task(implement → [review]) → [capitalize] |
-| **Grosse feature sur projet existant** | PRD → decompose → per-task(implement → [review]) |
-| **Feature moyenne multi-tâches** | PRD → decompose → per-task(implement → [review]) |
-| **Petite feature (1 tâche)** | PRD (léger, agit comme spec) → implement → [review] |
-| **Fix / changement trivial** | implement |
-| **Exploration d'idées** | brainstorm |
-| **Audit d'un repo legacy** | capture current state |
+Le workflow ne crée pas d'étape `Spec` séparée.
 
----
+- `prd.md` : produit, comportement, règles fonctionnelles, acceptance criteria
+- `tech-design.md` : architecture, décisions techniques, compromis, risques
+- `tasks/*.md` : tranches exécutables et vérifiables
+- `Build Preflight` : plan d'implémentation immédiat
 
-## Les étapes
+### Execution Contract
+
+`Build` démarre depuis un `Execution Contract` suffisant. Ce n'est pas un nouveau document : il vit dans un PRD minimal ou dans chaque task spec.
+
+Contenu minimal :
+
+- scope
+- behavior
+- acceptance criteria
+- edge cases
+- non-goals
+- verification
 
 ---
 
-### Étape 0 — Capture Current State
+## Étapes détaillées du core workflow
 
-**Skill :** `capture-current-state`
-
-**But :** Cartographier l'état actuel d'un projet existant peu ou mal documenté, afin d'établir une baseline fiable avant tout travail.
-
-**Quand l'utiliser :** Onboarding sur un projet legacy, reprise d'un repo abandonné ou mal documenté, audit technique. Cette étape est totalement isolée du reste du workflow — c'est un utilitaire.
-
-**Inputs :** Codebase, README existant, configuration, infra visible, tout ce qui est disponible dans le repo.
-
-**Actions de l'agent :**
-
-- Explore la codebase et la configuration
-- Identifie l'architecture en place, les composants principaux, la stack
-- Repère les conventions (explicites ou implicites)
-- Signale les zones à risque, la dette technique visible, les incohérences
-- Identifie les docs manquantes et les trous de connaissance
-- Liste les hypothèses et les inconnues
-- Pose des questions au dev si certains choix ou zones du code sont incompréhensibles
-
-**Rôle humain :** Répond aux questions de l'agent. Corrige les erreurs factuelles dans l'output. Valide ce qui devient "source of truth".
-
-**Output :** `docs/specs/current-state.md`
-
-**Contenu de l'output :**
-
-- Architecture observée
-- Composants principaux et leurs responsabilités
-- Stack et dépendances
-- Conventions implicites ou explicites
-- Zones à risque et dette technique
-- Documentation manquante
-- Hypothèses et inconnues
-
-**Gate humain :** Relire et corriger. Ce document servira de référence pour le reste du travail sur ce projet.
-
-**Pourquoi cette étape existe :** Un agent IA qui travaille sur un projet qu'il ne comprend pas produit du code incohérent avec l'existant. Cette étape est rare mais critique quand elle est nécessaire.
-
----
-
-### Étape 1 — Brainstorming / Exploration
-
-**Skill :** `brainstorming`
-
-**But :** Explorer largement un espace d'idées autour d'un sujet donné. La session peut durer 30 à 60 minutes. L'objectif est de générer et structurer un maximum d'idées, pas de converger.
-
-**Quand l'utiliser :** Nouveau produit, nouvelle direction, besoin flou, envie d'explorer avant de cadrer. Fonctionne pour un projet entier comme pour une feature — le but est de trouver des idées autour d'un sujet.
-
-**Inputs :** Prompt libre, notes, brouillon, transcript vocal, intuition, données existantes, directions à explorer.
-
-**Actions de l'agent :**
-
-- Pose des questions ouvertes pour stimuler la réflexion
-- Génère des pistes et des alternatives
-- Ouvre des angles morts
-- Identifie des problèmes, des utilisateurs, des opportunités, des contraintes
-- Contrôle la divergence : recentre si la discussion s'éparpille trop
-- Met à jour le document de brainstorming à chaque nouvelle idée
-- Structure les idées en catégories au fur et à mesure
-- Continue tant que le dev ne stoppe pas la session
-- Fait une synthèse dans l’output markdown à la fin de la session
-
-**Rôle humain :** Répond aux questions, partage ses idées brutes, oriente les directions d'exploration, peut relancer sur de nouvelles pistes, décide quand stopper la session.
-
-**Output :** `docs/specs/<initiative>/brainstorming.md`
-
-**Contenu de l'output :** Liste structurée d'idées brutes, organisée en catégories pertinentes selon le sujet. Peut inclure : opportunités, problèmes identifiés, personas/cibles, options de solution, cas d'usage, propositions de valeur, risques, hypothèses, contraintes, idées de features, scope initial et futur, questions ouvertes. On liste **tout** ce qui a été évoqué pendant la session de brainstorming.
-
-**Session :** Dédiée. Le brainstorming est long et divergent, il mérite sa propre session.
-
-**Gate humain avant l’étape suivante :** Trier les idées, éliminer les pistes faibles, garder le pertinent. Le dev décide ensuite quoi faire de ces idées : les utiliser comme input pour un brief, pour un PRD, ou simplement les garder comme référence.
-
-**Pourquoi cette étape existe :** Certains projets commencent avec une idée floue. Forcer un cadrage immédiat sans exploration produit des specs superficielles. C'est le seul moment explicitement divergent du workflow.
-
----
-
-### Étape 2 — Brief
+### 1. Brief
 
 **Skill :** `brief`
 
-**But :** Passer d'une idée (même vague) à un cadrage produit clair et non technique. C'est un document léger et jetable.
+**Statut :** Core optionnel.
 
-**Quand l'utiliser :** C’est le point d’entrée avant d'investir dans un PRD. — *Généralement couplée avec l’étape validation : on utilise les deux ou aucune. Si l’idée est déjà clair et ne nécessite pas de validation, on commence directement au PRD.*
+**Rôle :** Transformer une ou plusieurs idées en direction produit claire. Le brief est une note d'opportunité légère avant d'investir dans un PRD.
 
-**Inputs :** Brainstorming (si existant), prompt libre, notes, idée brute du dev.
+**Quand l'utiliser :** Après brainstorming, nouveau produit, grosse feature, idée encore floue, besoin de cadrer l'opportunité. À sauter pour une feature claire et limitée.
 
-**Actions de l'agent :**
+**Inputs possibles :** Idée brute, notes, transcript, `brainstorming.md`, signaux utilisateurs, contexte business ou produit.
 
-- Fait converger les idées en un cadrage net
-- Clarifie le problème et l'utilisateur cible
-- Explicite la proposition de valeur
-- Décrit la solution envisagée (grandes lignes, non technique)
-- Fixe le périmètre et les non-goals
-- Identifie les hypothèses et risques principaux
-- Pose des questions si des éléments critiques manquent pour cadrer
+**Actions :**
 
-**Questions que l'agent peut poser si info manquante :**
+- sélectionne et fait converger les idées/pistes prometteuses
+- clarifie problème, cible, proposition de valeur
+- décrit la solution envisagée dans les grandes lignes, sans détails techniques
+- cadre le scope pressenti : MVP, V1, Later, Excluded
+- explicite hypothèses, risques, contraintes, non-goals et questions ouvertes
 
-- Quel problème essaie-t-on de résoudre ?
-- Qui en souffre et pourquoi c'est important ?
-- Quelle est la solution envisagée (même grossière) ?
-- Qu'est-ce qui est explicitement hors scope ?
-- Quelles sont les contraintes connues ?
-
-**Rôle humain :** Répond aux questions, valide les arbitrages, tranche les ambiguïtés.
-
-**Output :** `docs/specs/<initiative>/brief.md`
+**Output :** `brief.md` ou équivalent tracker.
 
 **Contenu de l'output :**
 
-- Problème à résoudre
-- Utilisateur cible
-- Proposition de valeur
-- Solution envisagée (grandes lignes)
-- Cas d'usage principaux
-- Périmètre (in-scope / out-of-scope)
-- Non-goals
-- Hypothèses
-- Risques connus
-- Contraintes connues
-- Critères de succès
-- Questions ouvertes
+- problème
+- cible / utilisateurs
+- proposition de valeur
+- direction de solution
+- cas d'usage principaux
+- fonctionnalités importantes
+- scope pressenti
+- scope framing `MVP / V1 / Later / Excluded` si utile
+- non-goals
+- hypothèses
+- risques
+- contraintes
+- questions ouvertes
 
-**Session :** Dédiée (ou enchaîner après le brainstorming si la session est encore fraîche).
+**Tailles possibles :** brief léger, ou brief complet pour nouveau produit / grosse initiative.
 
-**Gate humain avant l’étape suivante :** Vérifier que le problème et le scope sont nets. Le brief doit être suffisamment clair pour qu'un agent puisse faire une analyse de validation avec.
+**Gate humain :** confirmer la direction et le scope initial avant `Grill Me`, `Validate` ou `PRD`.
 
-**Pourquoi cette étape existe :** Le brief protège contre le gaspillage. Il coûte 15 minutes. Si l’étape de validation dit "no-go", on n'a perdu que le brief au lieu d'un PRD complet. Si elle dit "pivot", on ajuste le brief (léger) plutôt qu'un PRD entier.
+**Important :** Le brief converge vers une direction produit claire, mais ne remplace pas le PRD, la validation externe ou le Tech Design.
 
 ---
 
-### Étape 3 — Validation
+### 2. Validate
 
 **Skill :** `validate`
 
-**But :** Réduire l'incertitude avant d'investir dans un PRD. L'agent fait des recherches approfondies et produit un avis argumenté avec un verdict Go / No-Go / Pivot.
+**Statut :** Core optionnel.
 
-**Quand l'utiliser :** Quand il y a un doute significatif sur le marché, la concurrence, la faisabilité technique, le business model, ou que le choix produit est risqué. — *Généralement couplée avec l’étape validation : on utilise les deux ou aucune. Si l’idée est déjà clair et ne nécessite pas de validation, on commence directement au PRD.*
+**Rôle :** Réduire l'incertitude externe avant d'investir dans un PRD complet, un Tech Design ou une implémentation coûteuse.
 
-**Inputs :** `brief.md`
+**Quand l'utiliser :** Doute sur marché, concurrence, utilisateurs, dépendances externes, business model, faisabilité ou risque produit. À sauter si l'idée est sûre ou l'enjeu faible.
 
-**Actions de l'agent :**
+**Inputs possibles :** `brief.md`, synthèse `grill-me`, hypothèses à tester, questions ouvertes, contraintes business ou utilisateur.
 
-- Fait des recherches web approfondies
-- Analyse le marché et la concurrence
-- Évalue les alternatives existantes
-- Vérifie la faisabilité technique
-- Challenge les hypothèses du brief
-- Évalue le business model (si applicable)
-- Identifie les contraintes externes et les dépendances
-- Produit un verdict argumenté : Go / No-Go / Pivot
-- Pose des questions au dev si des éléments sont nécessaires pour l'analyse
+**Actions :**
 
-**Rôle humain :** Répond aux questions de l'agent si besoin. Lit le rapport de validation. Prend la décision finale.
+- recherches web approfondies et collecte de signaux externes
+- analyse concurrence, alternatives, marché, utilisateurs ou business model si pertinent
+- challenge les hypothèses du brief
+- identifie risques, dépendances externes et contraintes majeures
+- produit un verdict motivé `Go / No-Go / Pivot`
 
-**Output :** `docs/specs/<initiative>/validation.md`
+**Output :** `validation.md` ou équivalent tracker.
 
 **Contenu de l'output :**
 
-- Analyse du marché et de la concurrence
-- Alternatives existantes
-- Risques marché
-- Risques techniques
-- Faisabilité
-- Analyse du business model (si applicable)
-- Dépendances externes
-- Hypothèses validées / invalidées
-- Niveau de confiance global
-- Recommandations
-- Verdict : Go / No-Go / Pivot (avec justification)
+- hypothèses testées
+- méthode et sources consultées
+- analyse marché / concurrence / alternatives
+- signaux utilisateurs ou business
+- faisabilité
+- dépendances externes
+- risques et contraintes
+- recommandations
+- verdict `Go / No-Go / Pivot`
 
-**Session :** Dédiée (recherche web intensive, peut être long).
+**Tailles possibles :** validation rapide sur quelques hypothèses, ou validation complète pour initiative stratégique.
 
-**Gate humain avant l’étape suivante :** Le dev décide :
+**Gate humain :** continuer, pivoter ou abandonner.
 
-- **Go** → passer au PRD
-- **Pivot** → réviser le brief et re-valider, ou passer au PRD avec une direction ajustée
-- **No-Go** → abandonner l'initiative
-
-**Pourquoi cette étape existe :** Investir des semaines de développement sur une idée non validée est un risque majeur. Cette étape est le filet de sécurité. Elle coûte une session d'agent et peut éviter des semaines de travail inutile.
+**Important :** `Validate` teste une direction convergée. Il ne remplace ni `Brief` ni `PRD`.
 
 ---
 
-### Étape 4 — PRD
+### 3. PRD
 
 **Skill :** `prd`
 
-**But :** Créer le document de référence central qui décrit **ce qu'on construit** (produit) et **comment on le construit** (technique). Le PRD est la source de vérité pour toute la suite du workflow. Une fois le PRD créé, les fichiers de brief et de validation peuvent être supprimés.
+**Statut :** Core requis sauf changement trivial.
 
-Ce skill s'adapte au scope :
+**Rôle :** Source de vérité produit et fonctionnelle. Le PRD fixe ce qu'on construit, pourquoi, pour qui, et le comportement observable attendu.
 
-- Pour un projet/MVP/grosse feature multi-tâches : PRD complet avec toutes les sections
-- Pour une petite feature (1 tâche) : PRD léger qui agit comme une spec de tâche
+**Quand l'utiliser :** Avant toute implémentation non triviale. Niveau de détail proportionné au scope.
 
-**Quand l'utiliser :** Avant toute implémentation qui nécessite du cadrage. C'est le **point d'entrée principal** du workflow pour la majorité des cas.
+**Inputs possibles :** Idée claire, `brainstorming.md`, `brief.md`, `validation.md`, synthèse `grill-me`, retours utilisateurs, contraintes produit, contexte projet, doc existante.
 
-**Inputs :**
+**Actions :**
 
-- `brief.md` + `validation.md` (si existants)
-- Ou prompt libre / notes du dev (si on entre directement au PRD)
-- `current-state.md` (si existant et pertinent)
-- Codebase existante pour contexte technique
+- consolide problème, objectifs, cible et valeur
+- décrit solution produit et comportements attendus
+- fixe scope, non-goals et success criteria
+- détaille flows, règles, états, erreurs et edge cases si nécessaire
+- formalise acceptance criteria et vérification fonctionnelle
+- fournit un Execution Contract si single-task, ou une base pour `Slice` si multi-tâches
 
-**Actions de l'agent :**
-
-- Formalise les exigences produit : comportements attendus, user journeys, règles métier, edge cases
-- Fixe les critères d'acceptation globaux
-- Définit le scope (in-scope / out-of-scope / futur)
-- Prend les décisions techniques : architecture, stack, patterns, data model, contraintes
-- Pour les scopes larges (≥ ~10 tâches estimées) : organise le travail en **modules** cohérents — blocs fonctionnels indépendants avec leur scope, leurs dépendances et leur ordre
-- Produit une liste de tâches légère (noms + statut) — le détail est dans les specs générées par `decompose`
-- Pose des questions au dev si des comportements sont ambigus ou si des décisions techniques nécessitent un arbitrage
-
-**Questions que l'agent peut poser si info manquante :**
-
-- Quel est le comportement attendu dans [cas limite] ?
-- Quelles sont les permissions / rôles impliqués ?
-- Y a-t-il des contraintes de données ou de migration ?
-- Y a-t-il des préférences de stack, de librairies, ou de patterns ?
-- Quelles fonctionnalités sont MVP vs futures ?
-- Quel est l'ordre de priorité entre les tâches ?
-
-**Rôle humain :** Répond aux questions, arbitre les priorités, valide le scope, tranche les comportements ambigus et les choix techniques.
-
-**Output :** `docs/specs/<initiative>/prd.md`
+**Output :** `prd.md` ou équivalent tracker.
 
 **Contenu de l'output :**
 
-*Partie Produit :*
+- problème et objectifs
+- cible, personas ou utilisateurs concernés
+- proposition de valeur
+- solution côté produit
+- user stories ou flows fonctionnels
+- exigences fonctionnelles
+- règles métier
+- comportements attendus
+- états UI ou états système attendus
+- messages d'erreur attendus si pertinent
+- edge cases fonctionnels
+- scope `In Scope`
+- `Out of Scope`
+- `Future Candidates`
+- assumptions
+- acceptance criteria testables
+- success criteria
+- vérification fonctionnelle
+- definition of done fonctionnelle si grosse initiative
+- boundaries `Always do / Ask first / Never do` si utile
 
-- Problème et objectifs
-- Utilisateur cible / personas
-- Proposition de valeur
-- User journeys (flux narratifs haut niveau — pas de user stories, celles-ci sont dans les specs de tâches)
-- Exigences fonctionnelles
-- Exigences non-fonctionnelles
-- Règles métier
-- Edge cases importants
-- Critères d'acceptation globaux
-- Scope (in-scope / out-of-scope / futur)
-- Non-goals
+**Tailles possibles :** PRD minimal, PRD standard, ou PRD complet MVP.
 
-*Partie Technique :*
+**Gate humain :** valider scope, comportements ambigus, acceptance criteria et décisions produit importantes.
 
-- Architecture cible
-- Stack et librairies
-- Patterns et conventions
-- Data model (si pertinent)
-- Décisions techniques et justifications
-- Contraintes techniques
-- Migrations / refactors nécessaires (si applicable)
-
-*Partie Modules (si scope large, ≥ ~10 tâches) :*
-
-Liste des modules avec leur scope et leurs dépendances. Exemple :
-
-- **Module Core** — setup, infra, database (prérequis pour tout)
-- **Module Auth** — inscription, login (dépend de Core)
-- **Module Frontend** — design system, UI (dépend de Auth)
-- **Module Billing** — paiement, plans (dépend de Auth)
-
-*Partie Tâches :*
-
-Liste légère — noms et statut uniquement. Le détail (AC, edge cases, approche technique, user stories) est dans les fichiers de spec générés par `decompose`. Les checkboxes servent de suivi d'avancement.
-
-```markdown
-- [ ] 001 — project-setup
-- [ ] 002 — database-models
-- [ ] 003 — api-base
-- [ ] 004 — auth-registration
-- [ ] 005 — auth-login
-- [ ] 006 — frontend-design-system
-```
-
-- Definition of Done globale
-
-**Session :** Dédiée.
-
-**Gate humain avant l’étape suivante :** Valider les exigences, les choix techniques, le scope et la liste de tâches. Le PRD devient la source de vérité. Les fichiers de brief et validation peuvent être supprimés si le dev le souhaite.
-
-**Pourquoi cette étape existe :** Le PRD est le pivot du workflow. Il transforme une idée cadrée en un plan constructible. En intégrant les décisions techniques directement dans le PRD, on évite une étape d'architecture séparée et on produit un document autosuffisant pour le découpage en tâches.
+**Important :** Le PRD ne contient pas choix de stack, architecture, data model, endpoints, librairies, noms de fichiers, migrations ou détails d'implémentation.
 
 ---
 
-### Étape 5 — Decompose
+### 4. Tech Design
 
-**Skill :** `decompose`
+**Skill :** `tech-design`
 
-**But :** Créer toutes les specs de tâches d'un coup à partir du PRD. Chaque tâche du PRD reçoit son propre fichier de spec avec suffisamment de détail pour être implémentée indépendamment.
+**Statut :** Core si impact technique non trivial.
 
-**Quand l'utiliser :** Quand le PRD contient plusieurs tâches à implémenter. **Ne pas utiliser** si le PRD est un PRD léger single-task (dans ce cas, le PRD fait office de spec et on passe directement à l'implémentation).
+**Rôle :** Source de vérité technique. Le Tech Design définit comment construire le produit et formalise les décisions structurantes.
 
-**Inputs :** `prd.md`
+**Quand l'utiliser :** Impact technique non trivial : architecture, data model, intégration, migration, sécurité, performance, scalabilité, observabilité, refactor structurel, choix de stack ou librairie durable.
 
-**Actions de l'agent :**
+**Inputs possibles :** `prd.md`, synthèse `grill-me`, contexte repo, architecture existante, docs techniques existantes, ADRs, conventions, services externes, contraintes stack, exigences non fonctionnelles.
 
-- Lit le PRD, la liste de tâches et les modules (si présents)
-- Pour chaque tâche, crée un fichier de spec contenant les détails d'implémentation
-- Si le PRD utilise des modules : génère les tâches en respectant l'ordre inter-modules et les dépendances ; reflète l'appartenance au module dans le nom de fichier (ex: `003-core-api-base.md`, `006-frontend-design-system.md`)
-- S'assure que chaque spec est auto-suffisante (compréhensible sans relire tout le PRD, mais peut y faire référence)
-- Maintient la cohérence entre les specs (pas de contradictions)
-- S'assure que les dépendances entre tâches sont explicites
-- Pose des questions si certaines tâches sont ambiguës
+**Actions :**
 
-**Rôle humain :** Relit les specs générées, ajuste si nécessaire, réordonne si besoin.
+- explore le repo et les patterns existants
+- collecte contraintes et exigences techniques
+- propose architecture, modules et patterns
+- arbitre stack, librairies, services, data model, interfaces/API, migrations et stratégie de tests
+- identifie impacts sur l'existant, risques, rollback et dette éventuelle
+- compare alternatives et formalise compromis
+- crée ou référence des ADR si nécessaire
 
-**Output :** Un fichier par tâche dans `docs/specs/<initiative>/tasks/`
+**Output :** `tech-design.md` ou équivalent tracker, avec ADRs si nécessaire.
 
-Nommage : `001-<nom-court>.md`, `002-<nom-court>.md`, etc.
-Pour les PRDs avec modules : préfixer le nom avec le module — `003-core-api-base.md`, `006-frontend-design-system.md`.
+**Contenu de l'output :**
 
-**Contenu de chaque spec :**
+- contexte technique
+- contraintes et exigences non fonctionnelles
+- architecture cible
+- modules touchés ou créés
+- intégrations et services externes
+- data model
+- interfaces/API
+- migrations et compatibilité
+- sécurité
+- performance et scalabilité
+- accessibilité si impact technique
+- observabilité, monitoring, logs
+- stratégie de testing technique
+- plan de rollback si pertinent
+- alternatives étudiées
+- compromis retenus
+- risques techniques
+- questions ouvertes
+- ADRs à créer ou mettre à jour
 
-- Contexte (référence au PRD et au module si applicable)
-- Objectif de la tâche
-- User stories (format : *En tant que X, quand Y, je peux Z*)
-- Comportement attendu détaillé
-- Edge cases et règles métier spécifiques à cette tâche
-- Approche technique sommaire (fichiers impactés, patterns à suivre)
-- Critères d'acceptation testables
-- Tests à couvrir
-- In-scope / out-of-scope de cette tâche
-- Dépendances (tâches qui doivent être faites avant)
-- Definition of Done
+**Tailles possibles :** Tech Design Lite pour changement limité, Tech Design complet pour architecture, migration ou initiative structurante.
 
-**Session :** Dédiée (une seule invocation produit toutes les specs).
+**Gate humain :** valider les arbitrages techniques avant `Slice` ou `Build`.
 
-**Gate humain avant l’étape suivante :** Relire les specs, ajuster, réordonner. Choisir la première tâche à implémenter.
-
-**Pourquoi cette étape existe :** Créer les specs une par une en invoquant un skill 20 fois est fastidieux. Un seul passage sur le PRD produit un ensemble cohérent de specs, avec des dépendances claires et sans contradictions. Les specs sont modérément détaillées — le complément se fait au moment de l'implémentation quand l'agent a accès au code réel.
-
----
-
-### Étape 6 — Implement
-
-**Skill :** `implement`
-
-**But :** Planifier puis implémenter une tâche. Ce skill a deux phases (plan et build) qui se déroulent dans la même session. Le comportement dépend du mode de l'agent :
-
-- **Mode PLAN :** l'agent planifie l'implémentation sans toucher au code. Le dev valide le plan, puis switch l'agent en mode BUILD.
-- **Mode BUILD :** l'agent implémente directement. Utilisé soit après validation du plan, soit directement pour les tâches simples.
-
-**Quand l'utiliser :** Pour chaque tâche à implémenter. C'est l'étape obligatoire et centrale de la boucle de développement.
-
-**Inputs :**
-
-- La spec de la tâche (`tasks/001-<nom>.md` ou `prd.md` si single-task)
-- Le code existant
-- Le PRD pour contexte global (si applicable)
-
-**Actions de l'agent :**
-
-*En mode PLAN :*
-
-- Lit la spec et explore le code existant
-- Identifie les fichiers à créer / modifier
-- Ordonne les étapes d'implémentation
-- Identifie les points de contrôle
-- Signale les risques ou ambiguïtés
-- Présente le plan au dev pour validation
-- Pose des questions si des choix techniques nécessitent un arbitrage
-
-*En mode BUILD :*
-
-- Implémente en suivant le plan (si plan validé) ou en suivant la spec (si build direct)
-- Reste strictement dans le scope de la spec
-- Demande confirmation avant toute dérive du scope ou du plan
-- Exécute les tests au fur et à mesure
-- Vérifie que le build passe
-- Fait une auto-review rapide en fin d'implémentation (conformité spec, pas de code mort, pas de TODO oubliés)
-- Continue jusqu'à ce que la tâche soit fonctionnelle
-
-**Questions que l'agent peut poser :**
-
-- La spec mentionne X, mais le code existant fait Y — que faire ?
-- Ce pattern est-il correct pour ce projet ?
-- Le scope doit-il inclure [cas non spécifié] ?
-
-**Rôle humain :**
-
-- En mode PLAN : valide le plan avant le passage en BUILD
-- En mode BUILD : répond aux questions, donne des instructions pour ajuster si besoin
-- Vérifie que le code fonctionne à la fin
-
-**Output :** Code implémenté, tests passants, build fonctionnel.
-
-**Fichier :** Aucun fichier de workflow. Le plan reste dans le contexte de la session. Le livrable est le code.
-
-**Session :** Dédiée par tâche. **Plan et build dans la même session** — ne pas séparer.
-
-**Gate humain avant l’étape suivante :** Vérifier que le code fonctionne. Décider si une review est nécessaire.
-
-**Pourquoi cette étape existe :** C'est le coeur du workflow. La fusion plan + build dans une même session préserve le raisonnement de l'agent. Un agent qui planifie puis implémente dans la foulée produit un code plus cohérent qu'un agent qui reçoit un plan sans comprendre le raisonnement derrière.
+**Important :** Par défaut, Tech Design vient après PRD. Si la faisabilité technique est l'incertitude principale, faire un spike léger avant PRD, puis le Tech Design complet après PRD.
 
 ---
 
-### Étape 7 — Review
+### 5. Slice
+
+**Skill :** `slice`
+
+**Statut :** Core si initiative multi-tâches.
+
+**Rôle :** Transformer `PRD + Tech Design optionnel + contexte repo` en tâches petites, verticales et vérifiables.
+
+**Quand l'utiliser :** Initiative multi-tâches. À sauter pour PRD minimal single-task avec Execution Contract suffisant.
+
+**Inputs possibles :** `prd.md`, `tech-design.md`, ADRs, contexte repo, priorités produit, contraintes d'équipe.
+
+**Actions :**
+
+- découpe en vertical slices
+- ordonne selon dépendances réelles
+- garde chaque tâche auto-suffisante côté comportement
+- associe tâches aux acceptance criteria correspondants
+- référence le Tech Design quand utile
+
+**Output :** une task spec par tâche dans `tasks/`, ou équivalent tracker.
+
+**Contenu de l'output :**
+
+- id et titre
+- contexte
+- objectif
+- comportement attendu
+- acceptance criteria testables
+- edge cases utiles
+- non-goals locaux si utile
+- références au PRD
+- références au Tech Design si utile
+- vérification attendue
+- dépendances `blocked-by` si applicable
+- type `AFK | HITL` si utile
+
+**Tailles possibles :** task spec minimale pour tâche simple, task spec détaillée pour tâche critique ou ambiguë.
+
+**Gate humain :** valider granularité, verticalité, ordre, dépendances et vérifiabilité.
+
+**Important :** Une task spec n'est pas un plan d'implémentation détaillé. Fichiers précis, commandes et séquence de code restent dans le `Build Preflight`.
+
+---
+
+### 6. Build
+
+**Skills :** `implement`, `implement-tdd`
+
+**Statut :** Core requis.
+
+**Rôle :** Implémenter une tâche en restant dans le scope et en planifiant l'exécution avant le code.
+
+**Quand l'utiliser :** Pour chaque task spec, ou directement depuis un PRD minimal single-task ou tout input avec un Execution Contract suffisant.
+
+**Inputs possibles :** PRD minimal, task spec, `tech-design.md`, ADRs, contexte repo, instructions projet.
+
+**Actions :**
+
+- prépare un plan d'implémentation proportionné (Plan mode / Read only)
+- implémente le plan en restant dans le scope
+- debug si nécessaire
+- exécute les vérifications nécessaires
+- vérifie la conformité à l'Execution Contract
+
+**Output :** code implémenté + compte rendu en session.
+
+**Contenu de l'output :**
+
+- approche retenue
+- modules et fichiers créés ou impactés
+- changements effectués
+- tests et checks exécutés
+- résultat des vérifications
+- statut final
+- ambiguïtés ou blocages restants
+
+**Tailles possibles :** plan très court pour tâche évidente, plan détaillé pour tâche sensible ou HITL.
+
+**Plan d'implémentation :** toujours présent mais adapté au scope et à la tâche. Il peut nécessiter une validation humaine (HITL) ou être auto-approuvé (AFK).
+
+**Choix du skill :** `implement` pour intégration, UI, glue code, configuration. `implement-tdd` pour bug fix, logique métier, comportement sensible ou fort risque de régression.
+
+**Gate humain :** validation du plan d'implémentation pour tâche `HITL`. Auto-approbation possible pour tâche `AFK` claire.
+
+**Important :** Si l'Execution Contract est insuffisant, revenir vers `PRD`, `Tech Design`, `Slice` ou `Grill Me`.
+
+---
+
+### 7. Review
 
 **Skill :** `review`
 
-**But :** Vérifier la qualité du code et la conformité à la spec avec un regard frais. Couvre à la fois la review de code et la validation fonctionnelle.
+**Statut :** Core recommandé.
 
-**Quand l'utiliser :** Au jugement du dev. Recommandé quand la tâche est conséquente (plus de 2 fichiers modifiés, logique métier complexe, changement d'architecture). Peut être sauté pour les fixes mineurs ou changements cosmétiques.
+**Rôle :** Revue de code à froid, distincte de l'implémentation.
 
-**Inputs :** Spec de la tâche, diff du code ou état courant du code modifié.
+**Quand l'utiliser :** Toute tâche non triviale, logique complexe, changement sensible, architecture, sécurité, performance, ou besoin de regard frais.
 
-**Actions de l'agent :**
+**Inputs possibles :** diff, commits, PRD, task spec, Tech Design, tests, résultats de vérification.
 
-- Compare l'implémentation aux critères d'acceptation de la spec
-- Identifie les écarts, les oublis, les comportements non spécifiés
-- Vérifie la qualité du code : lisibilité, patterns, sécurité, performance
-- Vérifie que les tests couvrent les cas définis dans la spec
-- Cherche les bugs potentiels et les risques de régression
-- Produit un verdict : accepté / à corriger (avec liste précise)
-- Prépare une checklist de QA manuelle pour le dev si applicable
+**Actions :**
 
-**Rôle humain :** Lit le feedback, décide des corrections à appliquer, fait la QA manuelle si nécessaire.
+- compare code, PRD/task spec, Tech Design et acceptance criteria
+- relit tests et vérifications
+- cherche divergences, oublis, bugs, régressions
+- évalue correctness, readability, architecture, security, performance
+- signale dead code et simplifications évidentes
 
-**Output :** Feedback structuré dans le contexte de la session : verdict, problèmes classés par sévérité, suggestions, checklist QA si applicable.
+**Output :** feedback en session, ou commentaire de review dans le tracker/PR.
 
-**Fichier :** Non en règle générale. Le feedback est appliqué immédiatement. Pour une tâche critique ou réglementée, le dev peut demander un fichier de review.
+**Contenu de l'output :**
 
-**Session :** **Nouvelle session, avec un modèle différent si possible.** C'est le seul moment du workflow où le changement de modèle est explicitement recommandé. Un agent qui review son propre code a un biais de confirmation.
+- verdict
+- findings par sévérité
+- références fichiers/lignes si possible
+- écarts au PRD, task spec ou Tech Design
+- couverture de tests et vérification
+- risques de régression
+- suggestions de correction
 
-**Gate humain avant l’étape suivante :** Si corrections nécessaires → retour à l'étape 6 (implement) pour appliquer les corrections. Sinon → tâche terminée.
+**Tailles possibles :** review courte pour changement simple, review complète pour changement sensible.
 
-**Pourquoi cette étape existe :** Un regard frais attrape des problèmes que l'implémenteur ne voit pas. Le changement de modèle/session élimine le biais de confirmation et apporte une perspective différente sur le code.
+**Gate humain :** accepter la tâche ou la renvoyer en correction.
+
+**Important :** `Review` évalue le code. Ce n'est pas une checklist de validation fonctionnelle manuelle.
 
 ---
 
-### Étape 8 — Capitalize
+### 8. QA
+
+**Skill :** `qa`
+
+**Statut :** Core à la demande.
+
+**Rôle :** Produire un plan de test manuel pour valider le comportement en conditions réelles.
+
+**Quand l'utiliser :** Après tâche conséquente, avant release importante, flow critique, impact utilisateur, ou besoin de validation manuelle explicite.
+
+**Inputs possibles :** PRD, task specs, diff, commits, contexte du chat, initiative complète ou groupe de tâches.
+
+**Actions :**
+
+- produit une checklist ordonnée de tests manuels
+- couvre cas nominaux, edge cases et régressions prioritaires
+- propose un pas-à-pas d'exécution si utile
+
+**Output :** checklist en session, `qa.md` optionnel ou équivalent tracker.
+
+**Contenu de l'output :**
+
+- périmètre testé
+- prérequis
+- données ou comptes nécessaires
+- ordre d'exécution
+- cas nominaux
+- edge cases
+- régressions à surveiller
+- résultats observés
+- anomalies relevées
+- verdict manuel si applicable
+
+**Tailles possibles :** checklist courte, ou plan QA complet pour release / flow critique.
+
+**Gate humain :** exécuter ou superviser le test réel et statuer sur les anomalies.
+
+**Important :** QA ne remplace pas Review.
+
+---
+
+### 9. Capitalize
 
 **Skill :** `capitalize`
 
-**But :** Mettre à jour la documentation existante du projet pour refléter ce qui a été implémenté. Ce n'est pas "créer de la doc" mais "maintenir la doc à jour".
+**Statut :** Core si décision durable ou doc à maintenir.
 
-**Quand l'utiliser :** Après une implémentation qui a modifié quelque chose de documenté ailleurs : architecture, API, conventions, README, [AGENTS.md](http://agents.md/), etc. Ne pas utiliser après chaque micro-tâche — seulement quand quelque chose de documenté a changé.
+**Rôle :** Aligner la doc projet et la doc IA/agents avec ce qui a vraiment été construit.
 
-**Inputs :** Code implémenté, documentation existante du projet.
+**Quand l'utiliser :** Après changement durable de convention, architecture, API, comportement documenté, ADR, artefact futur ou règle agent.
 
-**Actions de l'agent :**
+**Inputs possibles :** code livré, diff, commits, PRD, task specs, Tech Design, ADRs, docs existantes.
 
-- Identifie les documents qui ne sont plus à jour par rapport au code
-- Met à jour les documents concernés (README, [AGENTS.md](http://agents.md/), docs d'architecture, docs d'API, etc.)
-- Ne crée pas de nouveaux documents sauf si explicitement demandé
-- Signale au dev les documents mis à jour
+**Actions :**
 
-**Rôle humain :** Valide les mises à jour.
+- met à jour docs obsolètes
+- crée ou ajuste ADRs
+- met à jour doc IA/agents si une règle doit persister
+- réaligne PRD, Tech Design ou artefacts futurs invalidés
+- ouvre follow-up de dette ou refactoring si nécessaire
 
-**Output :** Documents existants mis à jour.
+**Output :** docs mises à jour, ADRs, règles agent, follow-ups, ou note indiquant qu'aucune capitalisation n'est utile.
 
-**Fichier :** Pas de nouveau fichier. Mise à jour de fichiers existants.
+**Contenu de l'output :**
 
-**Session :** Libre (peut être dans la session de review ou une session dédiée).
+- fichiers docs modifiés
+- ADRs créées ou ajustées
+- règles agent modifiées
+- artefacts futurs réalignés
+- follow-ups ouverts
+- décisions devenues durables
 
-**Gate humain avant l’étape suivante :** Vérifier que les mises à jour sont correctes.
+**Tailles possibles :** note courte si rien à capitaliser, mise à jour complète si décision durable.
 
-**Pourquoi cette étape existe :** La documentation qui diverge du code est pire qu'une absence de documentation — elle induit en erreur. Cette étape est le filet de sécurité contre la dérive documentation/code.
+**Gate humain :** valider ce qui devient source de vérité durable.
 
----
-
-## Use cases et gestion des situations courantes
-
-### Quand modifier un PRD existant
-
-**On modifie le PRD en cours quand** le changement affecte le scope ou les exigences de l'initiative sans en changer la nature : découverte technique, tâche à splitter, repriorisation, ajout dans le scope alors que l'initiative n'est pas terminée.
-
-**On ne modifie jamais** un PRD dont toutes les tâches sont terminées — il devient un document historique. Tout nouveau travail = nouvelle initiative.
-
-**On ne modifie pas** les task specs des tâches déjà implémentées. Si le comportement doit changer, c'est une nouvelle tâche.
-
-| Situation | Modifier PRD | Modifier task spec | Nouvelle initiative |
-| --- | :-: | :-: | :-: |
-| Découverte technique qui change les contraintes | Oui | Oui (tâches à venir) | — |
-| Tâche trop grosse à splitter | Oui (task list) | Remplacer par N specs | — |
-| Repriorisation suite à feedback | Oui | Oui si ajout/retrait | — |
-| Ajout de scope lié, initiative en cours | Oui | Oui | — |
-| Nouvelle feature indépendante | — | — | Oui |
-| Pivot fondamental | Statut final + note | — | Oui |
-| Initiative terminée, nouveau bloc de travail | — | — | Oui |
+**Important :** Capitalize ne documente pas pour le plaisir ; il maintient ce qui doit rester utile et vrai.
 
 ---
 
-### Use cases
+## Détail des on-demand skills
+
+Ces skills sont hors core workflow. Ils s'invoquent quand le contexte l'exige.
+
+### Brainstorm
+
+**Skill :** `brainstorm`
+
+**Statut :** On-demand skill.
+
+**Rôle :** Ouvrir largement l'espace d'idées, générer des options, structurer les pistes sans converger.
+
+**Quand l'utiliser :** Idée floue, nouveau produit, nouvelle direction, feature majeure, exploration produit/technique, manque d'options.
+
+**Inputs possibles :** Objectif du brainstorming, intuition, notes, transcript vocal, idées existantes, directions à explorer, données, code ou doc projet.
+
+**Actions :**
+
+- pose des questions ouvertes sans relâche pour stimuler la réflexion et générer des pistes
+- explore problèmes, opportunités, personas, solutions, proposition de valeur, cas d'usage, fonctionnalités, hypothèses, contraintes, risques
+- structure les idées au fil du brainstorming
+- continue jusqu'à demande d'arrêt explicite
+
+**Output :** `brainstorming.md` ou équivalent tracker.
+
+**Contenu de l'output :**
+
+- contexte / objectif du brainstorming
+- synthèse par thèmes
+- problèmes et opportunités
+- utilisateurs/personas possibles
+- propositions de valeur
+- solutions et variantes
+- cas d'usage
+- fonctionnalités candidates
+- hypothèses
+- contraintes et risques
+- questions ouvertes
+
+**Tailles possibles :** micro-brainstorm ciblé, ou brainstorm complet 30 à 120 minutes.
+
+**Gate humain :** choisir les pistes à filtrer dans `Brief`, `PRD`, `Tech Design` ou une décision explicite.
+
+**Important :** `Brainstorm` diverge volontairement. Il ne tranche pas.
 
 ---
 
-#### 1. Feature simple (1 tâche)
+### Grill Me
 
-**Contexte :** MVP livré, on veut ajouter le dark mode.
+**Skill :** `grill-me`
 
-**Chemin :** `PRD léger → implement → [review]`
+**Statut :** On-demand skill.
 
-```text
-docs/specs/004-dark-mode/
-  prd.md    ← agit comme spec, pas de dossier tasks/
-```
+**Rôle :** Interviewer l'utilisateur, une question à la fois, jusqu'à compréhension partagée et résolution des branches importantes de l'arbre de décision.
 
-Pas de decompose. Pas de modification des initiatives précédentes. Le roadmap peut être mis à jour.
+**Quand l'utiliser :** Idée claire mais décisions implicites, plan/design à challenger, dépendances entre décisions, Execution Contract ambigu, demande explicite de "grill me".
 
----
+**Inputs possibles :** brief, PRD, Tech Design, task spec, plan, intention, contexte repo.
 
-#### 2. Grosse feature (multi-tâches, < ~10 tâches)
+**Actions :**
 
-**Contexte :** MVP livré, on veut ajouter un système de collaboration d'équipe.
+- pose des questions une par une
+- propose une recommandation à chaque question
+- explore le repo au lieu de demander si la réponse est trouvable
+- résout les dépendances dans le bon ordre
+- arrête quand les décisions importantes sont résolues ou laissées ouvertes explicitement, ou quand l'utilisateur demande de stopper
 
-**Chemin :** `PRD → decompose → per-task(implement → [review]) → capitalize`
+**Output :** synthèse en session, ou intégration dans `brief.md`, `prd.md`, `tech-design.md` ou task specs.
 
-```text
-docs/specs/005-team-collaboration/
-  prd.md
-  tasks/
-    001-data-model-teams.md
-    002-invitation-system.md
-    003-permissions.md
-    004-shared-spaces.md
-```
+**Contenu de l'output :**
 
-Le PRD couvre tout le scope de la feature sans section modules — la liste de tâches suffit. Le capitalize en fin d'initiative met à jour les docs techniques si l'architecture a évolué.
+- décisions clarifiées
+- recommandations retenues
+- questions résolues
+- branches laissées ouvertes
+- hypothèses à intégrer dans l'étape suivante
+- ambiguïtés restantes
 
----
+**Tailles possibles :** micro-interview sur une décision, ou interview complète sur une intention.
 
-#### 3. Gros projet / MVP (≥ ~10 tâches, avec modules)
+**Gate humain :** répondre aux questions et valider les décisions retenues.
 
-**Contexte :** Nouveau produit from scratch. Après brainstorming → brief → validation, on a une direction claire mais ~25 tâches à implémenter.
+**Important :** Utiliser `Grill Me` en général une seule fois par intention, au point d'ambiguïté le plus utile :
 
-**Chemin :** `PRD (avec modules) → decompose → per-task(implement → [review]) → capitalize`
-
-Le PRD est **une seule initiative** avec une section modules. Pas de PRD séparé par module.
-
-```text
-docs/specs/001-mvp/
-  brainstorming.md
-  brief.md
-  validation.md
-  prd.md              ← un seul PRD, 4 modules, ~25 tâches en checklist
-  tasks/
-    001-core-project-setup.md
-    002-core-database-models.md
-    003-core-api-base.md
-    004-auth-registration.md
-    005-auth-login.md
-    006-auth-email-verification.md
-    007-frontend-design-system.md
-    008-frontend-landing.md
-    009-frontend-dashboard.md
-    010-billing-stripe-integration.md
-    ...
-```
-
-La section modules du PRD ressemble à :
-
-```markdown
-## Modules
-
-- **Core** — setup, infra, database (tâches 001-003, prérequis pour tout)
-- **Auth** — inscription, login, vérification email (tâches 004-006, dépend de Core)
-- **Frontend** — design system, landing, dashboard (tâches 007-009, dépend de Auth)
-- **Billing** — Stripe, plans, facturation (tâches 010-..., dépend de Auth)
-```
-
-Le decompose s'exécute en une seule passe sur le PRD entier et génère toutes les specs avec les préfixes de module dans les noms de fichiers. On implémente ensuite module par module dans l'ordre des dépendances.
+- après `Brief` : clarifier la direction avant validation ou PRD
+- après `PRD` : challenger scope, comportements et acceptance criteria
+- après `Tech Design` : challenger les arbitrages techniques
+- avant `Build` : seulement si l'Execution Contract est ambigu
 
 ---
 
-#### 4. Discovery technique en cours d'implémentation
+### Project Baseline
 
-**Contexte :** On implémente la tâche 005 (Stripe) et on découvre que Stripe ne supporte pas les abonnements multi-devises. Les tâches 008 et 012 sont impactées.
+**Skill :** `project-baseline`
 
-**Ce qu'on fait :**
+**Statut :** On-demand skill.
 
-- Terminer la tâche 005 normalement
-- Mettre à jour le PRD : section technique, noter la contrainte et la décision prise
-- Mettre à jour les task specs 008 et 012 avant de les implémenter
-- Ne pas toucher aux specs des tâches déjà implémentées
+**Rôle :** Établir une base fiable du projet existant : doc produit, doc projet, architecture, conventions, stratégie de testing, zones à risque.
 
-**Règle :** on met à jour entre deux tâches, pas "plus tard". L'agent qui lira la spec obsolète dans 3 jours produira du code incompatible.
+**Quand l'utiliser :** Onboarding legacy, projet abandonné, codebase peu documentée, reprise d'un projet existant.
 
----
+**Inputs possibles :** repo existant, docs existantes, README, scripts, tests, architecture, tickets, contexte utilisateur.
 
-#### 5. Pivot après plusieurs semaines de dev
+**Actions :**
 
-**Contexte :** MVP en cours (8/15 tâches terminées). Les retours utilisateurs imposent un changement de direction produit significatif.
+- explore le repo et la doc existante
+- identifie architecture, conventions et stratégie de testing réelles
+- repère zones à risque et incohérences
+- met à jour la documentation durable utile
 
-**Ce qu'on fait :**
+**Output :** mises à jour directes dans la doc projet.
 
-- Stopper l'implémentation du MVP actuel
-- Annoter le PRD en cours : marquer les tâches terminées/abandonnées, ajouter une note "Initiative interrompue — pivot vers [nouvelle direction]"
-- Créer une nouvelle initiative : `docs/specs/002-nouvelle-direction/`
-- Si incertitude forte : `brief → validation → PRD`. Si direction claire : `PRD` directement
-- Dans le nouveau PRD, identifier ce qui peut être réutilisé du MVP
-- Mettre à jour le roadmap
+**Contenu de l'output :**
 
-L'ancien PRD reste intact comme mémoire historique. On ne le réécrit pas.
+- architecture actuelle
+- conventions observées
+- stratégie de testing réelle
+- zones à risque
+- incohérences
+- fichiers docs mis à jour
 
----
+**Tailles possibles :** baseline rapide pour onboarding, baseline complète pour repo legacy.
 
-#### 6. Tâche trop grosse découverte au moment du plan
+**Gate humain :** valider ce qui devient source de vérité projet.
 
-**Contexte :** En mode PLAN sur `003-permissions.md`, on réalise que ça implique un système de rôles, un middleware, une UI admin et des migrations. La spec prévoyait une seule tâche.
-
-**Ce qu'on fait :**
-
-- Ne pas implémenter en une seule session
-- Modifier le PRD : splitter la tâche dans la task list, ajuster l'ordre et les dépendances
-- Remplacer la task spec par N specs :
-
-```text
-tasks/
-  003-role-model.md
-  004-auth-middleware.md
-  005-admin-ui.md
-  006-data-migration.md
-  007-...  ← anciennes tâches renumérotées
-```
-
-Le split peut se faire manuellement ou via un `decompose` partiel sur les tâches concernées.
+**Important :** Ne produit pas forcément un artefact isolé type `current-state.md`. Il met à jour la documentation durable du projet.
 
 ---
 
-#### 7. Bug / hotfix
+### Ship Readiness
 
-**Contexte :** Bug critique en production — les emails avec `+` sont rejetés au login.
+**Skill :** `ship-readiness`
 
-**Chemin :** `implement` directement, pas de PRD ni de spec.
+**Statut :** On-demand skill, gate optionnel de livraison.
 
-Le prompt au skill fait office de spec : description du bug, comportement attendu, comportement observé. Review recommandée si le fix touche à de la logique sensible (auth, paiement).
+**Rôle :** Vérifier qu'un changement est prêt à être livré dans de bonnes conditions.
 
-Si le bug révèle un problème plus large (toute la validation email est cassée), ça devient une petite feature : nouvelle initiative avec PRD léger.
+**Quand l'utiliser :** Release sensible, flow critique, changement utilisateur ou infra, migration, risque sécurité/performance.
 
----
+**Inputs possibles :** diff, commits, PRD, task specs, QA, review, CI, logs, contexte release.
 
-#### 8. Repriorisation suite à feedback utilisateur
+**Actions :**
 
-**Contexte :** À la tâche 6/12 du MVP. Les beta-testeurs veulent l'export PDF (prévu en phase 2). Les notifications (tâche 10) n'intéressent personne.
+- vérifie qualité, sécurité, performance et accessibilité si pertinent
+- vérifie migrations, variables d'env, monitoring et rollback plan
+- identifie blockers, risques acceptés et recommandations avant livraison
 
-**Ce qu'on fait :**
+**Output :** verdict `Go / No-Go`, checklist de pré-livraison, ou équivalent tracker.
 
-- Modifier le PRD : ajouter "export PDF" dans la task list, déplacer "notifications" dans "Future / Out of scope", ajouter une note de décision
-- Créer la task spec `013-export-pdf.md`
-- Annoter `010-notifications.md` : "ANNULÉE — reportée post-MVP"
-- Continuer dans le nouvel ordre
+**Contenu de l'output :**
 
----
+- blockers
+- risques acceptés
+- checks qualité
+- checks sécurité
+- performance
+- accessibilité si pertinent
+- migrations et variables d'env
+- monitoring / alerting
+- rollback plan
+- recommandations avant livraison
 
-#### 9. Refactoring / dette technique
+**Tailles possibles :** checklist courte, ou gate complet de release.
 
-**Contexte :** Après plusieurs initiatives, la couche API est incohérente, le code est dupliqué, les tests sont fragiles.
+**Gate humain :** accepter les risques ou bloquer la livraison.
 
-**Chemin :** `PRD technique → decompose → per-task(implement → review) → capitalize`
-
-```text
-docs/specs/006-api-refactoring/
-  prd.md    ← pas de partie produit, que du technique
-  tasks/
-    001-api-consistency.md
-    002-remove-duplication.md
-    003-test-stability.md
-```
-
-Le PRD technique contient : état actuel (problèmes), état cible, approche, risques de régression. Review fortement recommandée. Capitalize met à jour `docs/architecture.md` et `docs/conventions.md`.
-
-Ne pas glisser du refactoring dans une initiative produit en cours — ça pollue le scope et complexifie la review.
+**Important :** Ce n'est pas une étape normale de toutes les initiatives.
 
 ---
 
-#### 10. Tâche implémentée qui invalide des specs à venir
+## Règles transverses
 
-**Contexte :** La tâche `004-real-time-sync.md` adopte WebSockets. La tâche `007-offline-mode.md` partait du principe que tout passait par REST.
+### Product / Technical / Execution boundaries
 
-**Ce qu'on fait :**
+- PRD : comportement observable, règles fonctionnelles, acceptance criteria.
+- Tech Design : décisions techniques, interfaces, data model, migrations, risques.
+- Task specs : tranches exécutables avec Execution Contract.
+- Build Preflight : plan immédiat d'implémentation.
 
-- Terminer la tâche 004
-- Immédiatement après : mettre à jour le PRD (section technique, décision WebSocket) et la spec `007-offline-mode.md` (approche technique, critères d'acceptation, edge cases)
-- Si l'impact est majeur, splitter la tâche 007 (cf. use case 6)
+### Vertical slices
 
-**Règle :** après chaque implémentation, se demander "est-ce que ça change quelque chose pour les tâches à venir ?". Si oui, mettre à jour avant de passer à la tâche suivante.
+- Construire une tranche complète et vérifiable.
+- Éviter les tâches horizontales par couche.
+
+### Source-driven decisions
+
+- Vérifier la doc officielle quand une décision dépend d'un framework ou d'une lib.
+- Signaler tout conflit entre doc officielle et patterns du repo avant de trancher.
+
+### Context engineering
+
+- Charger le contexte utile, pas tout le repo.
+- Garder artefacts, fichiers et patterns pertinents pour la tâche.
+
+### Stop-the-line
+
+- Si test, build ou runtime casse, traiter avant d'ajouter du scope.
+- Ne pas empiler du nouveau travail sur un état instable.
+
+### Faire évoluer une initiative
+
+Modifier une initiative active si contrainte, scope ou tâches changent sans pivot majeur.
+
+Ouvrir une nouvelle initiative si le travail devient indépendant, s'il y a pivot majeur, ou si l'initiative précédente est historique.
+
+Règles :
+
+- ne pas réécrire l'histoire d'une initiative terminée
+- ne pas modifier rétroactivement une task spec déjà implémentée pour masquer une erreur
+- si un comportement livré doit changer, créer une nouvelle tâche ou initiative
+- si une implémentation invalide des tâches futures, mettre à jour PRD, Tech Design et task specs à venir immédiatement
 
 ---
 
-#### 11. Exploration d'une idée sans engagement
+## Livraison
 
-**Contexte :** Intuition pour une feature de gamification, mais on ne sait pas si c'est pertinent ou prioritaire.
+Ce workflow couvre cadrage, découpage, implémentation, revue et validation. Commit, PR, CI, release et déploiement restent des pratiques d'équipe ou de projet, avec `ship-readiness` comme gate optionnel avant livraison sensible.
 
-**Ce qu'on fait :**
+## Crédits
 
-```text
-docs/specs/007-gamification/
-  brainstorming.md    ← c'est tout pour l'instant
-```
-
-Si on veut aller plus loin : `brief → validation → PRD`. Si non, le dossier reste en veille avec juste le brainstorming. C'est une trace des idées explorées — si on y revient dans 3 mois, on ne repart pas de zéro.
-
----
-
-## Résumé des skills
-
-| # | Skill | Obligatoire | Produit un fichier | Session dédiée |
-| --- | --- | --- | --- | --- |
-| 0 | `capture-current-state` | Non (utilitaire) | Oui | Oui |
-| 1 | `brainstorm` | Non | Oui | Oui |
-| 2 | `brief` | Non (couplé avec validate) | Oui | Oui |
-| 3 | `validate` | Non (couplé avec brief) | Oui | Oui |
-| 4 | `prd` | Oui (sauf fix trivial) | Oui | Oui |
-| 5 | `decompose` | Si multi-tâches | Oui (N fichiers) | Oui |
-| 6 | `implement` | Oui | Non (code) | Oui, par tâche |
-| 7 | `review` | Recommandé | Non | Oui, autre modèle |
-| 8 | `capitalize` | Non | Non (mises à jour) | Libre |
+A huge thanks to [@mattpocock](https://github.com/mattpocock) for sharing his workflow and agent skills; it greatly inspired this one.
