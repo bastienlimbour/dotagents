@@ -1,6 +1,6 @@
 ---
 name: prompt-engineering
-description: Designs, rewrites, reviews, and debugs prompts, system instructions, agent rules, and output contracts for LLM workflows. Use when working on prompt engineering, LLM prompts, prompt templates, system prompts, context engineering, agent instructions, prompt evaluation, prompt debugging, or output schema design. Not intended for general copywriting, non-LLM documentation, or model API integration unless prompt design is the core task.
+description: Designs, rewrites, reviews, and debugs prompts, system instructions, and agent rules for LLMs. Use when working on prompt engineering, LLM prompts, prompt templates, system prompts, context engineering, agent instructions, prompt evaluation, prompt debugging. Not intended for general copywriting, non-LLM documentation, or model API integration unless prompt design is the core task.
 ---
 
 # Prompt Engineering
@@ -13,7 +13,6 @@ description: Designs, rewrites, reviews, and debugs prompts, system instructions
 - Rewriting or improving an existing prompt
 - Reviewing or debugging a prompt that produces poor results
 - Writing agent instructions, rules files (AGENTS.md, CLAUDE.md, .cursorrules)
-- Designing output contracts or structured output schemas
 - Context engineering for complex or multi-step LLM tasks
 - Evaluating prompt quality or building prompt test cases
 
