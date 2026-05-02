@@ -8,17 +8,20 @@
 
 **Quand l'utiliser :** Idée floue, nouveau produit, nouvelle direction, feature majeure, exploration produit/technique, manque d'options.
 
-**Inputs possibles :** Objectif du brainstorming, intuition, notes, transcript vocal, idées existantes, directions à explorer, données, code ou doc projet.
+**Inputs possibles :** Objectif du brainstorming, contexte, intuition, notes, transcript vocal, idées existantes, directions à explorer, données, code ou doc projet.
 
 **Actions :**
 
-- définit l'objectif et la timebox de la session
+- créé un fichier `brainstorming.md` local dans le dossier `.initiatives/<NNN-initiative-name>/`
+- définit l'objectif du brainstorming et le contexte
 - pose des questions ouvertes sans relâche pour stimuler la réflexion et générer des pistes
 - explore problèmes, opportunités, personas, solutions, proposition de valeur, cas d'usage, fonctionnalités, hypothèses, contraintes, risques
 - clusterise les idées au fil du brainstorming pour éviter le vrac
 - continue jusqu'à demande d'arrêt explicite ou fin de timebox
 
-**Output :** `brainstorming.md` ou équivalent tracker.
+**Output :** synthèse de brainstorming en session, `brainstorming.md` local optionnel, ou commentaire tracker seulement si un support actif existe déjà.
+
+**Publication de l'artefact :** Par défaut, garder le brainstorming en session/chat ou dans `.initiatives/<initiative>/brainstorming.md` gitignored. Ne pas créer d'issue parente GitHub pour du brainstorming divergent sauf demande explicite ; si une issue parente existe déjà, proposer un commentaire de synthèse sans transcript brut.
 
 **Contenu de l'output :**
 

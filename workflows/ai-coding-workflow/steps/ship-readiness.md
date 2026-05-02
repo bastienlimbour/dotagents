@@ -19,6 +19,8 @@
 
 **Output :** verdict `Go / No-Go`, checklist de pré-livraison, ou équivalent tracker.
 
+**Publication de l'artefact :** Si une PR, release issue, issue parente ou tracker actif existe, proposer d'y publier le verdict `Go / No-Go`, blockers, risques acceptés et preuves. Sans support actif, garder le verdict en session ou proposer un fichier local seulement pour une livraison qui doit être auditée.
+
 **Contenu de l'output :**
 
 Contenu obligatoire :

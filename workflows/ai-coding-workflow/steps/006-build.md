@@ -21,9 +21,12 @@
 - utilise red-green-refactor si `implement-tdd` est choisi
 - debug si nécessaire
 - exécute les vérifications nécessaires : tests, typecheck, lint, build ou commandes spécifiques
+- si un check échoue, corrige ou documente le blocage avant d'élargir le scope
 - vérifie la conformité à l'Execution Contract
 
 **Output :** code implémenté + compte rendu en session.
+
+**Publication du compte rendu :** Aucun fichier d'artefact n'est créé par défaut. Si une sub-issue, issue tracker ou PR active existe, proposer d'y publier le compte rendu final avec changements, checks exécutés et blocages. En mode Markdown local, garder le compte rendu en session sauf si l'utilisateur demande explicitement de l'ajouter à la task spec.
 
 **Contenu de l'output :**
 
@@ -52,6 +55,8 @@ Compte rendu final :
 
 **Plan d'implémentation :** toujours présent mais adapté au scope et à la tâche. Il peut nécessiter une validation humaine (HITL) ou être auto-approuvé (AFK).
 
+Une tâche `AFK` peut être auto-approuvée seulement si dépendances, checks et critères de succès sont explicites. Une tâche bloquée ou ambiguë reste `HITL` jusqu'à résolution.
+
 **Choix du skill :** `implement` pour intégration, UI, glue code, configuration. `implement-tdd` pour bug fix, logique métier, comportement sensible ou fort risque de régression.
 
 **Gate humain :** validation du plan d'implémentation pour tâche `HITL`. Auto-approbation possible pour tâche `AFK` claire.
@@ -73,3 +78,5 @@ Ne pas écrire tous les tests puis toute l'implémentation. Ce serait une slice 
 Les tests doivent vérifier le comportement via des interfaces publiques, idéalement en style intégration avec de vrais chemins de code. Éviter les tests couplés aux détails internes, les mocks excessifs, les tests de méthodes privées et les tests écrits après coup pour confirmer l'implémentation.
 
 Mocks : uniquement aux frontières système quand c'est utile : API externes, temps, hasard, filesystem ou base de données si aucun substitut local pratique n'existe. Ne pas mocker les modules internes que l'on contrôle. Préférer un test DB, un adapter in-memory ou un local substitute quand cela donne un signal plus réaliste.
+
+Préférer des interfaces spécifiques pour les opérations externes plutôt qu'un fetcher générique difficile à tester.

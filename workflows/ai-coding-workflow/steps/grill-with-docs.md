@@ -23,7 +23,9 @@
 - crée `CONTEXT.md`, `CONTEXT-MAP.md` ou `docs/decisions/` seulement au premier besoin réel
 - propose un ADR seulement pour une décision difficile à renverser, surprenante sans contexte, et issue d'un vrai compromis
 
-**Output :** synthèse en session, mises à jour de `CONTEXT.md` ou `CONTEXT-MAP.md`, ADRs proposées ou créées, intégration dans `PRD` ou `Tech Design`.
+**Output :** synthèse en session, mises à jour de `CONTEXT.md` ou `CONTEXT-MAP.md`, ADRs proposées ou créées, intégration dans `PRD`, `Tech Design` ou support actif.
+
+**Publication de l'artefact :** Si une initiative active existe, proposer d'intégrer les décisions dans l'issue parente, le PRD ou le Tech Design plutôt que créer un artefact séparé. Si un terme ou une décision devient durable, proposer la mise à jour de `CONTEXT.md`, `CONTEXT-MAP.md` ou `docs/decisions/` ; ne créer ou modifier ces docs qu'avec une information stabilisée.
 
 **Contenu de l'output :**
 

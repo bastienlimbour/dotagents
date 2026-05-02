@@ -20,7 +20,9 @@
 - documente ce qui fonctionne, ce qui ne fonctionne pas, et les éléments à réutiliser
 - marque clairement les fichiers comme temporaires ou prépare leur suppression
 
-**Output :** prototypes jetables, synthèse des options, recommandation UX, éléments à réinjecter dans `PRD`, `Tech Design` ou `Build`.
+**Output :** prototypes jetables, synthèse des options, recommandation UX, éléments à réinjecter dans `PRD`, `Tech Design`, `Build` ou support actif.
+
+**Publication de l'artefact :** Les prototypes restent locaux et jetables par défaut. Si une issue parente existe, proposer un commentaire de synthèse avec l'option retenue et les éléments à réinjecter ; ne pas publier le prototype brut comme source de vérité produit.
 
 **Contenu de l'output :**
 

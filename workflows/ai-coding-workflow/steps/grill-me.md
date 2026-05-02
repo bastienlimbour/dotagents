@@ -19,7 +19,9 @@
 - résout les dépendances dans le bon ordre
 - arrête quand les décisions importantes sont résolues, laissées ouvertes explicitement, ou quand le gain marginal devient faible
 
-**Output :** synthèse en session, ou intégration dans `brief.md`, `prd.md`, `tech-design.md` ou task specs.
+**Output :** synthèse en session, ou intégration dans `brief.md`, `prd.md`, `tech-design.md`, task specs ou support actif.
+
+**Publication de l'artefact :** Par défaut, garder le decision log en session et proposer son intégration dans l'artefact suivant. Si une issue parente ou une task issue existe déjà, proposer un commentaire court ou une mise à jour du body seulement pour les décisions qui changent la vérité courante.
 
 **Contenu de l'output :**
 

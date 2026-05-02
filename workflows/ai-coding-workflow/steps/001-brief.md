@@ -20,7 +20,9 @@
 - explicite hypothèses, risques, contraintes, non-goals et questions ouvertes
 - recommande le prochain gate : `Grill Me`, `Grill With Docs`, `Validate` ou `PRD`
 
-**Output :** `brief.md` ou équivalent tracker.
+**Output :** synthèse en session, `brief.md` local optionnel, ou intégration dans le PRD à venir.
+
+**Publication de l'artefact :** Par défaut, garder le brief en session/chat ou dans `.initiatives/<initiative>/brief.md` gitignored. Ne pas créer l'issue parente GitHub au brief ; l'issue parente est créée au moment du PRD, sauf demande explicite de l'utilisateur.
 
 **Contenu de l'output :**
 

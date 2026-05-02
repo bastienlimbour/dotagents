@@ -20,7 +20,9 @@
 - identifie risques, dépendances externes et contraintes majeures
 - produit un verdict motivé `Go / No-Go / Pivot` avec niveau de confiance
 
-**Output :** `validation.md` ou équivalent tracker.
+**Output :** synthèse de validation en session, `validation.md` local optionnel, ou commentaire tracker si une initiative active existe.
+
+**Publication de l'artefact :** Par défaut, garder la validation en session/chat ou dans `.initiatives/<initiative>/validation.md` gitignored. Si une issue parente existe déjà et que la validation justifie `Go / No-Go / Pivot`, proposer un commentaire de synthèse et consolider la décision importante dans le PRD ou le body canonique.
 
 **Contenu de l'output :**
 

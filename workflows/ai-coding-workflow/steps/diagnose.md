@@ -29,6 +29,8 @@
 
 **Output :** cause racine, correction, test de régression, commandes de vérification, risques restants.
 
+**Publication de l'artefact :** Si un bug issue, sub-issue ou tracker actif existe, proposer d'y publier cause racine, fix, test de régression et vérifications. Sans support actif, garder la synthèse en session ; ne proposer une nouvelle issue que si le diagnostic révèle un suivi nécessaire. Les logs, harness et instrumentations temporaires restent locaux et doivent être nettoyés.
+
 **Contenu de l'output :**
 
 Contenu obligatoire :

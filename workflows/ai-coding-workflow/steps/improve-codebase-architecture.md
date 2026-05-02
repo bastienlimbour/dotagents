@@ -23,6 +23,8 @@
 
 **Output :** candidats de deepening avec fichiers/modules concernés, problème, solution proposée, bénéfices en leverage/locality, impact test, risques et prochaine étape.
 
+**Publication de l'artefact :** Par défaut, présenter les candidats en session et demander quel candidat mérite une initiative. Si une issue parente existe, proposer un commentaire de synthèse. Ne créer une issue, un PRD, un Tech Design ou un ADR qu'après choix humain d'un candidat et validation du besoin de suivi durable.
+
 **Contenu de l'output :**
 
 Contenu obligatoire :
@@ -45,3 +47,5 @@ Contenu obligatoire :
 **Gate humain :** choisir le candidat à explorer, valider l'interface structurante et décider si le refactor mérite une initiative.
 
 **Important :** Ce skill propose d'abord. Il ne doit pas lancer un gros refactor sans gate humain et sans Execution Contract.
+
+Classification utile des dépendances : `in-process` se deepene directement et se teste par l'interface du module ; `local-substitutable` préfère un substitut local en test ; `remote-owned` justifie un port au seam avec adapter production et adapter test ; `true external` justifie un port injecté et un mock adapter ciblé.

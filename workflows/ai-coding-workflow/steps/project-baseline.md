@@ -20,6 +20,8 @@
 
 **Output :** mises à jour directes dans la doc projet.
 
+**Publication de l'artefact :** `Project Baseline` met à jour la documentation durable plutôt que créer un artefact temporaire. Proposer explicitement les fichiers durables à modifier avant édition. Si une issue ou tracker d'onboarding existe, proposer un commentaire de synthèse avec les docs mises à jour et les follow-ups.
+
 **Contenu de l'output :**
 
 Contenu obligatoire :

@@ -25,6 +25,8 @@
 
 **Output :** feedback en session, ou commentaire de review dans le tracker/PR.
 
+**Publication de l'artefact :** Si une PR existe, proposer par défaut la review en commentaire de PR. Sinon, si une sub-issue ou issue tracker active existe, proposer un commentaire sur ce support. Sans support actif, garder la review en session ; ne pas créer de fichier local par défaut.
+
 **Contenu de l'output :**
 
 Contenu obligatoire :

@@ -22,6 +22,8 @@
 
 **Output :** carte synthétique de la zone, modules et callers pertinents, seams à respecter, risques et prochaine étape recommandée.
 
+**Publication de l'artefact :** Par défaut, garder la carte en session. Si elle sert une initiative active, proposer un commentaire sur l'issue parente ou la sub-issue concernée ; en mode Markdown local, proposer un fichier dans `.initiatives/<initiative>/` seulement si la carte sera réutilisée pendant l'initiative.
+
 **Contenu de l'output :**
 
 Contenu obligatoire :

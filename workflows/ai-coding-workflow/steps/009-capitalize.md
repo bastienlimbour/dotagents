@@ -16,13 +16,15 @@
 - vérifie que la doc durable ne duplique pas un artefact temporaire
 - crée ou ajuste ADRs
 - crée ou met à jour `CONTEXT.md` ou `CONTEXT-MAP.md` si le vocabulaire domaine durable change
-- met à jour `docs/agents/` si la configuration consommée par les agents change
+- met à jour `.agents/` si la configuration consommée par les agents change
 - met à jour doc IA/agents si une règle doit persister
 - réaligne PRD, Tech Design ou artefacts futurs invalidés
 - supprime, archive, ferme ou consolide les artefacts temporaires qui ne doivent plus guider les agents
 - ouvre follow-up de dette ou refactoring si nécessaire
 
 **Output :** docs mises à jour, ADRs, règles agent, follow-ups, ou note indiquant qu'aucune capitalisation n'est utile.
+
+**Publication de l'artefact :** Consolider les informations durables dans le code, les tests, les docs projet, `CONTEXT.md`, `CONTEXT-MAP.md`, `.agents/` ou `docs/decisions/`. Si une issue parente, sub-issue ou tracker existe, proposer de mettre à jour le body/commentaire final, fermer les items terminés ou ouvrir les follow-ups. En mode Markdown local, proposer de supprimer ou archiver `.initiatives/<initiative>/` après consolidation ; demander confirmation avant toute suppression.
 
 **Contenu de l'output :**
 
@@ -36,7 +38,7 @@ Si une capitalisation est faite :
 - ADRs créées ou ajustées
 - vocabulaire domaine créé ou mis à jour si applicable
 - règles agent modifiées
-- configuration `docs/agents/` modifiée si applicable
+- configuration `.agents/` modifiée si applicable
 - artefacts futurs réalignés
 - artefacts temporaires supprimés, archivés ou fermés
 - follow-ups ouverts
