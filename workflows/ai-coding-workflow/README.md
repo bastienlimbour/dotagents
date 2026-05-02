@@ -9,31 +9,17 @@ Workflow AI coding léger, modulaire et humain-au-centre. Il couvre le cadrage, 
 
 ## Glossaire
 
+- **Skill (ou Agent skill) :** ressource réutilisable, basée sur le système de fichiers, qui fournit à des agents IA des connaissances spécifiques à un domaine : workflows, contexte, best practices, capacités. Voir [agentskills.io](https://agentskills.io/) pour plus de détails.
 - **Initiative :** unité de travail suivie dans le workflow : ajouter une feature, refactor un module, corriger un bug, développer un MVP, reprendre un projet abandonné, planifier une livraison sensible, etc.
 - **Step :** étape du workflow avec un rôle, des inputs, des outputs et parfois un gate humain. Chaque step est liée à un ou plusieurs skills.
-- **Core workflow :** chemin principal que suit une initiative du brief jusqu'à la livraison.
-- **On-demand step :** step activable hors séquence quand le contexte le justifie.
-- **Skill (Agent skill) :** ressource réutilisable, basée sur le système de fichiers, qui fournit à des agents IA des connaissances spécifiques à un domaine : workflows, contexte, best practices, capacités. Voir [agentskills.io](https://agentskills.io/) pour plus de détails.
 - **Artefact :** document, issue ou commentaire temporaire utile pendant l'initiative, comme PRD, Tech Design, task specs, QA ou prototype.
-- **Documentation durable :** information qui doit rester vraie après l'initiative : code, tests, README, docs projet, conventions, `CONTEXT.md`, `CONTEXT-MAP.md` ou ADRs.
-- **CONTEXT.md :** glossaire domaine durable : termes, définitions, synonymes à éviter et ambiguïtés résolues.
-- **CONTEXT-MAP.md :** carte des bounded contexts quand un projet contient plusieurs domaines métier.
-- **ADR :** Architecture Decision Record. Décision durable, difficile à renverser ou surprenante sans contexte.
-- **PRD :** source de vérité produit et fonctionnelle : comportement attendu, règles, edge cases et acceptance criteria.
-- **Tech Design :** source de vérité technique : architecture, interfaces, data model, migrations, risques et compromis.
-- **Task spec :** tranche exécutable et vérifiable issue du slicing.
-- **Execution Contract :** contenu minimal permettant à `Build` d'implémenter sans ambiguïté. Il vit dans un PRD minimal, une task spec, une issue ou un prompt.
-- **Build Preflight :** plan d'implémentation immédiat produit au début de `Build` avant d'écrire le code.
-- **AFK / HITL :** `AFK` désigne une tâche claire, testable et non bloquée ; `HITL` désigne une tâche qui nécessite un jugement humain.
+- **AFK / HITL :** `AFK` (away from keyboard) désigne une tâche claire, testable et non bloquée ; `HITL` (human in the loop) désigne une tâche qui nécessite un jugement humain.
 - **Gate humain :** point de décision où l'humain valide, arbitre ou bloque la suite.
-- **Vertical slice :** tranche end-to-end vérifiable, plutôt qu'un découpage horizontal par couches `DB -> API -> UI`.
 - **Feedback loop :** signal fiable qui prouve l'état du changement : test, typecheck, lint, build, CI, repro de bug, dev server ou vérification navigateur.
-- **Seam / adapter :** frontière où isoler une dépendance ou une variation réelle, surtout pour tester, remplacer ou intégrer un système externe.
-- **MCP :** Model Context Protocol. Serveur utilisé par un agent pour accéder à un outil ou une source externe de façon structurée.
 
 ---
 
-## Principes
+## Principes du workflow
 
 - **Cadrer avant de coder :** formaliser juste assez selon le scope et le niveau d'incertitude.
 - **Séparer produit, technique et exécution :** `prd.md`, `tech-design.md` et `tasks/*.md` n'ont pas le même rôle.
