@@ -1,52 +1,52 @@
 # Project Baseline
 
-**Skill :** `project-baseline`
+**Skill:** `project-baseline`
 
-**Statut :** On-demand step.
+**Status:** On-demand step.
 
-**Rôle :** Établir une base fiable du projet existant : doc produit, doc projet, architecture, conventions, stratégie de testing, zones à risque.
+**Role:** Establish a reliable baseline for an existing project: product docs, project docs, architecture, conventions, testing strategy, risk areas.
 
-**Quand l'utiliser :** Onboarding legacy, projet abandonné, codebase peu documentée, reprise d'un projet existant.
+**When to use:** Legacy onboarding, abandoned project, poorly documented codebase, takeover of an existing project.
 
-**Inputs possibles :** repo existant, docs existantes, README, scripts, tests, architecture, tickets, contexte utilisateur.
+**Possible inputs:** existing repository, existing docs, README, scripts, tests, architecture, tickets, user context.
 
-**Actions :**
+**Actions:**
 
-- borne le scope de baseline avant exploration
-- explore le repo et la doc existante
-- identifie architecture, conventions et stratégie de testing réelles
-- repère zones à risque et incohérences
-- met à jour la documentation durable utile plutôt que créer un méga-document
+- bound the baseline scope before exploration
+- explore the repository and existing documentation
+- identify actual architecture, conventions, and testing strategy
+- detect risk areas and inconsistencies
+- update useful durable documentation instead of creating a mega-document
 
-**Output :** mises à jour directes dans la doc projet.
+**Output:** direct updates to project documentation.
 
-**Publication de l'artefact :** `Project Baseline` met à jour la documentation durable plutôt que créer un artefact temporaire. Proposer explicitement les fichiers durables à modifier avant édition. Si une issue ou tracker d'onboarding existe, proposer un commentaire de synthèse avec les docs mises à jour et les follow-ups.
+**Artifact publication:** `Project Baseline` updates durable documentation instead of creating a temporary artifact. Explicitly propose the durable files to edit before editing. If an onboarding issue or tracker item exists, propose a summary comment with updated docs and follow-ups.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Contenu obligatoire :
+Required content:
 
-- fichiers docs mis à jour
-- architecture actuelle
-- conventions observées
-- stratégie de testing réelle
-- zones à risque
-- incohérences
+- documentation files updated
+- current architecture
+- observed conventions
+- actual testing strategy
+- risk areas
+- inconsistencies
 
-Contenu conditionnel :
+Conditional content:
 
-- sources inspectées
-- zones inconnues ou non couvertes
-- follow-ups proposés
+- inspected sources
+- unknown or uncovered areas
+- proposed follow-ups
 
-À éviter :
+Avoid:
 
-- artefact isolé type `current-state.md` sans usage durable
-- arbre de fichiers exhaustif
-- création de docs durables sans information réelle à maintenir
+- isolated artifact such as `current-state.md` without durable use
+- exhaustive file tree
+- creating durable docs without real information to maintain
 
-**Tailles possibles :** baseline rapide pour onboarding, baseline complète pour repo legacy.
+**Possible sizes:** quick baseline for onboarding, full baseline for a legacy repository.
 
-**Gate humain :** valider ce qui devient source de vérité projet.
+**Human gate:** validate what becomes project source of truth.
 
-**Important :** Ne produit pas forcément un artefact isolé type `current-state.md`. Il met à jour la documentation durable du projet.
+**Important:** This does not necessarily produce an isolated artifact such as `current-state.md`. It updates the project's durable documentation.

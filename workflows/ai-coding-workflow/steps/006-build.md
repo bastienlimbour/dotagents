@@ -1,82 +1,82 @@
 # 006 - Build
 
-**Skills :** `implement`, `implement-tdd`
+**Skills:** `implement`, `implement-tdd`
 
-**Statut :** Core requis.
+**Status:** Required core step.
 
-**Rôle :** Implémenter une tâche en restant dans le scope et en planifiant l'exécution avant le code.
+**Role:** Implement a task while staying within scope and planning execution before writing code.
 
-**Quand l'utiliser :** Pour chaque task spec, ou directement depuis un PRD minimal single-task ou tout input avec un Execution Contract suffisant.
+**When to use:** For each task spec, or directly from a minimal single-task PRD or any input with a sufficient Execution Contract.
 
-**Inputs possibles :** PRD minimal, task spec, `tech-design.md`, ADRs, contexte repo, instructions projet.
+**Possible inputs:** Minimal PRD, task spec, `tech-design.md`, ADRs, repository context, project instructions.
 
-**Actions :**
+**Actions:**
 
-- démarre depuis un contexte propre et les artefacts strictement utiles
-- vérifie le scope, l'Execution Contract et l'état du worktree sans modifier les changements non liés
-- prépare un plan d'implémentation proportionné (Plan mode / Read only)
-- confirme les changements d'interface publique et les comportements prioritaires à tester si la tâche est non triviale
-- identifie le seam de test avant de coder quand `implement-tdd` est utilisé
-- implémente le plan en restant dans le scope
-- utilise red-green-refactor si `implement-tdd` est choisi
-- debug si nécessaire
-- exécute les vérifications nécessaires : tests, typecheck, lint, build ou commandes spécifiques
-- si un check échoue, corrige ou documente le blocage avant d'élargir le scope
-- vérifie la conformité à l'Execution Contract
+- start from a clean context and only the strictly useful artifacts
+- verify the scope, Execution Contract, and worktree state without modifying unrelated changes
+- prepare a proportionate implementation plan (Plan mode / Read only)
+- confirm public interface changes and priority behaviors to test when the task is non-trivial
+- identify the test seam before coding when `implement-tdd` is used
+- implement the plan while staying in scope
+- use red-green-refactor when `implement-tdd` is selected
+- debug when needed
+- run required verification: tests, typecheck, lint, build, or specific commands
+- if a check fails, fix it or document the blocker before expanding scope
+- verify compliance with the Execution Contract
 
-**Output :** code implémenté + compte rendu en session.
+**Output:** implemented code + session report.
 
-**Publication du compte rendu :** Aucun fichier d'artefact n'est créé par défaut. Si une sub-issue, issue tracker ou PR active existe, proposer d'y publier le compte rendu final avec changements, checks exécutés et blocages. En mode Markdown local, garder le compte rendu en session sauf si l'utilisateur demande explicitement de l'ajouter à la task spec.
+**Report publication:** No artifact file is created by default. If an active sub-issue, tracker issue, or PR exists, propose publishing the final report there with changes, checks run, and blockers. In local Markdown mode, keep the report in session unless the user explicitly asks to add it to the task spec.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Build Preflight :
+Build Preflight:
 
-- approche retenue
-- zones ou fichiers probables si utile
-- tests et checks prévus
-- risques ou clarifications nécessaires pour une tâche `HITL`
+- selected approach
+- likely areas or files when useful
+- planned tests and checks
+- risks or clarifications needed for a `HITL` task
 
-Compte rendu final :
+Final report:
 
-- changements effectués
-- tests et checks exécutés
-- résultat des vérifications
-- statut final
-- ambiguïtés ou blocages restants
+- changes made
+- tests and checks run
+- verification result
+- final status
+- remaining ambiguities or blockers
 
-À éviter :
+Avoid:
 
-- journal détaillé de toutes les micro-actions
-- inventaire exhaustif de fichiers sans valeur de review
-- élargissement du scope pour corriger des problèmes voisins
+- detailed log of every micro-action
+- exhaustive file inventory without review value
+- scope expansion to fix adjacent issues
 
-**Tailles possibles :** plan très court pour tâche évidente, plan détaillé pour tâche sensible ou HITL.
+**Possible sizes:** very short plan for an obvious task, detailed plan for a sensitive or HITL task.
 
-**Plan d'implémentation :** toujours présent mais adapté au scope et à la tâche. Il peut nécessiter une validation humaine (HITL) ou être auto-approuvé (AFK).
+**Implementation plan:** always present but adapted to the scope and task. It may require human validation (HITL) or be self-approved (AFK).
 
-Une tâche `AFK` peut être auto-approuvée seulement si dépendances, checks et critères de succès sont explicites. Une tâche bloquée ou ambiguë reste `HITL` jusqu'à résolution.
+An `AFK` task may be self-approved only if dependencies, checks, and success criteria are explicit. A blocked or ambiguous task remains `HITL` until resolved.
 
-**Choix du skill :** `implement` pour intégration, UI, glue code, configuration. `implement-tdd` pour bug fix, logique métier, comportement sensible ou fort risque de régression.
+**Skill choice:** `implement` for integration, UI, glue code, and configuration. `implement-tdd` for bug fixes, business logic, sensitive behavior, or high regression risk.
 
-**Gate humain :** validation du plan d'implémentation pour tâche `HITL`. Auto-approbation possible pour tâche `AFK` claire.
+**Human gate:** validate the implementation plan for a `HITL` task. Self-approval is allowed for a clear `AFK` task.
 
-**Important :** Si l'Execution Contract est insuffisant, revenir vers `PRD`, `Tech Design`, `Slice`, `Grill Me` ou `Grill With Docs`.
+**Important:** If the Execution Contract is insufficient, route back to `PRD`, `Tech Design`, `Slice`, `Grill Me`, or `Grill With Docs`.
 
 #### TDD red-green-refactor
 
-`implement-tdd` applique une boucle comportement par comportement :
+`implement-tdd` applies a behavior-by-behavior loop:
 
-1. écrire un test échouant qui exprime le comportement attendu
-2. confirmer que le test échoue pour la bonne raison
-3. implémenter le minimum pour passer au vert
-4. refactorer seulement après un état vert
-5. relancer les feedback loops utiles
+1. write a failing test that expresses the expected behavior
+2. confirm the test fails for the right reason
+3. implement the minimum needed to make it green
+4. refactor only after reaching a green state
+5. rerun useful feedback loops
 
-Ne pas écrire tous les tests puis toute l'implémentation. Ce serait une slice horizontale. La bonne boucle est verticale : un test, un comportement, une implémentation minimale, puis le comportement suivant.
+Do not write all tests and then the full implementation. That is a horizontal slice. The correct loop is vertical: one test, one behavior, minimal implementation, then the next behavior.
 
-Les tests doivent vérifier le comportement via des interfaces publiques, idéalement en style intégration avec de vrais chemins de code. Éviter les tests couplés aux détails internes, les mocks excessifs, les tests de méthodes privées et les tests écrits après coup pour confirmer l'implémentation.
+Tests should verify behavior through public interfaces, ideally in an integration style with real code paths. Avoid tests coupled to internals, excessive mocks, private-method tests, and after-the-fact tests that only confirm the implementation.
 
-Mocks : uniquement aux frontières système quand c'est utile : API externes, temps, hasard, filesystem ou base de données si aucun substitut local pratique n'existe. Ne pas mocker les modules internes que l'on contrôle. Préférer un test DB, un adapter in-memory ou un local substitute quand cela donne un signal plus réaliste.
+Mocks: only at system boundaries when useful: external APIs, time, randomness, filesystem, or database if no practical local substitute exists. Do not mock internal modules you control. Prefer a DB test, in-memory adapter, or local substitute when it gives a more realistic signal.
 
-Préférer des interfaces spécifiques pour les opérations externes plutôt qu'un fetcher générique difficile à tester.
+Prefer specific interfaces for external operations over a generic fetcher that is hard to test.

@@ -1,56 +1,56 @@
 # Brainstorm
 
-**Skill :** `brainstorm`
+**Skill:** `brainstorm`
 
-**Statut :** On-demand step.
+**Status:** On-demand step.
 
-**Rôle :** Ouvrir largement l'espace d'idées, générer des options, structurer les pistes sans converger.
+**Role:** Open the idea space broadly, generate options, and structure directions without converging.
 
-**Quand l'utiliser :** Idée floue, nouveau produit, nouvelle direction, feature majeure, exploration produit/technique, manque d'options.
+**When to use:** Unclear idea, new product, new direction, major feature, product/technical exploration, lack of options.
 
-**Inputs possibles :** Objectif du brainstorming, contexte, intuition, notes, transcript vocal, idées existantes, directions à explorer, données, code ou doc projet.
+**Possible inputs:** Brainstorming goal, context, intuition, notes, voice transcript, existing ideas, directions to explore, data, code, or project documentation.
 
-**Actions :**
+**Actions:**
 
-- créé un fichier `brainstorming.md` local dans le dossier `.initiatives/<NNN-initiative-name>/`
-- définit l'objectif du brainstorming et le contexte
-- pose des questions ouvertes sans relâche pour stimuler la réflexion et générer des pistes
-- explore problèmes, opportunités, personas, solutions, proposition de valeur, cas d'usage, fonctionnalités, hypothèses, contraintes, risques
-- clusterise les idées au fil du brainstorming pour éviter le vrac
-- continue jusqu'à demande d'arrêt explicite ou fin de timebox
+- create a local `brainstorming.md` file in `.initiatives/<NNN-initiative-name>/`
+- define the brainstorming goal and context
+- ask open-ended questions persistently to stimulate thinking and generate directions
+- explore problems, opportunities, personas, solutions, value proposition, use cases, capabilities, assumptions, constraints, and risks
+- cluster ideas during brainstorming to avoid a flat dump
+- continue until an explicit stop request or the end of the timebox
 
-**Output :** synthèse de brainstorming en session, `brainstorming.md` local optionnel, ou commentaire tracker seulement si un support actif existe déjà.
+**Output:** brainstorming summary in session, optional local `brainstorming.md`, or tracker comment only if an active artifact location already exists.
 
-**Publication de l'artefact :** Par défaut, garder le brainstorming en session/chat ou dans `.initiatives/<initiative>/brainstorming.md` gitignored. Ne pas créer d'issue parente GitHub pour du brainstorming divergent sauf demande explicite ; si une issue parente existe déjà, proposer un commentaire de synthèse sans transcript brut.
+**Artifact publication:** By default, keep brainstorming in the session/chat or in gitignored `.initiatives/<initiative>/brainstorming.md`. Do not create a parent GitHub issue for divergent brainstorming unless explicitly requested; if a parent issue already exists, propose a summary comment without raw transcript.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Contenu obligatoire :
+Required content:
 
-- contexte / objectif du brainstorming
-- synthèse par thèmes
-- pistes prometteuses à filtrer ensuite
-- questions ouvertes
+- brainstorming context / goal
+- summary by themes
+- promising directions to filter later
+- open questions
 
-Contenu conditionnel :
+Conditional content:
 
-- problèmes et opportunités
-- utilisateurs/personas possibles
-- propositions de valeur
-- solutions et variantes
-- cas d'usage
-- fonctionnalités candidates
-- hypothèses
-- contraintes et risques
+- problems and opportunities
+- possible users/personas
+- value propositions
+- solutions and variants
+- use cases
+- candidate capabilities
+- assumptions
+- constraints and risks
 
-À éviter :
+Avoid:
 
-- transcript complet de la session
-- décision produit prématurée
-- liste brute de toutes les idées sans regroupement
+- full session transcript
+- premature product decision
+- raw list of all ideas without grouping
 
-**Tailles possibles :** micro-brainstorm ciblé, ou brainstorm complet 30 à 120 minutes.
+**Possible sizes:** targeted micro-brainstorm, or full 30 to 120 minute brainstorm.
 
-**Gate humain :** choisir les pistes à filtrer dans `Brief`, `PRD`, `Tech Design` ou une décision explicite.
+**Human gate:** choose directions to filter in `Brief`, `PRD`, `Tech Design`, or an explicit decision.
 
-**Important :** `Brainstorm` diverge volontairement. Il ne tranche pas.
+**Important:** `Brainstorm` intentionally diverges. It does not decide.

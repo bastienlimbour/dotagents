@@ -1,52 +1,52 @@
 # Prototype UI
 
-**Skill :** `prototype-ui`
+**Skill:** `prototype-ui`
 
-**Statut :** On-demand step.
+**Status:** On-demand step.
 
-**Rôle :** Explorer rapidement plusieurs directions frontend jetables avant d'intégrer proprement une UI dans le produit.
+**Role:** Quickly explore several disposable frontend directions before integrating UI cleanly into the product.
 
-**Quand l'utiliser :** UX incertaine, écran important, besoin de comparer plusieurs directions visuelles, risque d'AI slop frontend, feature produit où le ressenti utilisateur compte.
+**When to use:** Uncertain UX, important screen, need to compare several visual directions, frontend AI-slop risk, product feature where user feel matters.
 
-**Inputs possibles :** brief, PRD, captures, design system, composants existants, contraintes responsive, parcours utilisateur, inspirations visuelles.
+**Possible inputs:** brief, PRD, screenshots, design system, existing components, responsive constraints, user journey, visual references.
 
-**Actions :**
+**Actions:**
 
-- définit ce qu'on cherche à apprendre avant de prototyper
-- crée une zone temporaire isolée, route de prototype ou sandbox locale
-- produit plusieurs variantes cliquables si utile
-- utilise des données réalistes ou fixtures légères
-- évite toute intégration prématurée dans l'architecture produit
-- documente ce qui fonctionne, ce qui ne fonctionne pas, et les éléments à réutiliser
-- marque clairement les fichiers comme temporaires ou prépare leur suppression
+- define what needs to be learned before prototyping
+- create an isolated temporary area, prototype route, or local sandbox
+- produce multiple clickable variants when useful
+- use realistic data or lightweight fixtures
+- avoid premature integration into product architecture
+- document what works, what does not, and which elements to reuse
+- clearly mark files as temporary or prepare their deletion
 
-**Output :** prototypes jetables, synthèse des options, recommandation UX, éléments à réinjecter dans `PRD`, `Tech Design`, `Build` ou support actif.
+**Output:** disposable prototypes, options summary, UX recommendation, elements to reinject into `PRD`, `Tech Design`, `Build`, or an active artifact location.
 
-**Publication de l'artefact :** Les prototypes restent locaux et jetables par défaut. Si une issue parente existe, proposer un commentaire de synthèse avec l'option retenue et les éléments à réinjecter ; ne pas publier le prototype brut comme source de vérité produit.
+**Artifact publication:** Prototypes stay local and disposable by default. If a parent issue exists, propose a summary comment with the selected option and elements to reinject; do not publish the raw prototype as product source of truth.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Contenu obligatoire :
+Required content:
 
-- variantes créées
-- option recommandée et raison
-- compromis UX
-- recommandation d'intégration propre
-- fichiers temporaires à supprimer ou conserver brièvement
+- variants created
+- recommended option and rationale
+- UX trade-offs
+- clean integration recommendation
+- temporary files to delete or keep briefly
 
-Contenu conditionnel :
+Conditional content:
 
-- composants ou patterns réutilisables
-- points responsive et accessibilité à surveiller
+- reusable components or patterns
+- responsive and accessibility points to watch
 
-À éviter :
+Avoid:
 
-- transformation implicite du prototype en code produit
-- plan produit complet
-- description exhaustive de chaque détail visuel
+- implicit promotion of prototype code to product code
+- complete product plan
+- exhaustive description of every visual detail
 
-**Tailles possibles :** micro-prototype d'un composant, ou exploration de plusieurs écrans dans une route isolée.
+**Possible sizes:** micro-prototype of one component, or multi-screen exploration in an isolated route.
 
-**Gate humain :** choisir la direction visuelle et valider ce qui mérite d'être intégré proprement.
+**Human gate:** choose the visual direction and validate what is worth integrating cleanly.
 
-**Important :** Un prototype UI est jetable. Il ne doit pas devenir du code produit par accident.
+**Important:** A UI prototype is disposable. It must not accidentally become product code.

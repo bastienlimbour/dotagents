@@ -1,62 +1,62 @@
 # Diagnose
 
-**Skill :** `diagnose`
+**Skill:** `diagnose`
 
-**Statut :** On-demand step.
+**Status:** On-demand step.
 
-**Rôle :** Diagnostiquer un bug complexe ou une régression avec une boucle disciplinée avant de corriger.
+**Role:** Diagnose a complex bug or regression with a disciplined loop before fixing it.
 
-**Quand l'utiliser :** Bug non trivial, régression difficile, performance dégradée, erreur intermittente, cause racine inconnue, échec de test incompris.
+**When to use:** Non-trivial bug, hard regression, degraded performance, intermittent error, unknown root cause, unexplained test failure.
 
-**Inputs possibles :** rapport de bug, logs, stack traces, diff récent, tests échouants, contexte utilisateur, environnement, étapes de reproduction.
+**Possible inputs:** bug report, logs, stack traces, recent diff, failing tests, user context, environment, reproduction steps.
 
-**Actions :**
+**Actions:**
 
-- note environnement, commande de reproduction et fiabilité du repro
-- construit d'abord un feedback loop fiable : failing test, script HTTP, commande CLI, script navigateur, trace rejouée, harness jetable, fuzz/property loop, bisect ou boucle HITL structurée
-- améliore la boucle : plus rapide, plus déterministe, signal plus précis
-- reproduit le problème utilisateur ou documente pourquoi il ne peut pas être reproduit
-- minimise le cas d'échec sans perdre le symptôme réel
-- formule 3 à 5 hypothèses classées, falsifiables, avec prédiction observable
-- instrumente si nécessaire en changeant une seule variable à la fois
-- limite les logs aux extraits utiles pour falsifier une hypothèse
-- tague toute instrumentation temporaire avec un préfixe unique pour nettoyage
-- identifie la cause racine avant de corriger
-- applique le fix minimal
-- ajoute ou adapte un test de régression au bon seam si ce seam existe
-- relance les feedback loops utiles
-- nettoie logs temporaires, harness jetables et prototypes de debug avant de déclarer terminé
+- record environment, reproduction command, and reproduction reliability
+- first build a reliable feedback loop: failing test, HTTP script, CLI command, browser script, replayed trace, disposable harness, fuzz/property loop, bisect, or structured HITL loop
+- improve the loop: faster, more deterministic, more precise signal
+- reproduce the user issue or document why it cannot be reproduced
+- minimize the failing case without losing the real symptom
+- formulate 3 to 5 ranked, falsifiable hypotheses with observable predictions
+- instrument when needed, changing one variable at a time
+- keep logs limited to excerpts useful for falsifying a hypothesis
+- tag any temporary instrumentation with a unique prefix for cleanup
+- identify the root cause before fixing
+- apply the minimal fix
+- add or adapt a regression test at the right seam if that seam exists
+- rerun useful feedback loops
+- clean temporary logs, disposable harnesses, and debug prototypes before declaring completion
 
-**Output :** cause racine, correction, test de régression, commandes de vérification, risques restants.
+**Output:** root cause, fix, regression test, verification commands, remaining risks.
 
-**Publication de l'artefact :** Si un bug issue, sub-issue ou tracker actif existe, proposer d'y publier cause racine, fix, test de régression et vérifications. Sans support actif, garder la synthèse en session ; ne proposer une nouvelle issue que si le diagnostic révèle un suivi nécessaire. Les logs, harness et instrumentations temporaires restent locaux et doivent être nettoyés.
+**Artifact publication:** If an active bug issue, sub-issue, or tracker item exists, propose publishing root cause, fix, regression test, and verification there. Without an active artifact location, keep the summary in session; propose a new issue only if diagnosis reveals follow-up work. Logs, harnesses, and temporary instrumentation stay local and must be cleaned up.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Contenu obligatoire :
+Required content:
 
-- symptôme observé
-- environnement et reproduction minimale, ou raison de non-reproduction
-- feedback loop construit, commande ou limitation de reproduction
-- hypothèses testées
-- cause racine
-- fix appliqué
-- test de régression, ou absence de seam correct documentée
-- vérifications exécutées
-- risques ou follow-ups
+- observed symptom
+- environment and minimal reproduction, or reason for non-reproduction
+- feedback loop built, command, or reproduction limitation
+- hypotheses tested
+- root cause
+- fix applied
+- regression test, or documented absence of the right seam
+- verifications run
+- risks or follow-ups
 
-À éviter :
+Avoid:
 
-- logs longs non annotés
-- correction sans cause racine isolée
-- empilement de plusieurs fixes non falsifiés
+- long unannotated logs
+- fix without isolated root cause
+- stacking multiple unfalsified fixes
 
-**Tailles possibles :** diagnostic court pour bug isolé, ou investigation complète pour régression complexe.
+**Possible sizes:** short diagnosis for an isolated bug, or full investigation for a complex regression.
 
-**Gate humain :** valider l'impact du bug, le niveau de risque du fix et les éventuels follow-ups.
+**Human gate:** validate bug impact, fix risk level, and possible follow-ups.
 
-**Important :** `Diagnose` évite les corrections au hasard. Ne pas empiler plusieurs fixes sans avoir isolé la cause.
+**Important:** `Diagnose` avoids random fixes. Do not stack multiple fixes before isolating the cause.
 
-Si aucun feedback loop crédible ne peut être construit, s'arrêter explicitement, lister ce qui a été tenté et demander l'accès à l'environnement, un artefact capturé ou l'autorisation d'ajouter une instrumentation temporaire. Ne pas passer à l'hypothèse pure sans boucle.
+If no credible feedback loop can be built, stop explicitly, list what was tried, and ask for environment access, a captured artifact, or permission to add temporary instrumentation. Do not switch to pure hypothesis without a loop.
 
-Pour une régression de performance, mesurer d'abord : baseline, profiler, query plan ou harness de timing. Corriger seulement après mesure.
+For a performance regression, measure first: baseline, profiler, query plan, or timing harness. Fix only after measuring.

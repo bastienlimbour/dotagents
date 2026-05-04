@@ -1,84 +1,84 @@
 # 004 - Tech Design
 
-**Skill :** `tech-design`
+**Skill:** `tech-design`
 
-**Statut :** Core si impact technique non trivial.
+**Status:** Core step when technical impact is non-trivial.
 
-**Rôle :** Source de vérité technique. Le Tech Design définit comment construire le produit et formalise les décisions structurantes.
+**Role:** Technical source of truth. Tech Design defines how to build the product and formalizes structural decisions.
 
-**Quand l'utiliser :** Impact technique non trivial : architecture, data model, intégration, migration, sécurité, performance, scalabilité, observabilité, refactor structurel, choix de stack ou librairie durable.
+**When to use:** Non-trivial technical impact: architecture, data model, integration, migration, security, performance, scalability, observability, structural refactor, durable stack or library choice.
 
-**Inputs possibles :** `prd.md`, synthèse `grill-me` ou `grill-with-docs`, contexte repo, architecture existante, docs techniques existantes, ADRs, conventions, services externes, contraintes stack, exigences non fonctionnelles.
+**Possible inputs:** `prd.md`, `grill-me` or `grill-with-docs` summary, repository context, existing architecture, existing technical docs, ADRs, conventions, external services, stack constraints, non-functional requirements.
 
-**Actions :**
+**Actions:**
 
-- choisit le niveau de Tech Design utile : lite ou complet
-- explore le repo et les patterns existants
-- lit `CONTEXT.md`, `CONTEXT-MAP.md` et décisions pertinentes si disponibles
-- vérifie la doc officielle quand une décision dépend d'un framework ou d'une lib
-- documente l'état existant pertinent, les contraintes et les exigences techniques
-- propose architecture, modules et patterns
-- identifie les deep modules possibles : interface simple, comportement encapsulé, frontière de test claire
-- applique le deletion test aux modules suspects : si supprimer le module fait disparaître la complexité, il était probablement shallow ; si la complexité réapparaît chez les callers, il apporte de la locality
-- explicite les seams et adapters seulement quand ils correspondent à une vraie variation
-- sépare décisions techniques et plan d'implémentation immédiat
-- arbitre stack, librairies, services, data model, interfaces/API, migrations et stratégie de tests
-- identifie impacts sur l'existant, risques, rollback et dette éventuelle
-- compare alternatives et formalise compromis
-- crée ou référence des ADR si nécessaire
+- choose the useful Tech Design depth: lite or full
+- explore the repository and existing patterns
+- read `CONTEXT.md`, `CONTEXT-MAP.md`, and relevant decisions when available
+- verify official documentation when a decision depends on a framework or library
+- document relevant current state, constraints, and technical requirements
+- propose architecture, modules, and patterns
+- identify possible deep modules: simple interface, encapsulated behavior, clear test boundary
+- apply the deletion test to suspicious modules: if deleting the module removes the complexity, it was probably shallow; if complexity reappears in callers, it provides locality
+- make seams and adapters explicit only when they map to real variation
+- separate technical decisions from the immediate implementation plan
+- decide stack, libraries, services, data model, interfaces/API, migrations, and test strategy
+- identify impact on existing behavior, risks, rollback, and possible debt
+- compare alternatives and formalize trade-offs
+- create or reference ADRs when needed
 
-**Output :** résumé Tech Design dans l'issue parente par défaut, commentaire détaillé si nécessaire, ou `tech-design.md` local si le mode Markdown local est choisi, avec ADRs si nécessaire.
+**Output:** Tech Design summary in the parent issue by default, detailed comment when needed, or local `tech-design.md` when local Markdown mode is selected, with ADRs if needed.
 
-**Publication de l'artefact :** Si une issue parente existe, proposer de consolider un Tech Design Lite dans son body. Pour un Tech Design non trivial, proposer un commentaire détaillé lié depuis le body canonique. En mode Markdown local, proposer `.initiatives/<initiative>/tech-design.md`. Les décisions durables doivent être proposées en ADR ou doc projet, pas seulement dans un commentaire.
+**Artifact publication:** If a parent issue exists, propose consolidating a Tech Design Lite section into its body. For non-trivial Tech Design, propose a detailed comment linked from the canonical body. In local Markdown mode, propose `.initiatives/<initiative>/tech-design.md`. Durable decisions should be proposed as ADRs or project documentation, not only as comments.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Contenu obligatoire :
+Required content:
 
-- contexte technique et état existant pertinent
-- contraintes et exigences non fonctionnelles
-- approche ou architecture cible
-- décisions techniques clés
-- modules touchés ou créés
-- stratégie de testing technique
-- risques techniques
-- questions ouvertes
+- technical context and relevant current state
+- constraints and non-functional requirements
+- approach or target architecture
+- key technical decisions
+- modules touched or created
+- technical testing strategy
+- technical risks
+- open questions
 
-Contenu conditionnel :
+Conditional content:
 
-- interfaces stables, seams et adapters si pertinents
-- frontières de test et test surface
-- opportunités de deepening, leverage et locality
-- intégrations et services externes
+- stable interfaces, seams, and adapters when relevant
+- test boundaries and test surface
+- opportunities for depth, leverage, and locality
+- integrations and external services
 - data model
 - interfaces/API
-- migrations et compatibilité
-- sécurité
-- performance et scalabilité
-- accessibilité si impact technique
-- observabilité, monitoring, logs
-- plan de rollback si pertinent
-- alternatives étudiées
-- compromis retenus
-- ADRs à créer ou mettre à jour
+- migrations and compatibility
+- security
+- performance and scalability
+- accessibility if technically impacted
+- observability, monitoring, logs
+- rollback plan when relevant
+- alternatives considered
+- accepted trade-offs
+- ADRs to create or update
 
-À éviter :
+Avoid:
 
-- réécriture du PRD
-- plan de code fichier par fichier
-- inventaire exhaustif du repo
-- sections sécurité, performance ou observabilité sans impact réel
+- rewriting the PRD
+- file-by-file code plan
+- exhaustive repository inventory
+- security, performance, or observability sections without real impact
 
-**Tailles possibles :** Tech Design Lite pour changement limité, Tech Design complet pour architecture, migration ou initiative structurante.
+**Possible sizes:** Tech Design Lite for a limited change, full Tech Design for architecture, migration, or structural initiative.
 
-**Gate humain :** valider les arbitrages techniques, frontières de modules et interfaces structurantes avant `Slice` ou `Build`.
+**Human gate:** validate technical trade-offs, module boundaries, and structural interfaces before `Slice` or `Build`.
 
-**Important :** Par défaut, Tech Design vient après PRD. Si la faisabilité technique est l'incertitude principale, faire un spike léger avant PRD, puis le Tech Design complet après PRD.
+**Important:** By default, Tech Design comes after PRD. If technical feasibility is the main uncertainty, run a lightweight spike before PRD, then complete Tech Design after PRD.
 
-Un ADR n'est utile que si la décision est difficile à renverser, surprenante sans contexte, et issue d'un vrai compromis.
+An ADR is useful only when the decision is hard to reverse, surprising without context, and based on a real trade-off.
 
-Vocabulaire recommandé : `module`, `interface`, `implementation`, `seam`, `adapter`, `depth`, `leverage`, `locality`. Ici, une interface n'est pas seulement une signature de type : c'est tout ce qu'un caller doit savoir pour utiliser correctement le module.
+Recommended vocabulary: `module`, `interface`, `implementation`, `seam`, `adapter`, `depth`, `leverage`, `locality`. Here, an interface is not only a type signature: it is everything a caller must know to use the module correctly.
 
-La depth est une propriété de l'interface : beaucoup de comportement utile pour peu de surface à apprendre. L'interface est aussi la surface de test ; si un test doit passer derrière l'interface, la forme du module est probablement mauvaise.
+Depth is an interface property: a lot of useful behavior behind little surface area to learn. The interface is also the test surface; if a test must bypass the interface, the module shape is probably wrong.
 
-La locality concentre changements, bugs et connaissances à un endroit au lieu de les disperser chez les callers. Un seam ou adapter unique indique souvent une abstraction hypothétique ; deux variantes réelles justifient mieux le seam.
+Locality keeps changes, bugs, and knowledge in one place instead of scattering them across callers. A single seam or adapter often indicates a hypothetical abstraction; two real variants justify the seam better.

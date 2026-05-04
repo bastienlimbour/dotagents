@@ -1,57 +1,57 @@
 # 001 - Brief
 
-**Skill :** `brief`
+**Skill:** `brief`
 
-**Statut :** Core optionnel.
+**Status:** Optional core step.
 
-**Rôle :** Transformer une ou plusieurs idées en direction produit claire. Le brief est une note d'opportunité légère avant d'investir dans un PRD.
+**Role:** Turn one or more ideas into a clear product direction. The brief is a lightweight opportunity note before investing in a PRD.
 
-**Quand l'utiliser :** Après brainstorming, nouveau produit, grosse feature, idée encore floue, besoin de cadrer l'opportunité. À sauter pour une feature claire et limitée.
+**When to use:** After brainstorming, for a new product, a large feature, an unclear idea, or when the opportunity needs framing. Skip it for a clear, bounded feature.
 
-**Inputs possibles :** Idée brute, notes, transcript, `brainstorming.md`, signaux utilisateurs, contexte business ou produit.
+**Possible inputs:** Raw idea, notes, transcript, `brainstorming.md`, user signals, business or product context.
 
-**Actions :**
+**Actions:**
 
-- choisit le niveau de brief utile : léger ou complet
-- sélectionne et fait converger les idées/pistes prometteuses
-- clarifie problème, cible, proposition de valeur
-- décrit la solution envisagée dans les grandes lignes, sans détails techniques
-- cadre le scope pressenti : MVP, V1, Later, Excluded
-- explicite hypothèses, risques, contraintes, non-goals et questions ouvertes
-- recommande le prochain gate : `Grill Me`, `Grill With Docs`, `Validate` ou `PRD`
+- choose the useful brief depth: lightweight or full
+- select and converge promising ideas or directions
+- clarify the problem, target users, and value proposition
+- describe the proposed solution at a high level, without technical details
+- frame the expected scope: MVP, V1, Later, Excluded
+- make assumptions, risks, constraints, non-goals, and open questions explicit
+- recommend the next gate: `Grill Me`, `Grill With Docs`, `Validate`, or `PRD`
 
-**Output :** synthèse en session, `brief.md` local optionnel, ou intégration dans le PRD à venir.
+**Output:** session summary, optional local `brief.md`, or integration into the upcoming PRD.
 
-**Publication de l'artefact :** Par défaut, garder le brief en session/chat ou dans `.initiatives/<initiative>/brief.md` gitignored. Ne pas créer l'issue parente GitHub au brief ; l'issue parente est créée au moment du PRD, sauf demande explicite de l'utilisateur.
+**Artifact publication:** By default, keep the brief in the session/chat or in gitignored `.initiatives/<initiative>/brief.md`. Do not create the parent GitHub issue at the brief stage; create it at the PRD stage unless the user explicitly asks otherwise.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Contenu obligatoire :
+Required content:
 
-- problème
-- cible / utilisateurs
-- proposition de valeur
-- direction de solution
-- scope pressenti
+- problem
+- target users
+- value proposition
+- solution direction
+- expected scope
 - non-goals
-- hypothèses, risques ou questions ouvertes qui changent la suite
+- assumptions, risks, or open questions that affect the next step
 
-Contenu conditionnel :
+Conditional content:
 
-- cas d'usage principaux
-- fonctionnalités importantes
-- scope framing `MVP / V1 / Later / Excluded`
-- contraintes
-- prochain gate recommandé
+- main use cases
+- important capabilities
+- scope framing: `MVP / V1 / Later / Excluded`
+- constraints
+- recommended next gate
 
-À éviter :
+Avoid:
 
-- détails techniques
-- liste exhaustive d'idées non retenues
-- duplication brute du brainstorming
+- technical details
+- exhaustive list of rejected ideas
+- raw duplication of brainstorming notes
 
-**Tailles possibles :** brief léger, ou brief complet pour nouveau produit / grosse initiative.
+**Possible sizes:** lightweight brief, or full brief for a new product / large initiative.
 
-**Gate humain :** confirmer la direction et le scope initial avant `Grill Me`, `Grill With Docs`, `Validate` ou `PRD`.
+**Human gate:** confirm direction and initial scope before `Grill Me`, `Grill With Docs`, `Validate`, or `PRD`.
 
-**Important :** Le brief converge vers une direction produit claire, mais ne remplace pas le PRD, la validation externe ou le Tech Design.
+**Important:** The brief converges toward a clear product direction, but does not replace the PRD, external validation, or Tech Design.

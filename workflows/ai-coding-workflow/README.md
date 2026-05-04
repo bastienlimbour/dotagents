@@ -1,38 +1,38 @@
-# Workflow AI pour le développement de projets logiciels
+# AI Workflow for Software Project Development
 
-Workflow AI coding léger, modulaire et humain-au-centre. Il couvre le cadrage, le découpage, l'implémentation, la review et la validation d'un projet logiciel, sans chercher à automatiser tout le cycle. Il s'appuie sur des agent skills spécialisés et une mémoire de travail flexible.
+Lightweight, modular, human-centered AI coding workflow. It covers framing, slicing, implementation, review, and validation for a software project without trying to automate the entire lifecycle. It relies on specialized agent skills and flexible working memory.
 
 > [!NOTE]
-> Ce workflow n'est pas prévu pour faire du Vibe Coding. Vous devez maîtriser les fondamentaux du développement logiciel et l'architecture de vos projets pour l'utiliser efficacement.
+> This workflow is not designed for Vibe Coding. You must understand software development fundamentals and your projects' architecture to use it effectively.
 
 ---
 
-## Glossaire
+## Glossary
 
-- **Skill (ou Agent skill) :** ressource réutilisable, basée sur le système de fichiers, qui fournit à des agents IA des connaissances spécifiques à un domaine : workflows, contexte, best practices, capacités. Voir [agentskills.io](https://agentskills.io/) pour plus de détails.
-- **Initiative :** unité de travail suivie dans le workflow : ajouter une feature, refactor un module, corriger un bug, développer un MVP, reprendre un projet abandonné, planifier une livraison sensible, etc.
-- **Step :** étape du workflow avec un rôle, des inputs, des outputs et parfois un gate humain. Chaque step est liée à un ou plusieurs skills.
-- **Artefact :** document, issue ou commentaire temporaire utile pendant l'initiative, comme PRD, Tech Design, task specs, QA ou prototype.
-- **AFK / HITL :** `AFK` (away from keyboard) désigne une tâche claire, testable et non bloquée ; `HITL` (human in the loop) désigne une tâche qui nécessite un jugement humain.
-- **Gate humain :** point de décision où l'humain valide, arbitre ou bloque la suite.
-- **Feedback loop :** signal fiable qui prouve l'état du changement : test, typecheck, lint, build, CI, repro de bug, dev server ou vérification navigateur.
-
----
-
-## Principes du workflow
-
-- **Cadrer avant de coder :** formaliser juste assez selon le scope et le niveau d'incertitude.
-- **Séparer produit, technique et exécution :** `prd.md`, `tech-design.md` et `tasks/*.md` n'ont pas le même rôle.
-- **Construire par vertical slices vérifiables :** chaque tâche doit produire un signal utile de bout en bout.
-- **Garder l'humain sur le jugement :** produit, UX, architecture, sécurité sensible, review, QA et validation finale restent `HITL` quand l'enjeu est réel.
-- **S'appuyer sur des feedback loops fiables :** tests, typecheck, lint, build, CI ou repro déterminent le plafond de qualité atteignable.
-- **Capitaliser seulement ce qui dure :** les artefacts temporaires ne doivent pas devenir une fausse source de vérité.
+- **Skill (or Agent skill):** reusable filesystem-based resource that provides AI agents with capabilities and expertise : instructions, workflows, domain-specific knowledge, best practices. See [agentskills.io](https://agentskills.io/) for details.
+- **Initiative:** unit of work tracked in the workflow, e.g. add a feature, refactor a module, fix a bug, build an MVP, resume an abandoned project, plan a sensitive delivery, etc.
+- **Step:** workflow stage with a role, inputs, outputs, and sometimes a human gate. Each step is linked to one or more skills.
+- **Artifact:** temporary document, issue, or comment useful during an initiative, such as PRD, Tech Design, task specs, QA, or prototype.
+- **AFK / HITL:** `AFK` (away from keyboard) means a clear, testable, unblocked task; `HITL` (human in the loop) means a task that requires human judgment.
+- **Human gate:** decision point where the human validates, arbitrates, or blocks the next step.
+- **Feedback loop:** reliable signal that proves the state of a change: test, typecheck, lint, build, CI, bug reproduction, dev server, or browser verification.
 
 ---
 
-## Vue d'ensemble
+## Workflow Principles
 
-Le workflow est intention-driven : on utilise les steps selon le besoin, pas mécaniquement. Le flux nominal ressemble à ceci :
+- **Frame before coding:** formalize just enough based on scope and uncertainty.
+- **Separate product, technical, and execution concerns:** `prd.md`, `tech-design.md`, and `tasks/*.md` have different roles.
+- **Build verifiable vertical slices:** every task must produce a useful end-to-end signal.
+- **Keep humans on judgment:** product, UX, architecture, sensitive security, review, QA, and final validation remain `HITL` when stakes are real.
+- **Rely on reliable feedback loops:** tests, typecheck, lint, build, CI, or reproduction define the achievable quality ceiling.
+- **Capitalize only what lasts:** temporary artifacts must not become a false source of truth.
+
+---
+
+## Overview
+
+The workflow is intention-driven: use steps as needed, not mechanically. The nominal flow looks like this:
 
 ```text
 Discovery : [brainstorm] -> [brief] -> [grill-me | grill-with-docs] -> [validate]
@@ -41,196 +41,196 @@ Technical : [tech-design]
 Execution : [slice] -> build/tdd -> review -> qa -> capitalize
 ```
 
-Les crochets indiquent des steps optionnelles ou contextuelles. Le détail opérationnel de chaque step vit dans `steps/` ; ce README sert surtout à comprendre le workflow, choisir un chemin et savoir où placer l'information.
+Brackets indicate optional or contextual steps. Operational details for each step live in `steps/`; this README explains the workflow, how to choose a path, and where information belongs.
 
-Les core workflow steps progressent du cadrage vers l'exécution. Les on-demand steps sont contextuelles : ouvrir des options, réduire une ambiguïté, comprendre une zone de code, diagnostiquer un bug, prototyper une UI ou vérifier une livraison.
-
----
-
-## Choisir son chemin
-
-### Exploration et cadrage
-
-- **Exploration d'idées :** `Brainstorm -> Brief -> [Grill Me] -> [Validate]`.
-- **Gros projet ou MVP from scratch :** `[Brainstorm] -> Brief -> [Grill Me] -> [Validate] -> PRD -> Tech Design -> Slice -> per-task(Build -> Review -> [QA]) -> [Capitalize]`.
-- **UI incertaine :** `[Prototype UI] -> Brief ou PRD -> Build propre -> [Review] -> [QA]`.
-
-### Feature et build
-
-- **Grosse feature sur projet existant :** `[Brief] -> [Grill Me ou Grill With Docs] -> PRD -> [Tech Design] -> Slice -> per-task(Build -> Review -> [QA]) -> [Capitalize]`.
-- **Feature moyenne multi-tâches :** `[Grill Me ou Grill With Docs] -> PRD -> [Tech Design Lite] -> Slice -> per-task(Build -> Review) -> [QA] -> [Capitalize]`.
-- **Petite feature :** `PRD minimal -> [Grill Me si ambigu] -> Build -> [Review] -> [QA]`.
-- **Fix ou hotfix simple :** `Build -> [Review] -> [QA]`.
-
-### Investigation, refactor et reprise
-
-- **Bug complexe :** `Diagnose -> Build ou TDD -> Review -> [QA]`.
-- **Zone de code inconnue :** `Zoom Out`.
-- **Refactoring structurel :** `Zoom Out -> Improve Codebase Architecture -> [Grill With Docs] -> Tech Design -> Slice -> per-task(Build -> Review) -> [QA] -> Capitalize`.
-- **Projet legacy ou abandonné :** `Project Baseline -> [PRD] ou [Tech Design]`.
-- **Livraison importante :** `... -> Review -> [QA] -> Ship Readiness`.
+Core workflow steps progress from framing to execution. On-demand steps are contextual: open options, reduce ambiguity, understand a code area, diagnose a bug, prototype a UI, or verify a release.
 
 ---
 
-## Liste des steps
+## Choose a Path
 
-Les définitions détaillées vivent dans `steps/`. Voici un résumé des steps et leurs rôles :
+### Exploration and Framing
 
-### Core workflow
+- **Idea exploration:** `Brainstorm -> Brief -> [Grill Me] -> [Validate]`.
+- **Large project or MVP from scratch:** `[Brainstorm] -> Brief -> [Grill Me] -> [Validate] -> PRD -> Tech Design -> Slice -> per-task(Build -> Review -> [QA]) -> [Capitalize]`.
+- **Uncertain UI:** `[Prototype UI] -> Brief or PRD -> Clean Build -> [Review] -> [QA]`.
 
-- **[Brief](steps/001-brief.md)** - `brief` - optionnel. Transforme une idée en direction produit claire. Artefact : `brief.md` ou équivalent tracker.
-- **[Validate](steps/002-validate.md)** - `validate` - optionnel. Réduit l'incertitude externe avant d'investir davantage. Artefact : `validation.md` ou équivalent tracker.
-- **[PRD](steps/003-prd.md)** - `prd` - requis sauf changement trivial. Fixe le comportement produit attendu. Artefact : `prd.md` ou équivalent tracker.
-- **[Tech Design](steps/004-tech-design.md)** - `tech-design` - requis si impact technique non trivial. Formalise architecture, interfaces et compromis. Artefact : `tech-design.md` et ADRs si nécessaire.
-- **[Slice](steps/005-slice.md)** - `slice` - requis si initiative multi-tâches. Découpe en tasks verticales, vérifiables et ordonnées par dépendances. Artefact : `tasks/*.md` ou équivalent tracker.
-- **[Build](steps/006-build.md)** - `implement` ou `implement-tdd` - requis. Implémente une tâche depuis un Execution Contract suffisant. Artefact : code + compte rendu en session.
-- **[Review](steps/007-review.md)** - `review` - recommandé. Revue de code à froid centrée sur bugs, risques et écarts au contrat. Artefact : feedback en session ou commentaire de review.
-- **[QA](steps/008-qa.md)** - `qa` - à la demande. Produit un plan de test manuel et peut consigner les résultats observés. Artefact : checklist ou `qa.md` optionnel.
-- **[Capitalize](steps/009-capitalize.md)** - `capitalize` - si décision durable ou doc à maintenir. Met à jour la doc durable et nettoie les artefacts temporaires. Artefact : docs, ADRs, follow-ups ou note de non-capitalisation.
+### Feature and Build
 
-### On-demand steps
+- **Large feature on an existing project:** `[Brief] -> [Grill Me or Grill With Docs] -> PRD -> [Tech Design] -> Slice -> per-task(Build -> Review -> [QA]) -> [Capitalize]`.
+- **Medium multi-task feature:** `[Grill Me or Grill With Docs] -> PRD -> [Tech Design Lite] -> Slice -> per-task(Build -> Review) -> [QA] -> [Capitalize]`.
+- **Small feature:** `Minimal PRD -> [Grill Me if ambiguous] -> Build -> [Review] -> [QA]`.
+- **Simple fix or hotfix:** `Build -> [Review] -> [QA]`.
 
-- **[Brainstorm](steps/brainstorm.md)** - `brainstorm`. Ouvre l'espace des options sans converger trop tôt. Artefact : `brainstorming.md` optionnel.
-- **[Grill Me](steps/grill-me.md)** - `grill-me`. Interview décisionnelle une question à la fois. Artefact : decision log court ou intégration dans l'étape suivante.
-- **[Grill With Docs](steps/grill-with-docs.md)** - `grill-with-docs`. Aligne l'intention avec langage domaine, docs, ADRs et code existant. Artefact : décisions clarifiées, vocabulaire durable ou ADRs si nécessaire.
-- **[Prototype UI](steps/prototype-ui.md)** - `prototype-ui`. Explore des directions frontend jetables avant intégration propre. Artefact : prototypes isolés + synthèse.
-- **[Diagnose](steps/diagnose.md)** - `diagnose`. Isole la cause racine d'un bug complexe avant correction. Artefact : cause racine, fix, test de régression et vérifications.
-- **[Zoom Out](steps/zoom-out.md)** - `zoom-out`. Cartographie une zone de code inconnue avant modification. Artefact : carte synthétique modules, callers, seams et risques.
-- **[Improve Codebase Architecture](steps/improve-codebase-architecture.md)** - `improve-codebase-architecture`. Identifie des opportunités de deepening et de refactor structurant. Artefact : candidats de refactor priorisés.
-- **[Project Baseline](steps/project-baseline.md)** - `project-baseline`. Établit la baseline d'un projet existant. Artefact : docs projet mises à jour.
-- **[Ship Readiness](steps/ship-readiness.md)** - `ship-readiness`. Gate optionnel avant livraison sensible. Artefact : checklist ou verdict `Go / No-Go`.
+### Investigation, Refactor, and Takeover
+
+- **Complex bug:** `Diagnose -> Build or TDD -> Review -> [QA]`.
+- **Unknown code area:** `Zoom Out`.
+- **Structural refactor:** `Zoom Out -> Improve Codebase Architecture -> [Grill With Docs] -> Tech Design -> Slice -> per-task(Build -> Review) -> [QA] -> Capitalize`.
+- **Legacy or abandoned project:** `Project Baseline -> [PRD] or [Tech Design]`.
+- **Important release:** `... -> Review -> [QA] -> Ship Readiness`.
 
 ---
 
-## Mémoire du workflow
+## Step List
 
-### Documentation durable
+Detailed definitions live in `steps/`. Summary of steps and roles:
 
-La documentation durable est la mémoire du projet à long terme. Elle est versionnée dans le repository.
+### Core Workflow
 
-Exemples :
+- **[Brief](steps/001-brief.md)** - `brief` - optional. Turns an idea into a clear product direction. Artifact: `brief.md` or tracker equivalent.
+- **[Validate](steps/002-validate.md)** - `validate` - optional. Reduces external uncertainty before further investment. Artifact: `validation.md` or tracker equivalent.
+- **[PRD](steps/003-prd.md)** - `prd` - required except for trivial changes. Defines expected product behavior. Artifact: `prd.md` or tracker equivalent.
+- **[Tech Design](steps/004-tech-design.md)** - `tech-design` - required when technical impact is non-trivial. Formalizes architecture, interfaces, and trade-offs. Artifact: `tech-design.md` and ADRs when needed.
+- **[Slice](steps/005-slice.md)** - `slice` - required for multi-task initiatives. Splits work into vertical, verifiable tasks ordered by dependencies. Artifact: `tasks/*.md` or tracker equivalent.
+- **[Build](steps/006-build.md)** - `implement` or `implement-tdd` - required. Implements a task from a sufficient Execution Contract. Artifact: code + session report.
+- **[Review](steps/007-review.md)** - `review` - recommended. Cold code review focused on bugs, risks, and contract deviations. Artifact: session feedback or review comment.
+- **[QA](steps/008-qa.md)** - `qa` - on demand. Produces a manual test plan and may record observed results. Artifact: optional checklist or `qa.md`.
+- **[Capitalize](steps/009-capitalize.md)** - `capitalize` - when there is a durable decision or maintained documentation. Updates durable docs and cleans temporary artifacts. Artifact: docs, ADRs, follow-ups, or non-capitalization note.
 
-- `docs/*` : documentation projet, architecture, conventions, testing strategy, etc.
-- `docs/decisions/*` : décisions durables (ADRs) dont le contexte est utile à long terme.
-- `CONTEXT.md` (optionnel) : vocabulaire domaine durable et termes partagés.
-- `CONTEXT-MAP.md` (optionnel) : carte des bounded contexts si le projet en a plusieurs.
-- `AGENTS.md` (optionnel) : règles et instructions pour les agents IA.
-- `README.md` (optionnel) : porte d'entrée et guide de référence du projet (utilité, installation, mode d'emploi pour les utilisateurs, les contributeurs et les agents IA).
+### On-Demand Steps
 
-Ne pas créer un fichier durable avant d'avoir une information réelle à y stocker.
+- **[Brainstorm](steps/brainstorm.md)** - `brainstorm`. Opens the option space without converging too early. Artifact: optional `brainstorming.md`.
+- **[Grill Me](steps/grill-me.md)** - `grill-me`. Decision interview, one question at a time. Artifact: short decision log or integration into the next step.
+- **[Grill With Docs](steps/grill-with-docs.md)** - `grill-with-docs`. Aligns intent with domain language, docs, ADRs, and existing code. Artifact: clarified decisions, durable vocabulary, or ADRs when needed.
+- **[Prototype UI](steps/prototype-ui.md)** - `prototype-ui`. Explores disposable frontend directions before clean integration. Artifact: isolated prototypes + summary.
+- **[Diagnose](steps/diagnose.md)** - `diagnose`. Isolates the root cause of a complex bug before fixing. Artifact: root cause, fix, regression test, and verification.
+- **[Zoom Out](steps/zoom-out.md)** - `zoom-out`. Maps an unknown code area before modification. Artifact: concise map of modules, callers, seams, and risks.
+- **[Improve Codebase Architecture](steps/improve-codebase-architecture.md)** - `improve-codebase-architecture`. Identifies deepening and structural refactor opportunities. Artifact: prioritized refactor candidates.
+- **[Project Baseline](steps/project-baseline.md)** - `project-baseline`. Establishes the baseline of an existing project. Artifact: updated project docs.
+- **[Ship Readiness](steps/ship-readiness.md)** - `ship-readiness`. Optional gate before a sensitive release. Artifact: checklist or `Go / No-Go` verdict.
 
-### Artefacts
+---
 
-Les artefacts sont des supports temporaires liés à une initiative, générés par l'agent IA durant le workflow.
+## Workflow Memory
 
-Exemples : brainstorming, brief, validation, PRD, Tech Design, task specs, QA, prototypes.
+### Durable Documentation
 
-La stratégie par défaut est **GitHub Issues + sub-issues**, ou un tracker équivalent capable de représenter une initiative parente, des tâches enfants et des liens. Markdown local reste tout à fait acceptable, surtout en solo ou local-first, si le cycle de vie est respecté.
+Durable documentation is the project's long-term memory. It is versioned in the repository.
 
-Avant PRD, les artefacts très exploratoires comme brainstorming, brief ou notes de validation peuvent rester en local ou dans le chat. À partir du PRD, le support principal doit être explicite : issue parente, tracker équivalent ou dossier Markdown local.
+Examples:
 
-#### Support principal des artefacts
+- `docs/*`: project documentation, architecture, conventions, testing strategy, etc.
+- `docs/decisions/*`: durable decisions (ADRs) whose context is useful long term.
+- `CONTEXT.md` (optional): durable domain vocabulary and shared terms.
+- `CONTEXT-MAP.md` (optional): bounded context map if the project has several.
+- `AGENTS.md` (optional): rules and instructions for AI agents.
+- `README.md` (optional): project entry point and reference guide (purpose, installation, usage for users, contributors, and AI agents).
 
-Une initiative doit avoir un support actif principal. Les supports secondaires peuvent pointer, commenter ou automatiser, mais ne doivent pas dupliquer le contenu principal.
+Do not create a durable file before there is real information to store in it.
 
-Recommandation pratique :
+### Artifacts
 
-- par défaut : GitHub Issues ou tracker équivalent
-- travail collaboratif ou multi-agent : GitHub Issues ou tracker équivalent
-- travail solo ou local-first : Markdown local gitignored dans `.initiatives/<initiative>/`
+Artifacts are temporary initiative-specific working materials generated by the AI agent during the workflow.
 
-Si le support est externe au repo, l'agent doit y accéder via CLI officielle ou serveur MCP.
+Examples: brainstorming, brief, validation, PRD, Tech Design, task specs, QA, prototypes.
 
-#### Mode GitHub Issues
+The default strategy is **GitHub Issues + sub-issues**, or an equivalent tracker that can represent a parent initiative, child tasks, and links. Local Markdown remains fully acceptable, especially solo or local-first, if the lifecycle is respected.
 
-Créer l'issue parente au moment du PRD. Le brainstorming, le brief et les notes de validation restent locaux ou dans le chat tant qu'ils ne sont pas consolidés. Seuls les éléments utiles à l'exécution ou à la décision sont intégrés dans l'issue parente.
+Before PRD, highly exploratory artifacts such as brainstorming, brief, or validation notes can stay local or in chat. Starting at PRD, the primary artifact location must be explicit: parent issue, equivalent tracker item, or local Markdown folder.
 
-Issue parente :
+#### Primary Artifact Support
 
-- source de vérité active de l'initiative
-- créée quand le PRD est prêt à devenir support de travail
-- body canonique maintenu à jour
-- liens vers sub-issues, commentaires importants, docs durables et ADRs
+An initiative must have one active primary artifact location. Secondary locations may point, comment, or automate, but must not duplicate the primary content.
 
-Body canonique recommandé :
+Practical recommendation:
 
-- contexte court issu du brief ou de la validation, sans transcript brut
-- PRD courant : scope, behavior, edge cases, acceptance criteria, non-goals
-- Tech Design summary si impact technique non trivial
-- liens vers commentaire Tech Design détaillé si nécessaire
-- liens vers sub-issues de vertical slices
-- statut, questions ouvertes bloquantes et décisions acceptées
+- default: GitHub Issues or equivalent tracker
+- collaborative or multi-agent work: GitHub Issues or equivalent tracker
+- solo or local-first work: gitignored local Markdown in `.initiatives/<initiative>/`
 
-Commentaires recommandés :
+If the location is external to the repo, the agent must access it through the official CLI or an MCP server.
 
-- decision log et arbitrages datés
-- validation summary si elle justifie `Go / No-Go / Pivot`
-- Tech Design détaillé quand il serait trop long pour le body
-- QA plan ou rapport QA
-- changement de scope ou clarification importante
+#### GitHub Issues Mode
 
-Règle de consolidation : un commentaire peut garder l'historique, mais il ne doit pas devenir une source de vérité concurrente. Si une décision en commentaire change la vérité courante, la consolider dans le body, une sub-issue, une doc durable ou un ADR.
+Create the parent issue at PRD time. Brainstorming, brief, and validation notes stay local or in chat until consolidated. Only elements useful for execution or decision-making are integrated into the parent issue.
 
-Sub-issues :
+Parent issue:
 
-- une sub-issue par vertical slice
-- chaque sub-issue contient son propre Execution Contract
-- chaque sub-issue pointe vers l'issue parente
-- ne pas recopier tout le PRD ou tout le Tech Design dans chaque sub-issue
-- fermer ou mettre à jour les sub-issues quand le scope parent change
+- active source of truth for the initiative
+- created when the PRD is ready to become the working location
+- canonical body kept up to date
+- links to sub-issues, important comments, durable docs, and ADRs
 
-Mapping recommandé :
+Recommended canonical body:
 
-- brainstorming : local/chat, jamais copié brut
-- brief : local/chat, résumé utile intégré au PRD
-- validation : local/chat ou commentaire si elle justifie une décision
-- PRD : body de l'issue parente
-- Tech Design lite : section courte dans le body
-- Tech Design non trivial : résumé dans le body + commentaire détaillé lié depuis le body
-- tasks : sub-issues, une par vertical slice
-- QA : commentaire sur l'issue parente ou sur la sub-issue concernée
-- capitalization : docs durables, ADRs, cleanup local et fermeture de l'initiative
+- short context from the brief or validation, without raw transcript
+- current PRD: scope, behavior, edge cases, acceptance criteria, non-goals
+- Tech Design summary if technical impact is non-trivial
+- links to detailed Tech Design comment when needed
+- links to vertical slice sub-issues
+- status, blocking open questions, and accepted decisions
 
-#### Mode Markdown local
+Recommended comments:
 
-Markdown local est acceptable si le support principal n'est pas un tracker. Le chemin recommandé est `.initiatives/<initiative>/`, gitignored par défaut.
+- dated decision log and trade-offs
+- validation summary if it justifies `Go / No-Go / Pivot`
+- detailed Tech Design when too long for the body
+- QA plan or QA report
+- scope change or important clarification
 
-Les artefacts locaux ne sont pas versionnés par défaut. Les décisions ou informations utiles à long terme sont consolidées dans la documentation durable.
+Consolidation rule: a comment may preserve history, but must not become a competing source of truth. If a decision in a comment changes current truth, consolidate it into the body, a sub-issue, durable docs, or an ADR.
 
-#### Cycle de vie des artefacts
+Sub-issues:
 
-À la clôture d'une initiative, les artefacts associés doivent être supprimés, archivés, fermés ou consolidés dans une documentation durable. Un vieux PRD ne doit pas redevenir source de vérité implicite pour un agent.
+- one sub-issue per vertical slice
+- each sub-issue contains its own Execution Contract
+- each sub-issue links to the parent issue
+- do not copy the full PRD or full Tech Design into each sub-issue
+- close or update sub-issues when parent scope changes
 
-Règles d'évolution :
+Recommended mapping:
 
-- si contraintes, scope ou tâches changent sans pivot majeur : modifier l'initiative active.
-- si le travail devient indépendant, s'il y a pivot majeur, ou si l'initiative précédente est historique : ouvrir une nouvelle initiative.
-- ne pas réécrire l'histoire d'une initiative terminée
-- ne pas modifier rétroactivement une task spec déjà implémentée pour masquer une erreur
-- si un comportement livré doit changer, créer une nouvelle tâche ou initiative
-- si une implémentation invalide des tâches futures, mettre à jour PRD, Tech Design et task specs à venir immédiatement
+- brainstorming: local/chat, never copied raw
+- brief: local/chat, useful summary integrated into the PRD
+- validation: local/chat or comment if it justifies a decision
+- PRD: parent issue body
+- Tech Design lite: short section in the body
+- non-trivial Tech Design: summary in the body + detailed comment linked from the body
+- tasks: sub-issues, one per vertical slice
+- QA: comment on the parent issue or relevant sub-issue
+- capitalization: durable docs, ADRs, local cleanup, and initiative closure
 
-#### Structure Markdown recommandée
+#### Local Markdown Mode
 
-Si le support principal est le Markdown local, cette structure sépare la documentation durable et les artefacts temporaires groupés par initiative. Le dossier `.initiatives/` est gitignored par défaut.
+Local Markdown is acceptable when the primary artifact location is not a tracker. The recommended path is `.initiatives/<initiative>/`, gitignored by default.
+
+Local artifacts are not versioned by default. Decisions or information useful long term are consolidated into durable documentation.
+
+#### Artifact Lifecycle
+
+When an initiative closes, associated artifacts must be deleted, archived, closed, or consolidated into durable documentation. An old PRD must not become an implicit source of truth for an agent.
+
+Evolution rules:
+
+- if constraints, scope, or tasks change without a major pivot: update the active initiative
+- if the work becomes independent, there is a major pivot, or the previous initiative is historical: open a new initiative
+- do not rewrite the history of a completed initiative
+- do not retroactively edit an already implemented task spec to hide an error
+- if shipped behavior must change, create a new task or initiative
+- if an implementation invalidates future tasks, immediately update the PRD, Tech Design, and upcoming task specs
+
+#### Recommended Markdown Structure
+
+If the primary artifact location is local Markdown, this structure separates durable documentation from temporary artifacts grouped by initiative. The `.initiatives/` directory is gitignored by default.
 
 ```text
 /
 ├─ README.md
 ├─ AGENTS.md
-├─ CONTEXT.md                    (glossaire domaine durable, optionnel)
-├─ CONTEXT-MAP.md                (si plusieurs bounded contexts, optionnel)
-├─ .agents/                      (configuration agent optionnelle)
+├─ CONTEXT.md                    (durable domain glossary, optional)
+├─ CONTEXT-MAP.md                (if several bounded contexts, optional)
+├─ .agents/                      (optional agent configuration)
 │  ├─ issue-tracker.md
 │  └─ domain.md
-├─ .initiatives/                 (gitignored par défaut)
+├─ .initiatives/                 (gitignored by default)
 │  ├─ 001-<initiative>/
-│  │  ├─ brainstorming.md     (optionnel)
-│  │  ├─ brief.md             (optionnel)
-│  │  ├─ validation.md        (optionnel)
+│  │  ├─ brainstorming.md     (optional)
+│  │  ├─ brief.md             (optional)
+│  │  ├─ validation.md        (optional)
 │  │  ├─ prd.md
-│  │  ├─ tech-design.md       (optionnel)
-│  │  ├─ qa.md                (optionnel)
+│  │  ├─ tech-design.md       (optional)
+│  │  ├─ qa.md                (optional)
 │  │  └─ tasks/
 │  │     ├─ 001-<task>.md
 │  │     └─ ...
@@ -241,47 +241,47 @@ Si le support principal est le Markdown local, cette structure sépare la docume
 │  ├─ conventions.md
 │  ├─ testing-strategy.md
 │  └─ decisions/
-│     └─ 001-*.md                (ADRs / décisions durables)
+│     └─ 001-*.md                (ADRs / durable decisions)
 └─ apps/, packages/, scripts/, ...
 ```
 
-Règles de nommage :
+Naming rules:
 
-- un dossier par initiative, en kebab-case, préfixé par `001-`, `002-`, etc.
-- `tasks/` n'existe que si l'initiative a plusieurs tâches
-- un fichier par tâche, en kebab-case, préfixé par `001-`, `002-`, etc.
+- one folder per initiative, in kebab-case, prefixed with `001-`, `002-`, etc.
+- `tasks/` exists only if the initiative has multiple tasks
+- one file per task, in kebab-case, prefixed with `001-`, `002-`, etc.
 
-#### Initiative Index (optionnel)
+#### Initiative Index (Optional)
 
-Un index est utile mais optionnel. Si les artefacts vivent en Markdown local, l'emplacement recommandé est `.initiatives/index.md`. Pour une vue durable ou collaborative, préférer GitHub Projects, Linear, Jira ou `docs/product/initiatives.md`. Sur un petit projet, l'index peut ne pas exister.
+An index is useful but optional. If artifacts live in local Markdown, the recommended location is `.initiatives/index.md`. For a durable or collaborative view, prefer GitHub Projects, Linear, Jira, or `docs/product/initiatives.md`. On a small project, the index may not exist.
 
-Son rôle :
+Its role:
 
-- lister les initiatives
-- indiquer leur statut
-- pointer vers PRD, tâches ou tickets
+- list initiatives
+- indicate their status
+- point to PRDs, tasks, or tickets
 
-Exemple minimal :
+Minimal example:
 
 ```text
-En cours
-- 003-team-collaboration - PRD validé, 2/5 tâches terminées
+In progress
+- 003-team-collaboration - PRD validated, 2/5 tasks done
 
-À venir
-- 004-gamification - brainstorming uniquement
+Upcoming
+- 004-gamification - brainstorming only
 
-Terminées
+Completed
 - 001-mvp
 - 002-dark-mode
 ```
 
 #### Execution Contract
 
-L'Execution Contract n'est pas un nouveau document : c'est le contenu minimal qu'un agent doit avoir à sa disposition pour implémenter une tâche. Il peut vivre dans un prompt, un PRD, une task spec, une issue ou tout autre support.
+The Execution Contract is not a new document: it is the minimum content an agent must have available to implement a task. It can live in a prompt, PRD, task spec, issue, or any other medium.
 
-L'étape `Build` ne doit démarrer que si un `Execution Contract` suffisant est disponible.
+The `Build` step must start only when a sufficient `Execution Contract` is available.
 
-Contenu minimal :
+Minimum content:
 
 - scope
 - behavior
@@ -289,73 +289,73 @@ Contenu minimal :
 - edge cases
 - non-goals
 - verification
-- verification commands ou feedback commands si connues
-- dépendances `blocked-by` si applicable
-- type `AFK | HITL` si la tâche est destinée à un agent
-- touchpoints probables, sans plan d'implémentation détaillé
+- verification commands or feedback commands if known
+- `blocked-by` dependencies when applicable
+- `AFK | HITL` type if the task is intended for an agent
+- likely touchpoints, without a detailed implementation plan
 
-#### Format des outputs
+#### Output Format
 
-Les listes de contenu des outputs de chaque step ou skill ne sont pas des checklists exhaustives. Chaque skill doit produire le plus petit artefact utile pour la décision, l'exécution ou la validation.
+The output content lists for each step or skill are not exhaustive checklists. Each skill must produce the smallest useful artifact for the decision, execution, or validation.
 
-Règles :
+Rules:
 
-- choisir le niveau `lite / standard / full` avant de rédiger
-- inclure seulement les sections qui changent une décision, lèvent une ambiguïté ou servent directement l'exécution
-- distinguer contenu obligatoire, contenu conditionnel et contenu à éviter quand l'output peut grossir
-- omettre les sections sans signal réel
-- éviter transcript brut, logs longs, inventaire exhaustif de fichiers, copier-coller de l'étape précédente, etc.
-- finir par les décisions prises et les questions ouvertes bloquantes
+- choose the `lite / standard / full` level before writing
+- include only sections that change a decision, remove ambiguity, or directly support execution
+- distinguish required content, conditional content, and content to avoid when output can grow
+- omit sections without real signal
+- avoid raw transcripts, long logs, exhaustive file inventory, copy-paste from the previous step, etc.
+- finish with decisions made and blocking open questions
 
-### Configuration agent (optionnel)
+### Agent Configuration (Optional)
 
-Sur un projet multi-agent ou piloté par issues, une configuration peut être utile pour éviter les ambiguïtés. Elle est versionnée et vit généralement dans le repo dans un dossier `.agents/`.
+On a multi-agent or issue-driven project, configuration can help avoid ambiguity. It is versioned and usually lives in the repo under `.agents/`.
 
-Emplacements recommandés :
+Recommended locations:
 
-- `.agents/issue-tracker.md` : indique où lire et publier les PRDs, les task specs, etc.
-- `.agents/domain.md` : indique comment lire la documentation durable, `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/decisions/`, etc.
-- `AGENTS.md` ou `CLAUDE.md` : pointe vers les fichiers de configuration ci-dessus
+- `.agents/issue-tracker.md`: where to read and publish PRDs, task specs, etc.
+- `.agents/domain.md`: how to read durable documentation, `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/decisions/`, etc.
+- `AGENTS.md` or `CLAUDE.md`: points to the configuration files above
 
-Si ces docs n'existent pas, les skills ou agents consommateurs continuent silencieusement. Ils ne doivent pas proposer de les créer upfront. Seul un besoin réel de configuration durable justifie leur création.
-
----
-
-## Règles globales
-
-### Feedback loops et stop-the-line
-
-- Sans feedback fiable, l'agent code à l'aveugle.
-- Documenter les commandes réelles du projet dans `README.md`, `AGENTS.md`, `docs/testing-strategy.md` ou équivalent.
-- Feedback minimal utile : typecheck, tests automatisés, lint, formatage, build et CI rapide.
-- Feedback avancé : dev server accessible, vérification navigateur, tests e2e ciblés, migrations vérifiables, seeds reproductibles.
-- Si test, build, CI ou runtime casse, traiter le problème ou documenter le blocage avant d'élargir le scope.
-- Pour un bug, le feedback loop est le produit principal du diagnostic : sans signal pass/fail fiable, ne pas élargir les hypothèses.
-
-### Context engineering
-
-- Charger le contexte utile, pas tout le repo.
-- Garder artefacts, fichiers et patterns pertinents pour la tâche.
-- Utiliser `Zoom Out` avant de modifier une zone inconnue ou difficile à situer.
-- Préférer `/clear` plutôt que `/compact` entre grandes étapes ou avant review.
-- Utiliser PRD, tasks, issues, docs et tests comme mémoire externe plutôt que l'historique complet du chat.
-- Garder le system prompt et les instructions poussées aussi courts que possible.
-- Si `CONTEXT.md`, `CONTEXT-MAP.md` ou `docs/decisions/` n'existent pas, continuer silencieusement et ne les créer que lorsqu'une décision ou un terme réel est stabilisé.
-
-### Source-driven decisions
-
-- Vérifier la doc officielle quand une décision dépend d'un framework ou d'une lib.
-- Signaler tout conflit entre doc officielle et patterns du repo avant de trancher.
-- Utiliser le vocabulaire de `CONTEXT.md` dans les titres d'issues, PRDs, tests, hypothèses et plans.
-- Si un terme nécessaire manque ou contredit l'usage du code, c'est un signal pour `Grill With Docs`.
-- Signaler explicitement tout conflit avec une décision durable au lieu de l'écraser silencieusement.
+If these docs do not exist, consuming skills or agents continue silently. They must not propose creating them upfront. Only a real need for durable configuration justifies creating them.
 
 ---
 
-## Livraison
+## Global Rules
 
-Ce workflow couvre cadrage, découpage, implémentation, revue et validation. La partie commit, PR, CI, release et déploiement reste une responsabilité d'équipe ou de projet, avec `ship-readiness` comme gate optionnel avant livraison sensible.
+### Feedback Loops and Stop-the-Line
 
-## Crédits
+- Without reliable feedback, the agent codes blind.
+- Document real project commands in `README.md`, `AGENTS.md`, `docs/testing-strategy.md`, or equivalent.
+- Minimal useful feedback: typecheck, automated tests, lint, formatting, build, and fast CI.
+- Advanced feedback: accessible dev server, browser verification, targeted e2e tests, verifiable migrations, reproducible seeds.
+- If test, build, CI, or runtime breaks, handle the issue or document the blocker before expanding scope.
+- For a bug, the feedback loop is the main product of diagnosis: without a reliable pass/fail signal, do not expand hypotheses.
+
+### Context Engineering
+
+- Load useful context, not the whole repository.
+- Keep artifacts, files, and patterns relevant to the task.
+- Use `Zoom Out` before modifying an unknown or hard-to-locate area.
+- Prefer `/clear` over `/compact` between major steps or before review.
+- Use PRDs, tasks, issues, docs, and tests as external memory instead of the full chat history.
+- Keep the system prompt and pushed instructions as short as possible.
+- If `CONTEXT.md`, `CONTEXT-MAP.md`, or `docs/decisions/` do not exist, continue silently and create them only when a real decision or term is stabilized.
+
+### Source-Driven Decisions
+
+- Check official documentation when a decision depends on a framework or library.
+- Report any conflict between official docs and repository patterns before deciding.
+- Use `CONTEXT.md` vocabulary in issue titles, PRDs, tests, hypotheses, and plans.
+- If a required term is missing or contradicts code usage, it is a signal for `Grill With Docs`.
+- Explicitly report any conflict with a durable decision instead of silently overriding it.
+
+---
+
+## Delivery
+
+This workflow covers framing, slicing, implementation, review, and validation. Commit, PR, CI, release, and deployment remain team or project responsibilities, with `ship-readiness` as an optional gate before sensitive delivery.
+
+## Credits
 
 A huge thanks to [@mattpocock](https://github.com/mattpocock) for sharing his workflow and agent skills; it greatly inspired this one.

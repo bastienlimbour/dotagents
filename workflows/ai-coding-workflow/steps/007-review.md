@@ -1,56 +1,56 @@
 # 007 - Review
 
-**Skill :** `review`
+**Skill:** `review`
 
-**Statut :** Core recommandé.
+**Status:** Recommended core step.
 
-**Rôle :** Revue de code à froid, distincte de l'implémentation.
+**Role:** Cold code review, separate from implementation.
 
-**Quand l'utiliser :** Toute tâche non triviale, logique complexe, changement sensible, architecture, sécurité, performance, ou besoin de regard frais.
+**When to use:** Any non-trivial task, complex logic, sensitive change, architecture, security, performance, or need for a fresh review.
 
-**Inputs possibles :** diff, commits, PRD, task spec, Tech Design, tests, résultats de vérification.
+**Possible inputs:** diff, commits, PRD, task spec, Tech Design, tests, verification results.
 
-**Actions :**
+**Actions:**
 
-- démarre idéalement dans un contexte frais, et possiblement avec un LLM différent de celui qui a implémenté le code
-- pousse explicitement les standards projet utiles au reviewer
-- compare code, PRD/task spec, Tech Design et acceptance criteria
-- relit tests et vérifications
-- cherche divergences, oublis, bugs, régressions
-- vérifie les changements hors scope, secrets, config accidentelle et migrations oubliées
-- évalue correctness, readability, architecture, security, performance
-- vérifie que les tests couvrent le comportement réel et les edge cases importants
-- signale dead code et simplifications évidentes
-- signale explicitement les zones non revues ou le niveau de confiance si nécessaire
+- ideally start from a fresh context, possibly with a different LLM than the one that implemented the code
+- explicitly provide useful project standards to the reviewer
+- compare code, PRD/task spec, Tech Design, and acceptance criteria
+- review tests and verification
+- look for divergences, omissions, bugs, and regressions
+- check for out-of-scope changes, secrets, accidental config changes, and missed migrations
+- evaluate correctness, readability, architecture, security, and performance
+- verify that tests cover real behavior and important edge cases
+- flag dead code and obvious simplifications
+- explicitly report unreviewed areas or confidence level when needed
 
-**Output :** feedback en session, ou commentaire de review dans le tracker/PR.
+**Output:** session feedback, or review comment in the tracker/PR.
 
-**Publication de l'artefact :** Si une PR existe, proposer par défaut la review en commentaire de PR. Sinon, si une sub-issue ou issue tracker active existe, proposer un commentaire sur ce support. Sans support actif, garder la review en session ; ne pas créer de fichier local par défaut.
+**Artifact publication:** If a PR exists, propose publishing the review as a PR comment by default. Otherwise, if an active sub-issue or tracker issue exists, propose a comment there. Without an active artifact location, keep the review in session; do not create a local file by default.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Contenu obligatoire :
+Required content:
 
 - verdict
-- findings par sévérité, ou `No findings` explicite
-- références fichiers/lignes si possible
-- couverture de tests et vérification
+- findings by severity, or explicit `No findings`
+- file/line references when possible
+- test and verification coverage
 
-Contenu conditionnel :
+Conditional content:
 
-- écarts au PRD, task spec ou Tech Design
-- risques de régression
-- suggestions de correction
-- zones non revues ou niveau de confiance
+- deviations from PRD, task spec, or Tech Design
+- regression risks
+- fix suggestions
+- unreviewed areas or confidence level
 
-À éviter :
+Avoid:
 
-- résumé optimiste avant les findings
-- corrections de code avant d'avoir formulé les problèmes
-- remarques de style non actionnables
+- optimistic summary before findings
+- code fixes before stating the problems
+- non-actionable style comments
 
-**Tailles possibles :** review courte pour changement simple, review complète pour changement sensible.
+**Possible sizes:** short review for a simple change, full review for a sensitive change.
 
-**Gate humain :** accepter la tâche ou la renvoyer en correction.
+**Human gate:** accept the task or send it back for correction.
 
-**Important :** `Review` évalue le code. Ce n'est pas une checklist de validation fonctionnelle manuelle. Le reviewer liste d'abord les findings ; il ne modifie pas le code avant d'avoir formulé les problèmes.
+**Important:** `Review` evaluates code. It is not a manual functional validation checklist. The reviewer lists findings first; they do not modify code before stating the problems.

@@ -1,71 +1,71 @@
 # 005 - Slice
 
-**Skill :** `slice`
+**Skill:** `slice`
 
-**Statut :** Core si initiative multi-tâches.
+**Status:** Core step for multi-task initiatives.
 
-**Rôle :** Transformer `PRD + Tech Design optionnel + contexte repo` en tâches petites, verticales et vérifiables.
+**Role:** Turn `PRD + optional Tech Design + repository context` into small, vertical, verifiable tasks.
 
-**Quand l'utiliser :** Initiative multi-tâches. À sauter pour PRD minimal single-task avec Execution Contract suffisant.
+**When to use:** Multi-task initiative. Skip it for a minimal single-task PRD with a sufficient Execution Contract.
 
-**Inputs possibles :** `prd.md`, `tech-design.md`, ADRs, contexte repo, priorités produit, contraintes d'équipe.
+**Possible inputs:** `prd.md`, `tech-design.md`, ADRs, repository context, product priorities, team constraints.
 
-**Actions :**
+**Actions:**
 
-- découpe en vertical slices
-- construit chaque slice comme un incrément end-to-end vérifiable, même minimal
-- inclut les couches nécessaires à la slice : données, logique, API/routes, UI minimale et tests si pertinent
-- évite les tâches horizontales par couche technique (`DB -> API -> UI`)
-- ordonne selon dépendances réelles, comme un graphe plutôt qu'un plan linéaire
-- garde chaque tâche auto-suffisante côté comportement
-- rend chaque tâche independently grabbable par un agent
-- cherche un feedback de bout en bout tôt, même via une tracer bullet fine
-- évite de recopier le PRD ou le Tech Design dans chaque tâche
-- classe chaque tâche en `AFK` ou `HITL` quand cela aide l'exécution
-- associe tâches aux acceptance criteria correspondants
-- référence le PRD et le Tech Design par liens courts quand utile
-- présente le découpage à l'humain avant publication : granularité, dépendances, merge/split, classification `AFK | HITL`
-- si le support actif est GitHub Issues ou un tracker équivalent, propose une sub-issue par vertical slice dans l'ordre des dépendances
+- split the initiative into vertical slices
+- build each slice as a verifiable end-to-end increment, even if minimal
+- include the layers needed by the slice: data, logic, API/routes, minimal UI, and tests when relevant
+- avoid horizontal tasks by technical layer (`DB -> API -> UI`)
+- order tasks by real dependencies, as a graph rather than a linear plan
+- keep each task behaviorally self-contained
+- make each task independently grabbable by an agent
+- seek end-to-end feedback early, even through a narrow tracer bullet
+- avoid copying the PRD or Tech Design into every task
+- classify each task as `AFK` or `HITL` when it helps execution
+- map tasks to corresponding acceptance criteria
+- reference the PRD and Tech Design with short links when useful
+- present the slice breakdown to the human before publication: granularity, dependencies, merge/split decisions, `AFK | HITL` classification
+- if the active artifact location is GitHub Issues or an equivalent tracker, propose one sub-issue per vertical slice in dependency order
 
-**Output :** sub-issues par vertical slice par défaut, ou une task spec par tâche dans `tasks/` si le mode Markdown local est choisi.
+**Output:** sub-issues per vertical slice by default, or one task spec per task in `tasks/` when local Markdown mode is selected.
 
-**Publication de l'artefact :** Si une issue parente GitHub/tracker existe, proposer de créer une sub-issue par slice, chacune avec son Execution Contract et un lien vers l'issue parente. Si le support principal est Markdown local, proposer `.initiatives/<initiative>/tasks/*.md`. Après publication, proposer de mettre à jour le body canonique de l'issue parente avec les liens vers les sub-issues.
+**Artifact publication:** If a GitHub/tracker parent issue exists, propose creating one sub-issue per slice, each with its Execution Contract and a link to the parent issue. If the primary artifact location is local Markdown, propose `.initiatives/<initiative>/tasks/*.md`. After publication, propose updating the canonical parent issue body with links to the sub-issues.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Contenu obligatoire :
+Required content:
 
-- id et titre
-- contexte court
-- objectif
-- comportement end-to-end à construire
-- acceptance criteria testables
-- vérification attendue
+- id and title
+- short context
+- goal
+- end-to-end behavior to build
+- testable acceptance criteria
+- expected verification
 
-Contenu conditionnel :
+Conditional content:
 
-- parent si issu d'un PRD ou d'une issue parente
-- edge cases utiles
-- non-goals locaux si utile
-- références au PRD
-- références au Tech Design si utile
-- commandes de feedback attendues si connues
-- dépendances `blocked-by` si applicable
-- type `AFK | HITL` si utile
-- touchpoints probables, sans imposer un plan de code
+- parent when derived from a PRD or parent issue
+- useful edge cases
+- local non-goals when useful
+- PRD references
+- Tech Design references when useful
+- expected feedback commands when known
+- `blocked-by` dependencies when applicable
+- `AFK | HITL` type when useful
+- likely touchpoints, without imposing a code plan
 
-À éviter :
+Avoid:
 
-- copie du PRD ou du Tech Design
-- plan d'implémentation détaillé
-- tâches horizontales par couche technique
+- copying the PRD or Tech Design
+- detailed implementation plan
+- horizontal tasks by technical layer
 
-**Tailles possibles :** task spec minimale pour tâche simple, task spec détaillée pour tâche critique ou ambiguë.
+**Possible sizes:** minimal task spec for a simple task, detailed task spec for a critical or ambiguous task.
 
-**Gate humain :** valider granularité, verticalité, ordre, dépendances, vérifiabilité et classification `AFK | HITL`.
+**Human gate:** validate granularity, verticality, order, dependencies, verifiability, and `AFK | HITL` classification.
 
-**Important :** Une task spec n'est pas un plan d'implémentation détaillé. Fichiers précis, commandes et séquence de code restent dans le `Build Preflight`. Une tâche bloquée ne doit pas être prise en AFK.
+**Important:** A task spec is not a detailed implementation plan. Exact files, commands, and code sequence remain in the `Build Preflight`. A blocked task must not be taken as AFK.
 
-Préférer plusieurs petites slices reviewables à une grosse tâche qui ne devient testable qu'à la fin. Une slice fine qui traverse le système vaut mieux qu'un lot de tâches séparées par couche.
+Prefer several small reviewable slices over one large task that becomes testable only at the end. A narrow slice that crosses the system is better than a batch of layer-separated tasks.
 
-Ne pas fermer, réécrire ou modifier implicitement l'issue parente lors de la création des slices.
+Do not implicitly close, rewrite, or modify the parent issue when creating slices.

@@ -1,57 +1,57 @@
 # 009 - Capitalize
 
-**Skill :** `capitalize`
+**Skill:** `capitalize`
 
-**Statut :** Core si décision durable ou doc à maintenir.
+**Status:** Core step when there is a durable decision or documentation to maintain.
 
-**Rôle :** Aligner la doc projet et la doc IA/agents avec ce qui a vraiment été construit.
+**Role:** Align project documentation and AI/agent documentation with what was actually built.
 
-**Quand l'utiliser :** Après changement durable de convention, architecture, API, comportement documenté, ADR, artefact futur ou règle agent.
+**When to use:** After a durable change to convention, architecture, API, documented behavior, ADR, future artifact, or agent rule.
 
-**Inputs possibles :** code livré, diff, commits, PRD, task specs, Tech Design, ADRs, docs existantes.
+**Possible inputs:** shipped code, diff, commits, PRD, task specs, Tech Design, ADRs, existing docs.
 
-**Actions :**
+**Actions:**
 
-- met à jour docs obsolètes
-- vérifie que la doc durable ne duplique pas un artefact temporaire
-- crée ou ajuste ADRs
-- crée ou met à jour `CONTEXT.md` ou `CONTEXT-MAP.md` si le vocabulaire domaine durable change
-- met à jour `.agents/` si la configuration consommée par les agents change
-- met à jour doc IA/agents si une règle doit persister
-- réaligne PRD, Tech Design ou artefacts futurs invalidés
-- supprime, archive, ferme ou consolide les artefacts temporaires qui ne doivent plus guider les agents
-- ouvre follow-up de dette ou refactoring si nécessaire
+- update obsolete docs
+- verify that durable documentation does not duplicate a temporary artifact
+- create or adjust ADRs
+- create or update `CONTEXT.md` or `CONTEXT-MAP.md` if durable domain vocabulary changes
+- update `.agents/` if agent-consumed configuration changes
+- update AI/agent docs if a rule must persist
+- realign invalidated PRD, Tech Design, or future artifacts
+- delete, archive, close, or consolidate temporary artifacts that should no longer guide agents
+- open debt or refactor follow-ups when needed
 
-**Output :** docs mises à jour, ADRs, règles agent, follow-ups, ou note indiquant qu'aucune capitalisation n'est utile.
+**Output:** updated docs, ADRs, agent rules, follow-ups, or a note that no capitalization is useful.
 
-**Publication de l'artefact :** Consolider les informations durables dans le code, les tests, les docs projet, `CONTEXT.md`, `CONTEXT-MAP.md`, `.agents/` ou `docs/decisions/`. Si une issue parente, sub-issue ou tracker existe, proposer de mettre à jour le body/commentaire final, fermer les items terminés ou ouvrir les follow-ups. En mode Markdown local, proposer de supprimer ou archiver `.initiatives/<initiative>/` après consolidation ; demander confirmation avant toute suppression.
+**Artifact publication:** Consolidate durable information into code, tests, project docs, `CONTEXT.md`, `CONTEXT-MAP.md`, `.agents/`, or `docs/decisions/`. If a parent issue, sub-issue, or tracker exists, propose updating the body/final comment, closing completed items, or opening follow-ups. In local Markdown mode, propose deleting or archiving `.initiatives/<initiative>/` after consolidation; ask for confirmation before deleting anything.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Si rien n'est à capitaliser :
+If there is nothing to capitalize:
 
-- une phrase indiquant qu'aucune mise à jour durable n'est utile
+- one sentence stating that no durable update is useful
 
-Si une capitalisation est faite :
+If capitalization is done:
 
-- fichiers docs modifiés
-- ADRs créées ou ajustées
-- vocabulaire domaine créé ou mis à jour si applicable
-- règles agent modifiées
-- configuration `.agents/` modifiée si applicable
-- artefacts futurs réalignés
-- artefacts temporaires supprimés, archivés ou fermés
-- follow-ups ouverts
-- décisions devenues durables
+- documentation files modified
+- ADRs created or adjusted
+- domain vocabulary created or updated when applicable
+- agent rules modified
+- `.agents/` configuration modified when applicable
+- future artifacts realigned
+- temporary artifacts deleted, archived, or closed
+- follow-ups opened
+- decisions made durable
 
-À éviter :
+Avoid:
 
-- résumé complet de l'initiative
-- documentation de décisions temporaires
-- duplication du PRD, du Tech Design ou des task specs
+- full initiative summary
+- documenting temporary decisions
+- duplicating the PRD, Tech Design, or task specs
 
-**Tailles possibles :** note courte si rien à capitaliser, mise à jour complète si décision durable.
+**Possible sizes:** short note if nothing should be capitalized, full update for a durable decision.
 
-**Gate humain :** valider ce qui devient source de vérité durable.
+**Human gate:** validate what becomes the durable source of truth.
 
-**Important :** Capitalize ne documente pas pour le plaisir ; il maintient ce qui doit rester utile et vrai. Les artefacts temporaires ne doivent pas survivre par défaut et créer du doc rot.
+**Important:** Capitalize does not document for its own sake; it maintains what must stay useful and true. Temporary artifacts should not survive by default and create documentation rot.

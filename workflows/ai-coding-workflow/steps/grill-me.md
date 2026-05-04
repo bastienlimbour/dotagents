@@ -1,52 +1,52 @@
 # Grill Me
 
-**Skill :** `grill-me`
+**Skill:** `grill-me`
 
-**Statut :** On-demand step.
+**Status:** On-demand step.
 
-**Rôle :** Interviewer l'utilisateur, une question à la fois, jusqu'à compréhension partagée et résolution des branches importantes de l'arbre de décision.
+**Role:** Interview the user one question at a time until there is shared understanding and the important branches of the decision tree are resolved.
 
-**Quand l'utiliser :** Idée claire mais décisions implicites, plan/design à challenger, dépendances entre décisions, Execution Contract ambigu, demande explicite de "grill me".
+**When to use:** Clear idea with implicit decisions, plan/design to challenge, dependencies between decisions, ambiguous Execution Contract, explicit request to "grill me".
 
-**Inputs possibles :** brief, PRD, Tech Design, task spec, plan, intention, contexte repo.
+**Possible inputs:** brief, PRD, Tech Design, task spec, plan, intent, repository context.
 
-**Actions :**
+**Actions:**
 
-- identifie les questions bloquantes ou à fort levier
-- pose des questions une par une
-- propose une recommandation à chaque question, idéalement sous forme de choix quand c'est possible
-- explore le repo au lieu de demander si la réponse est trouvable
-- résout les dépendances dans le bon ordre
-- arrête quand les décisions importantes sont résolues, laissées ouvertes explicitement, ou quand le gain marginal devient faible
+- identify blocking or high-leverage questions
+- ask questions one at a time
+- provide a recommendation for each question, ideally as choices when possible
+- explore the repository instead of asking when the answer is discoverable
+- resolve dependencies in the right order
+- stop when important decisions are resolved, explicitly left open, or marginal value becomes low
 
-**Output :** synthèse en session, ou intégration dans `brief.md`, `prd.md`, `tech-design.md`, task specs ou support actif.
+**Output:** session summary, or integration into `brief.md`, `prd.md`, `tech-design.md`, task specs, or an active artifact location.
 
-**Publication de l'artefact :** Par défaut, garder le decision log en session et proposer son intégration dans l'artefact suivant. Si une issue parente ou une task issue existe déjà, proposer un commentaire court ou une mise à jour du body seulement pour les décisions qui changent la vérité courante.
+**Artifact publication:** By default, keep the decision log in session and propose integrating it into the next artifact. If a parent issue or task issue already exists, propose a short comment or body update only for decisions that change current truth.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Decision log court :
+Short decision log:
 
-- décisions clarifiées
-- recommandations retenues
-- questions résolues
-- branches laissées ouvertes
-- hypothèses à intégrer dans l'étape suivante
-- ambiguïtés restantes
+- clarified decisions
+- accepted recommendations
+- resolved questions
+- branches left open
+- assumptions to integrate into the next step
+- remaining ambiguities
 
-À éviter :
+Avoid:
 
-- transcript complet de l'interview
-- questions non bloquantes qui ralentissent l'étape suivante
-- demandes d'information trouvable dans le repo ou les docs
+- full interview transcript
+- non-blocking questions that slow the next step
+- requests for information discoverable in the repository or docs
 
-**Tailles possibles :** micro-interview sur une décision, ou interview complète sur une intention.
+**Possible sizes:** micro-interview on one decision, or full interview on one intent.
 
-**Gate humain :** répondre aux questions et valider les décisions retenues.
+**Human gate:** answer questions and validate accepted decisions.
 
-**Important :** Utiliser `Grill Me` en général une seule fois par intention, au point d'ambiguïté le plus utile :
+**Important:** Usually use `Grill Me` once per intent, at the most useful ambiguity point:
 
-- après `Brief` : clarifier la direction avant validation ou PRD
-- après `PRD` : challenger scope, comportements et acceptance criteria
-- après `Tech Design` : challenger les arbitrages techniques
-- avant `Build` : seulement si l'Execution Contract est ambigu
+- after `Brief`: clarify direction before validation or PRD
+- after `PRD`: challenge scope, behaviors, and acceptance criteria
+- after `Tech Design`: challenge technical trade-offs
+- before `Build`: only if the Execution Contract is ambiguous

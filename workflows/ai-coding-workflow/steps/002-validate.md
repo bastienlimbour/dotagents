@@ -1,55 +1,55 @@
 # 002 - Validate
 
-**Skill :** `validate`
+**Skill:** `validate`
 
-**Statut :** Core optionnel.
+**Status:** Optional core step.
 
-**Rôle :** Réduire l'incertitude externe avant d'investir dans un PRD complet, un Tech Design ou une implémentation coûteuse.
+**Role:** Reduce external uncertainty before investing in a full PRD, Tech Design, or costly implementation.
 
-**Quand l'utiliser :** Doute sur marché, concurrence, utilisateurs, dépendances externes, business model, faisabilité ou risque produit. À sauter si l'idée est sûre ou l'enjeu faible.
+**When to use:** Uncertainty about market, competition, users, external dependencies, business model, feasibility, or product risk. Skip it when the idea is safe or the stakes are low.
 
-**Inputs possibles :** `brief.md`, synthèse `grill-me` ou `grill-with-docs`, hypothèses à tester, questions ouvertes, contraintes business ou utilisateur.
+**Possible inputs:** `brief.md`, `grill-me` or `grill-with-docs` summary, assumptions to test, open questions, business or user constraints.
 
-**Actions :**
+**Actions:**
 
-- transforme les incertitudes en hypothèses testables et seuils de décision
-- timeboxe la recherche selon l'enjeu
-- recherches web approfondies et collecte de signaux externes
-- analyse concurrence, alternatives, marché, utilisateurs ou business model si pertinent
-- challenge les hypothèses du brief
-- identifie risques, dépendances externes et contraintes majeures
-- produit un verdict motivé `Go / No-Go / Pivot` avec niveau de confiance
+- turn uncertainties into testable assumptions and decision thresholds
+- timebox research based on the stakes
+- perform deep web research and collect external signals
+- analyze competition, alternatives, market, users, or business model when relevant
+- challenge assumptions from the brief
+- identify risks, external dependencies, and major constraints
+- produce a reasoned `Go / No-Go / Pivot` verdict with confidence level
 
-**Output :** synthèse de validation en session, `validation.md` local optionnel, ou commentaire tracker si une initiative active existe.
+**Output:** validation summary in session, optional local `validation.md`, or tracker comment if an active initiative exists.
 
-**Publication de l'artefact :** Par défaut, garder la validation en session/chat ou dans `.initiatives/<initiative>/validation.md` gitignored. Si une issue parente existe déjà et que la validation justifie `Go / No-Go / Pivot`, proposer un commentaire de synthèse et consolider la décision importante dans le PRD ou le body canonique.
+**Artifact publication:** By default, keep validation in the session/chat or in gitignored `.initiatives/<initiative>/validation.md`. If a parent issue already exists and validation justifies `Go / No-Go / Pivot`, propose a summary comment and consolidate the important decision into the PRD or canonical body.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Contenu obligatoire :
+Required content:
 
-- hypothèses testées
-- méthode et sources utiles
-- signaux clés observés
-- recommandations
-- verdict `Go / No-Go / Pivot` et niveau de confiance
+- assumptions tested
+- method and useful sources
+- key observed signals
+- recommendations
+- `Go / No-Go / Pivot` verdict and confidence level
 
-Contenu conditionnel :
+Conditional content:
 
-- analyse marché / concurrence / alternatives
-- signaux utilisateurs ou business
-- faisabilité
-- dépendances externes
-- risques et contraintes
+- market / competition / alternatives analysis
+- user or business signals
+- feasibility
+- external dependencies
+- risks and constraints
 
-À éviter :
+Avoid:
 
-- synthèse encyclopédique du marché
-- liste de sources non utilisées dans le raisonnement
-- longs extraits copiés depuis le web
+- encyclopedic market summary
+- source list not used in the reasoning
+- long excerpts copied from the web
 
-**Tailles possibles :** validation rapide sur quelques hypothèses, ou validation complète pour initiative stratégique.
+**Possible sizes:** quick validation of a few assumptions, or full validation for a strategic initiative.
 
-**Gate humain :** continuer, pivoter ou abandonner.
+**Human gate:** continue, pivot, or stop.
 
-**Important :** `Validate` teste une direction convergée. Il ne remplace ni `Brief` ni `PRD`.
+**Important:** `Validate` tests a converged direction. It replaces neither `Brief` nor `PRD`.

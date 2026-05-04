@@ -1,52 +1,52 @@
 # Zoom Out
 
-**Skill :** `zoom-out`
+**Skill:** `zoom-out`
 
-**Statut :** On-demand step.
+**Status:** On-demand step.
 
-**Rôle :** Monter d'un niveau d'abstraction pour comprendre comment une zone de code s'insère dans le système avant de l'éditer.
+**Role:** Move up one abstraction level to understand how a code area fits into the system before editing it.
 
-**Quand l'utiliser :** Zone de code inconnue, stack trace traversant plusieurs modules, refactor imminent, onboarding sur un domaine, doute sur les callers ou les seams.
+**When to use:** Unknown code area, stack trace crossing multiple modules, imminent refactor, domain onboarding, uncertainty about callers or seams.
 
-**Inputs possibles :** fichier, dossier, symbole, stack trace, issue, PRD, task spec, intention de modification, `CONTEXT.md`, décisions durables.
+**Possible inputs:** file, directory, symbol, stack trace, issue, PRD, task spec, modification intent, `CONTEXT.md`, durable decisions.
 
-**Actions :**
+**Actions:**
 
-- limite la carte à l'intention ou à la zone demandée
-- lit le vocabulaire domaine et les décisions pertinentes si disponibles
-- cartographie modules, callers, flux de données, seams et adapters pertinents
-- explique les responsabilités en langage domaine plutôt qu'en noms de fichiers uniquement
-- signale les zones de couplage, d'ambiguïté ou de risque
-- indique le niveau de confiance et les inconnues restantes si nécessaire
-- recommande la prochaine étape : `Build`, `Grill With Docs`, `Tech Design`, `Diagnose` ou `Improve Codebase Architecture`
+- limit the map to the requested intent or area
+- read domain vocabulary and relevant decisions when available
+- map relevant modules, callers, data flows, seams, and adapters
+- explain responsibilities in domain language rather than only file names
+- flag coupling, ambiguity, or risk areas
+- indicate confidence level and remaining unknowns when needed
+- recommend the next step: `Build`, `Grill With Docs`, `Tech Design`, `Diagnose`, or `Improve Codebase Architecture`
 
-**Output :** carte synthétique de la zone, modules et callers pertinents, seams à respecter, risques et prochaine étape recommandée.
+**Output:** concise area map, relevant modules and callers, seams to preserve, risks, and recommended next step.
 
-**Publication de l'artefact :** Par défaut, garder la carte en session. Si elle sert une initiative active, proposer un commentaire sur l'issue parente ou la sub-issue concernée ; en mode Markdown local, proposer un fichier dans `.initiatives/<initiative>/` seulement si la carte sera réutilisée pendant l'initiative.
+**Artifact publication:** By default, keep the map in session. If it supports an active initiative, propose a comment on the parent issue or relevant sub-issue; in local Markdown mode, propose a file in `.initiatives/<initiative>/` only if the map will be reused during the initiative.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Contenu obligatoire :
+Required content:
 
-- zone étudiée
-- responsabilités principales en langage domaine
-- callers, callees ou flux pertinents
-- seams, adapters ou interfaces à respecter
-- risques, zones de couplage ou ambiguïtés
-- prochaine étape recommandée
+- area studied
+- main responsibilities in domain language
+- relevant callers, callees, or flows
+- seams, adapters, or interfaces to preserve
+- risks, coupling points, or ambiguities
+- recommended next step
 
-Contenu conditionnel :
+Conditional content:
 
-- termes domaine ou décisions durables applicables
-- dépendances externes ou ownership connu
-- niveau de confiance et inconnues restantes
+- applicable domain terms or durable decisions
+- external dependencies or known ownership
+- confidence level and remaining unknowns
 
-À éviter :
+Avoid:
 
-- carte complète du repo sans lien avec l'intention
-- plan d'implémentation détaillé
-- refactor proposé sans gate humain
+- full repository map unrelated to the intent
+- detailed implementation plan
+- proposed refactor without human gate
 
-**Gate humain :** confirmer que la carte correspond à l'intention avant une modification sensible.
+**Human gate:** confirm that the map matches the intent before a sensitive change.
 
-**Important :** `Zoom Out` n'implémente pas. Il réduit le risque de modifier une zone sans comprendre son contexte système.
+**Important:** `Zoom Out` does not implement. It reduces the risk of modifying an area without understanding its system context.

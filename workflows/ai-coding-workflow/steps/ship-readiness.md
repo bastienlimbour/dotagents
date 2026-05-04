@@ -1,54 +1,54 @@
 # Ship Readiness
 
-**Skill :** `ship-readiness`
+**Skill:** `ship-readiness`
 
-**Statut :** On-demand step, gate optionnel de livraison.
+**Status:** On-demand step, optional release gate.
 
-**Rôle :** Vérifier qu'un changement est prêt à être livré dans de bonnes conditions.
+**Role:** Verify that a change is ready to ship under good conditions.
 
-**Quand l'utiliser :** Release sensible, flow critique, changement utilisateur ou infra, migration, risque sécurité/performance.
+**When to use:** Sensitive release, critical flow, user-facing or infrastructure change, migration, security/performance risk.
 
-**Inputs possibles :** diff, commits, PRD, task specs, QA, review, CI, logs, contexte release.
+**Possible inputs:** diff, commits, PRD, task specs, QA, review, CI, logs, release context.
 
-**Actions :**
+**Actions:**
 
-- vérifie CI, checks automatisés et preuves disponibles
-- vérifie qualité, sécurité, performance et accessibilité si pertinent
-- vérifie migrations, variables d'env, monitoring, owner de rollback et rollback plan
-- distingue blockers, risques acceptés et recommandations avant livraison
+- verify CI, automated checks, and available evidence
+- verify quality, security, performance, and accessibility when relevant
+- verify migrations, environment variables, monitoring, rollback owner, and rollback plan
+- distinguish blockers, accepted risks, and pre-release recommendations
 
-**Output :** verdict `Go / No-Go`, checklist de pré-livraison, ou équivalent tracker.
+**Output:** `Go / No-Go` verdict, pre-release checklist, or tracker equivalent.
 
-**Publication de l'artefact :** Si une PR, release issue, issue parente ou tracker actif existe, proposer d'y publier le verdict `Go / No-Go`, blockers, risques acceptés et preuves. Sans support actif, garder le verdict en session ou proposer un fichier local seulement pour une livraison qui doit être auditée.
+**Artifact publication:** If a PR, release issue, parent issue, or active tracker item exists, propose publishing the `Go / No-Go` verdict, blockers, accepted risks, and evidence there. Without an active artifact location, keep the verdict in session or propose a local file only for a release that must be audited.
 
-**Contenu de l'output :**
+**Output contents:**
 
-Contenu obligatoire :
+Required content:
 
-- verdict `Go / No-Go`
+- `Go / No-Go` verdict
 - blockers
-- risques acceptés
-- preuves ou checks disponibles
+- accepted risks
+- available evidence or checks
 - rollback plan
-- recommandations avant livraison
+- pre-release recommendations
 
-Contenu conditionnel :
+Conditional content:
 
-- checks qualité
-- checks sécurité
+- quality checks
+- security checks
 - performance
-- accessibilité si pertinent
-- migrations et variables d'env
+- accessibility when relevant
+- migrations and environment variables
 - monitoring / alerting
 
-À éviter :
+Avoid:
 
-- checklist générique sans verdict
-- risques implicites ou non assumés
-- duplication complète de la QA ou de la review
+- generic checklist without verdict
+- implicit or unowned risks
+- full duplication of QA or review
 
-**Tailles possibles :** checklist courte, ou gate complet de release.
+**Possible sizes:** short checklist, or full release gate.
 
-**Gate humain :** accepter les risques ou bloquer la livraison.
+**Human gate:** accept risks or block the release.
 
-**Important :** Ce n'est pas une étape normale de toutes les initiatives.
+**Important:** This is not a normal step for every initiative.
