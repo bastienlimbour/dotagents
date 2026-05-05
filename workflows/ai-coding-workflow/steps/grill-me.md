@@ -1,52 +1,64 @@
 # Grill Me
 
-**Skill:** `grill-me`
+**Skill name:** `grill-me`
 
-**Status:** On-demand step.
+**Step type:** On-demand step.
 
-**Role:** Interview the user one question at a time until there is shared understanding and the important branches of the decision tree are resolved.
+**Role:** Resolve important decisions through a focused interview, one question at a time.
 
-**When to use:** Clear idea with implicit decisions, plan/design to challenge, dependencies between decisions, ambiguous Execution Contract, explicit request to "grill me".
+**When to use:** Clear idea with implicit decisions, plan/design to challenge, dependent decisions, ambiguous Execution Contract, or explicit request to "grill me".
 
-**Possible inputs:** brief, PRD, Tech Design, task spec, plan, intent, repository context.
+**Possible inputs:** Brief, PRD, Tech Design, task spec, implementation plan, user intent, repository context, current decision log.
 
-**Actions:**
+**Process:**
 
-- identify blocking or high-leverage questions
-- ask questions one at a time
-- provide a recommendation for each question, ideally as choices when possible
-- explore the repository instead of asking when the answer is discoverable
-- resolve dependencies in the right order
-- stop when important decisions are resolved, explicitly left open, or marginal value becomes low
+1. Identify unresolved decisions that most affect the next step.
+2. Answer discoverable questions from repository context or docs before asking the user.
+3. Order questions by dependency, risk, and decision value.
+4. Ask the highest-value unresolved question.
+5. Capture the accepted decision, intentionally deferred branch, or remaining ambiguity.
+6. Repeat until the next step is unblocked or the remaining ambiguity is intentionally deferred.
+7. Route resolved context to the next artifact or step.
 
-**Output:** session summary, or integration into `brief.md`, `prd.md`, `tech-design.md`, task specs, or an active artifact location.
+**Rules:**
 
-**Artifact publication:** By default, keep the decision log in session and propose integrating it into the next artifact. If a parent issue or task issue already exists, propose a short comment or body update only for decisions that change current truth.
+- Ask one question at a time.
+- Provide a recommendation and concise choices when possible.
+- Use `Grill Me` at the most useful ambiguity point: after `Brief`, after `PRD`, after `Tech Design`, or before `Build` when the Execution Contract is ambiguous.
+- Do not ask the user questions that repository context or docs can answer.
 
-**Output contents:**
+**Output:** Session decision log with clarified decisions, accepted recommendations, deferred branches, and assumptions to integrate into the next step.
 
-Short decision log:
+**Output location:** Check `.agents/workflow/output-locations.md` when it exists. Recommended default: session context only. Update an artifact only when the user asks or when project convention requires accepted decisions to be consolidated.
 
-- clarified decisions
-- accepted recommendations
-- resolved questions
-- branches left open
-- assumptions to integrate into the next step
-- remaining ambiguities
+**Output template:**
 
-Avoid:
+```markdown
+## Grill Me Decision Log
 
-- full interview transcript
-- non-blocking questions that slow the next step
-- requests for information discoverable in the repository or docs
+## Clarified Decisions
+<!-- Required. Bullet list: accepted decisions and recommendation chosen. -->
+- **<Decision area>:** <Accepted decision and rationale.>
 
-**Possible sizes:** micro-interview on one decision, or full interview on one intent.
+## Dependencies Resolved
+<!-- Conditional. Bullet list: decision dependencies or branches resolved. -->
+- <Dependency or branch resolved.>
 
-**Human gate:** answer questions and validate accepted decisions.
+## Deferred Branches
+<!-- Conditional. Bullet list: questions intentionally left open and their destination. -->
+- <Deferred question and next step.>
 
-**Important:** Usually use `Grill Me` once per intent, at the most useful ambiguity point:
+## Assumptions to Carry Forward
+<!-- Conditional. Bullet list: assumptions to integrate into the next artifact. -->
+- <Assumption and target artifact.>
 
-- after `Brief`: clarify direction before validation or PRD
-- after `PRD`: challenge scope, behaviors, and acceptance criteria
-- after `Tech Design`: challenge technical trade-offs
-- before `Build`: only if the Execution Contract is ambiguous
+## Recommended Next Step
+<!-- Required. One sentence: next workflow step and rationale. -->
+<Recommended next step and rationale.>
+```
+
+**Possible sizes:** Micro-interview for one blocking decision; standard interview for one feature intent; full interview for a plan with several dependent decisions.
+
+**Verification:** Decisions are explicit enough to update the next artifact or proceed, and unresolved branches are intentionally assigned to the right next step.
+
+**Human gate:** Answer questions and validate accepted decisions.

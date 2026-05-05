@@ -1,52 +1,75 @@
 # Prototype UI
 
-**Skill:** `prototype-ui`
+**Skill name:** `prototype-ui`
 
-**Status:** On-demand step.
+**Step type:** On-demand step.
 
-**Role:** Quickly explore several disposable frontend directions before integrating UI cleanly into the product.
+**Role:** Explore disposable frontend directions so the product can choose a stronger UI path before clean implementation.
 
-**When to use:** Uncertain UX, important screen, need to compare several visual directions, frontend AI-slop risk, product feature where user feel matters.
+**When to use:** Uncertain UX, important screen, need to compare visual directions, frontend AI-slop risk, user-facing feature where feel matters, or unclear responsive behavior.
 
-**Possible inputs:** brief, PRD, screenshots, design system, existing components, responsive constraints, user journey, visual references.
+**Possible inputs:** Brief, PRD, screenshots, existing design system, components, user journey, responsive constraints, accessibility constraints, visual references, brand direction.
 
-**Actions:**
+**Process:**
 
-- define what needs to be learned before prototyping
-- create an isolated temporary area, prototype route, or local sandbox
-- produce multiple clickable variants when useful
-- use realistic data or lightweight fixtures
-- avoid premature integration into product architecture
-- document what works, what does not, and which elements to reuse
-- clearly mark files as temporary or prepare their deletion
+1. Define the learning goal before creating variants.
+2. Identify evaluation criteria: usability, visual direction, information hierarchy, responsiveness, accessibility, and implementation risk.
+3. Choose an isolated disposable location, route, or local sandbox.
+4. Produce multiple variants when comparison will improve the decision.
+5. Use realistic data or lightweight fixtures.
+6. Check desktop and mobile behavior for promising variants.
+7. Check basic accessibility for interactive elements when feasible.
+8. Summarize what works, what fails, and which elements are worth clean integration.
+9. Mark prototype files as temporary and identify cleanup needs.
 
-**Output:** disposable prototypes, options summary, UX recommendation, elements to reinject into `PRD`, `Tech Design`, `Build`, or an active artifact location.
+**Rules:**
 
-**Artifact publication:** Prototypes stay local and disposable by default. If a parent issue exists, propose a summary comment with the selected option and elements to reinject; do not publish the raw prototype as product source of truth.
+- Prototype UI code is disposable exploration.
+- Clean product implementation happens in `Build`.
+- Preserve existing design-system patterns unless the goal is explicitly to challenge them.
+- Do not promote prototype files into product architecture without clean integration.
 
-**Output contents:**
+**Output:** Disposable prototype files plus a concise UX options summary, recommendation, and integration notes.
 
-Required content:
+**Output location:** Check `.agents/workflow/output-locations.md` when it exists. Recommended default: local disposable prototype files and session summary. If a parent issue exists, publish only the selected option, rationale, and elements to reintegrate.
 
-- variants created
-- recommended option and rationale
-- UX trade-offs
-- clean integration recommendation
-- temporary files to delete or keep briefly
+**Output template:**
 
-Conditional content:
+```markdown
+## UI Prototype Summary
 
-- reusable components or patterns
-- responsive and accessibility points to watch
+## Learning Goal
+<!-- Required. Paragraph, 1-3 sentences: UX question or decision this prototype should answer. -->
+<Learning goal.>
 
-Avoid:
+## Variants Created
+<!-- Required. Bullet list: one variant per bullet. -->
+- **Variant A:** <Direction and distinguishing idea.>
+- **Variant B:** <Direction and distinguishing idea.>
 
-- implicit promotion of prototype code to product code
-- complete product plan
-- exhaustive description of every visual detail
+## Evaluation Criteria
+<!-- Required. Bullet list: criteria used to compare variants. -->
+- <Usability, hierarchy, responsiveness, accessibility, visual direction, or implementation risk.>
 
-**Possible sizes:** micro-prototype of one component, or multi-screen exploration in an isolated route.
+## Recommendation
+<!-- Required. Paragraph, 2-5 sentences: selected direction and rationale. -->
+<Selected direction and rationale.>
 
-**Human gate:** choose the visual direction and validate what is worth integrating cleanly.
+## Reusable Elements
+<!-- Conditional. Bullet list: elements worth reintegrating into product code. -->
+- <Layout, copy, component pattern, interaction, or visual treatment.>
 
-**Important:** A UI prototype is disposable. It must not accidentally become product code.
+## Responsive & Accessibility Notes
+<!-- Conditional. Bullet list: observed issue or requirement to carry forward. -->
+- <Responsive or accessibility note.>
+
+## Temporary Files
+<!-- Required. Bullet list: prototype path and cleanup recommendation. -->
+- `<path>` - delete / keep briefly / integrate cleanly: <reason.>
+```
+
+**Possible sizes:** Micro-prototype for one component; standard prototype for one important screen; multi-screen exploration for a critical flow or visual direction decision.
+
+**Verification:** The selected direction was compared against the learning goal and can be reinjected into PRD, Tech Design, or Build without promoting disposable code as architecture.
+
+**Human gate:** Choose the visual direction and validate what is worth integrating cleanly.

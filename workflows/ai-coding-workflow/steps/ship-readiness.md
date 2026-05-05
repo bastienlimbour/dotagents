@@ -1,54 +1,73 @@
 # Ship Readiness
 
-**Skill:** `ship-readiness`
+**Skill name:** `ship-readiness`
 
-**Status:** On-demand step, optional release gate.
+**Step type:** On-demand step.
 
-**Role:** Verify that a change is ready to ship under good conditions.
+**Role:** Decide whether a change is ready to ship by checking evidence, blockers, rollback, and accepted risks.
 
-**When to use:** Sensitive release, critical flow, user-facing or infrastructure change, migration, security/performance risk.
+**When to use:** Sensitive release, critical flow, user-facing change, infrastructure change, migration, security/performance risk, or explicit release gate.
 
-**Possible inputs:** diff, commits, PRD, task specs, QA, review, CI, logs, release context.
+**Possible inputs:** Diff, commits, PRD, task specs, QA, review, CI, logs, release context, feature flag state, migration plan, rollback plan, monitoring, deployment notes.
 
-**Actions:**
+**Process:**
 
-- verify CI, automated checks, and available evidence
-- verify quality, security, performance, and accessibility when relevant
-- verify migrations, environment variables, monitoring, rollback owner, and rollback plan
-- distinguish blockers, accepted risks, and pre-release recommendations
+1. Define release scope and blast radius.
+2. Gather review, QA, CI, and verification evidence.
+3. Identify rollback owner, rollback mechanism, monitoring, feature flags, migrations, environment/config changes, and external dependencies.
+4. Check quality, security, performance, accessibility, migrations, and configuration when relevant.
+5. Distinguish blockers, accepted risks, and pre-release recommendations.
+6. Produce a clear `Go / No-Go` verdict with evidence and ownership.
+7. Recommend post-launch checks when useful.
 
-**Output:** `Go / No-Go` verdict, pre-release checklist, or tracker equivalent.
+**Rules:**
 
-**Artifact publication:** If a PR, release issue, parent issue, or active tracker item exists, propose publishing the `Go / No-Go` verdict, blockers, accepted risks, and evidence there. Without an active artifact location, keep the verdict in session or propose a local file only for a release that must be audited.
+- This is a contextual release gate, not a normal step for every initiative.
+- Every `Go` needs evidence, owned accepted risks when risk remains, and rollback expectations when relevant.
+- Every `No-Go` must name blockers and the path to unblock.
+- Do not hide missing evidence behind a positive verdict.
 
-**Output contents:**
+**Output:** `Go / No-Go` verdict with release evidence, blockers, accepted risks, rollback, and recommendations.
 
-Required content:
+**Output location:** Check `.agents/workflow/output-locations.md` when it exists. Recommended default: session verdict. If a PR, release issue, parent issue, or active tracker item exists, publish the verdict there when release coordination matters.
 
-- `Go / No-Go` verdict
-- blockers
-- accepted risks
-- available evidence or checks
-- rollback plan
-- pre-release recommendations
+**Output template:**
 
-Conditional content:
+```markdown
+## Ship Readiness
 
-- quality checks
-- security checks
-- performance
-- accessibility when relevant
-- migrations and environment variables
-- monitoring / alerting
+## Verdict
+<!-- Required. Single line. -->
+Go / No-Go
 
-Avoid:
+## Scope & Blast Radius
+<!-- Required. Paragraph, 1-4 sentences: what is shipping and who/what can be affected. -->
+<Release scope and blast radius.>
 
-- generic checklist without verdict
-- implicit or unowned risks
-- full duplication of QA or review
+## Evidence
+<!-- Required. Bullet list: CI, tests, build, QA, review, browser check, logs, or monitoring evidence. -->
+- <Evidence and result.>
 
-**Possible sizes:** short checklist, or full release gate.
+## Blockers
+<!-- Required for No-Go; otherwise omit or state `None`. Bullet list. -->
+- **<Blocker>:** <Owner and path to unblock.>
 
-**Human gate:** accept risks or block the release.
+## Accepted Risks
+<!-- Required for Go when risk remains. Bullet list. -->
+- **<Risk>:** <Owner, mitigation, and reason it is acceptable.>
 
-**Important:** This is not a normal step for every initiative.
+## Rollback
+<!-- Required for sensitive releases. Metadata list. -->
+- **Owner:** <Person/team>
+- **Mechanism:** <Rollback, feature flag, revert, migration rollback, or mitigation.>
+
+## Release Notes
+<!-- Conditional. Bullet list: config, migration, monitoring, feature flag, staged rollout, or post-launch check. -->
+- <Release note.>
+```
+
+**Possible sizes:** Quick readiness check for a small safe release; standard release gate for user-facing work; full readiness review for migrations, infrastructure, security, performance, or high-blast-radius releases.
+
+**Verification:** Every `Go` has evidence, owned accepted risks, monitoring expectations when relevant, and a rollback plan. Every `No-Go` names blockers and the path to unblock.
+
+**Human gate:** Accept risks or block the release.

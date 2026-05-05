@@ -1,56 +1,74 @@
 # Brainstorm
 
-**Skill:** `brainstorm`
+**Skill name:** `brainstorm`
 
-**Status:** On-demand step.
+**Step type:** On-demand step.
 
-**Role:** Open the idea space broadly, generate options, and structure directions without converging.
+**Role:** Expand and structure the option space before the workflow converges on a direction.
 
-**When to use:** Unclear idea, new product, new direction, major feature, product/technical exploration, lack of options.
+**When to use:** Unclear idea, new product, new direction, major feature, product/technical exploration, UX exploration, or lack of useful options.
 
-**Possible inputs:** Brainstorming goal, context, intuition, notes, voice transcript, existing ideas, directions to explore, data, code, or project documentation.
+**Possible inputs:** Brainstorming goal, user context, intuition, notes, transcript, existing ideas, data, code context, project documentation, market or product constraints.
 
-**Actions:**
+**Process:**
 
-- create a local `brainstorming.md` file in `.initiatives/<NNN-initiative-name>/`
-- define the brainstorming goal and context
-- ask open-ended questions persistently to stimulate thinking and generate directions
-- explore problems, opportunities, personas, solutions, value proposition, use cases, capabilities, assumptions, constraints, and risks
-- cluster ideas during brainstorming to avoid a flat dump
-- continue until an explicit stop request or the end of the timebox
+1. Define the brainstorming goal, exploration type, and timebox.
+2. Create or locate the local brainstorming artifact when a durable session note is useful.
+3. Ask open-ended questions that generate options and reveal assumptions.
+4. Explore problems, opportunities, users, use cases, solution directions, capabilities, constraints, risks, and selection criteria.
+5. Group ideas by theme, problem, user, use case, solution, capability, or assumption.
+6. Update the brainstorming artifact after meaningful user responses so it remains structured session memory.
+7. Preserve promising directions without forcing a final decision.
+8. Route convergence to `Brief`, `PRD`, `Tech Design`, or another explicit decision step when the user is ready.
 
-**Output:** brainstorming summary in session, optional local `brainstorming.md`, or tracker comment only if an active artifact location already exists.
+**Rules:**
 
-**Artifact publication:** By default, keep brainstorming in the session/chat or in gitignored `.initiatives/<initiative>/brainstorming.md`. Do not create a parent GitHub issue for divergent brainstorming unless explicitly requested; if a parent issue already exists, propose a summary comment without raw transcript.
+- `Brainstorm` intentionally diverges.
+- Convergence belongs in `Brief`, `PRD`, or an explicit decision step.
+- Do not promote raw brainstorming notes to product truth without a convergence step.
 
-**Output contents:**
+**Output:** Markdown brainstorming note with structured options, clusters, candidate directions, selection criteria, and open questions.
 
-Required content:
+**Output location:** Check `.agents/workflow/output-locations.md` when it exists. Recommended default: local `.initiatives/<initiative>/brainstorming.md`, updated during the session. Session-only brainstorming is acceptable for lightweight exploration.
 
-- brainstorming context / goal
-- summary by themes
-- promising directions to filter later
-- open questions
+**Output template:**
 
-Conditional content:
+```markdown
+# <Initiative> Brainstorming
 
-- problems and opportunities
-- possible users/personas
-- value propositions
-- solutions and variants
-- use cases
-- candidate capabilities
-- assumptions
-- constraints and risks
+## Goal
+<!-- Required. Paragraph, 1-3 sentences: what is being explored and why. -->
+<Brainstorming goal.>
 
-Avoid:
+## Context
+<!-- Conditional. Bullet list: only context that helps generate or filter ideas. -->
+- <Relevant user, product, technical, business, or market context.>
 
-- full session transcript
-- premature product decision
-- raw list of all ideas without grouping
+## Idea Clusters
+<!-- Required. Grouped bullet lists. Use one subsection per theme, problem, user, use case, solution, capability, or assumption. -->
 
-**Possible sizes:** targeted micro-brainstorm, or full 30 to 120 minute brainstorm.
+### <Theme>
+- <Idea, opportunity, problem, solution, or capability.>
 
-**Human gate:** choose directions to filter in `Brief`, `PRD`, `Tech Design`, or an explicit decision.
+## Candidate Directions
+<!-- Required. Bullet list: promising directions to evaluate later, without choosing one. -->
+- <Promising direction to filter later.>
 
-**Important:** `Brainstorm` intentionally diverges. It does not decide.
+## Selection Criteria
+<!-- Conditional. Bullet list: criteria that may help choose later. -->
+- <Criterion that may help choose later.>
+
+## Assumptions & Risks
+<!-- Conditional. Bullet list: assumptions, constraints, or risks surfaced during brainstorming. -->
+- <Assumption, constraint, or risk.>
+
+## Open Questions
+<!-- Required. Bullet list: questions to resolve in Brief, Validate, Grill Me, or PRD. -->
+- <Open question and likely next step.>
+```
+
+**Possible sizes:** Micro-brainstorm for one decision; focused brainstorm for one product area; full brainstorm for a new product, MVP, or broad strategy session.
+
+**Verification:** The output expands and organizes useful possibilities without prematurely choosing the product direction.
+
+**Human gate:** Choose which directions to filter, converge, validate, or discard.

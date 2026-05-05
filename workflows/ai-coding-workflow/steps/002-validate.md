@@ -1,55 +1,81 @@
 # 002 - Validate
 
-**Skill:** `validate`
+**Skill name:** `validate`
 
-**Status:** Optional core step.
+**Step type:** Core workflow step (optional).
 
-**Role:** Reduce external uncertainty before investing in a full PRD, Tech Design, or costly implementation.
+**Role:** Test the assumptions that could change whether an initiative should proceed, pivot, or stop.
 
-**When to use:** Uncertainty about market, competition, users, external dependencies, business model, feasibility, or product risk. Skip it when the idea is safe or the stakes are low.
+**When to use:** After a converged brief when product, market, feasibility, or business uncertainty could change the next investment decision.
 
-**Possible inputs:** `brief.md`, `grill-me` or `grill-with-docs` summary, assumptions to test, open questions, business or user constraints.
+**Possible inputs:** `brief.md`, grill summary, assumptions to test, open questions, business constraints, user constraints, external sources, repository constraints when feasibility matters.
 
-**Actions:**
+**Process:**
 
-- turn uncertainties into testable assumptions and decision thresholds
-- timebox research based on the stakes
-- perform deep web research and collect external signals
-- analyze competition, alternatives, market, users, or business model when relevant
-- challenge assumptions from the brief
-- identify risks, external dependencies, and major constraints
-- produce a reasoned `Go / No-Go / Pivot` verdict with confidence level
+1. Extract assumptions that could change the decision.
+2. Define `Go / Pivot / No-Go` thresholds before researching when possible.
+3. Choose validation depth and timebox based on risk and investment level.
+4. Validate across relevant tracks: product, market, technical feasibility, and finances.
+5. Grade evidence strength and confidence per track.
+6. Challenge what changed from the brief.
+7. Synthesize one decision memo with verdict, confidence, and recommended next step.
 
-**Output:** validation summary in session, optional local `validation.md`, or tracker comment if an active initiative exists.
+**Rules:**
 
-**Artifact publication:** By default, keep validation in the session/chat or in gitignored `.initiatives/<initiative>/validation.md`. If a parent issue already exists and validation justifies `Go / No-Go / Pivot`, propose a summary comment and consolidate the important decision into the PRD or canonical body.
+- `Validate` tests a converged direction. It does not replace `Brief` or `PRD`.
+- Prefer official, primary, recent, or directly observed sources when external facts matter.
+- Do not overstate weak evidence; make confidence and uncertainty explicit.
+- Use the smallest validation depth that can change the investment decision.
 
-**Output contents:**
+**Output:** Markdown validation note with tested assumptions, evidence synthesis, confidence, and `Go / Pivot / No-Go` verdict.
 
-Required content:
+**Output location:** Check `.agents/workflow/output-locations.md` when it exists. Recommended default: local `.initiatives/<initiative>/validation.md`. If a parent issue already exists, publish only the decision summary when it changes current execution truth.
 
-- assumptions tested
-- method and useful sources
-- key observed signals
-- recommendations
-- `Go / No-Go / Pivot` verdict and confidence level
+**Output template:**
 
-Conditional content:
+```markdown
+# <Initiative> Validation
 
-- market / competition / alternatives analysis
-- user or business signals
-- feasibility
-- external dependencies
-- risks and constraints
+## Verdict
+<!-- Required. Metadata list plus one concise rationale sentence. -->
+- **Decision:** Go / Pivot / No-Go
+- **Confidence:** Low / Medium / High
+- **Rationale:** <One-sentence synthesis.>
 
-Avoid:
+## Assumptions Tested
+<!-- Required. Bullet list: one tested assumption per bullet. -->
+- **<Assumption>:** <Why it matters and what would change.>
 
-- encyclopedic market summary
-- source list not used in the reasoning
-- long excerpts copied from the web
+## Evidence by Track
+<!-- Required. Keep each track to a short paragraph or 2-4 bullets. Omit a track only when irrelevant and state why. -->
 
-**Possible sizes:** quick validation of a few assumptions, or full validation for a strategic initiative.
+### Product
+<Observed signal, evidence strength, and conclusion.>
 
-**Human gate:** continue, pivot, or stop.
+### Market
+<Observed signal, evidence strength, and conclusion.>
 
-**Important:** `Validate` tests a converged direction. It replaces neither `Brief` nor `PRD`.
+### Technical Feasibility
+<Observed signal, evidence strength, and conclusion.>
+
+### Finances
+<Observed signal, evidence strength, and conclusion.>
+
+## What Changed
+<!-- Required. Bullet list: what changed from the brief or initial belief. -->
+- <Brief assumption confirmed, weakened, or revised.>
+
+## Sources
+<!-- Conditional. Bullet list: only sources used in the reasoning. -->
+- <Useful source or observed signal.>
+
+## Next Step
+<!-- Required. One sentence: PRD / Brief revision / Brainstorm / stop, with rationale. -->
+<Recommended next step and rationale.>
+```
+
+**Possible sizes:** Minimal validation for one risky assumption; standard four-track validation for a feature or MVP; full validation for a strategic, costly, or externally dependent initiative.
+
+**Verification:** The verdict is traceable to tested assumptions, useful evidence, source quality, confidence, and explicit decision thresholds.
+
+**Human gate:** Decide whether to continue, pivot, or stop.

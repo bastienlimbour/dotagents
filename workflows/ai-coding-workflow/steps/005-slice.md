@@ -1,71 +1,84 @@
 # 005 - Slice
 
-**Skill:** `slice`
+**Skill name:** `slice`
 
-**Status:** Core step for multi-task initiatives.
+**Step type:** Core workflow step (required, for multi-task initiatives).
 
-**Role:** Turn `PRD + optional Tech Design + repository context` into small, vertical, verifiable tasks.
+**Role:** Convert accepted product and technical context into vertical, verifiable tasks that agents can implement safely.
 
 **When to use:** Multi-task initiative. Skip it for a minimal single-task PRD with a sufficient Execution Contract.
 
-**Possible inputs:** `prd.md`, `tech-design.md`, ADRs, repository context, product priorities, team constraints.
+**Possible inputs:** PRD, Tech Design, ADRs, parent issue, repository context, product priorities, dependency constraints, team constraints, feedback commands.
 
-**Actions:**
+**Process:**
 
-- split the initiative into vertical slices
-- build each slice as a verifiable end-to-end increment, even if minimal
-- include the layers needed by the slice: data, logic, API/routes, minimal UI, and tests when relevant
-- avoid horizontal tasks by technical layer (`DB -> API -> UI`)
-- order tasks by real dependencies, as a graph rather than a linear plan
-- keep each task behaviorally self-contained
-- make each task independently grabbable by an agent
-- seek end-to-end feedback early, even through a narrow tracer bullet
-- avoid copying the PRD or Tech Design into every task
-- classify each task as `AFK` or `HITL` when it helps execution
-- map tasks to corresponding acceptance criteria
-- reference the PRD and Tech Design with short links when useful
-- present the slice breakdown to the human before publication: granularity, dependencies, merge/split decisions, `AFK | HITL` classification
-- if the active artifact location is GitHub Issues or an equivalent tracker, propose one sub-issue per vertical slice in dependency order
+1. Confirm the PRD is current enough to slice.
+2. Confirm whether Tech Design or ADRs are needed before slicing.
+3. Identify product requirements, dependencies, risk-first work, and likely verification routes.
+4. Split work into vertical slices that each produce a useful end-to-end signal.
+5. Include only the layers required by each slice: data, logic, API/routes, minimal UI, tests, or migration steps.
+6. Order tasks by real dependencies and risk, not by technical layer.
+7. Mark tracer-bullet or risk-first slices when early feedback matters.
+8. Classify tasks as `AFK` or `HITL` when useful.
+9. Assign rough size `XS / S / M / L`; split `L` tasks unless the reason to keep them is explicit.
+10. Present granularity, dependencies, merge/split decisions, and `AFK | HITL` classification to the human before publication.
+11. After validation, publish one sub-issue or task artifact per vertical slice.
 
-**Output:** sub-issues per vertical slice by default, or one task spec per task in `tasks/` when local Markdown mode is selected.
+**Rules:**
 
-**Artifact publication:** If a GitHub/tracker parent issue exists, propose creating one sub-issue per slice, each with its Execution Contract and a link to the parent issue. If the primary artifact location is local Markdown, propose `.initiatives/<initiative>/tasks/*.md`. After publication, propose updating the canonical parent issue body with links to the sub-issues.
+- A task spec is an Execution Contract, not a detailed implementation plan.
+- Keep each task behaviorally self-contained, independently grabbable, and verifiable.
+- Prefer vertical slices over technical-layer tasks.
+- Do not slice against stale PRD or missing required Tech Design decisions.
 
-**Output contents:**
+**Output:** One task spec per vertical slice, each containing a sufficient Execution Contract for `Build`.
 
-Required content:
+**Output location:** Check `.agents/workflow/output-locations.md` when it exists. Recommended default: sub-issues linked to the parent issue. Local Markdown alternative: `.initiatives/<initiative>/tasks/*.md`.
 
-- id and title
-- short context
-- goal
-- end-to-end behavior to build
-- testable acceptance criteria
-- expected verification
+**Output template:**
 
-Conditional content:
+```markdown
+# <NNN> - <Task Title>
 
-- parent when derived from a PRD or parent issue
-- useful edge cases
-- local non-goals when useful
-- PRD references
-- Tech Design references when useful
-- expected feedback commands when known
-- `blocked-by` dependencies when applicable
-- `AFK | HITL` type when useful
-- likely touchpoints, without imposing a code plan
+<!-- Required. Metadata list. Keep values short and machine-readable where possible. -->
+- **Parent:** <Parent issue, PRD, or initiative link>
+- **Type:** AFK / HITL
+- **Size:** XS / S / M / L
+- **Blocked by:** <Dependencies, or none>
 
-Avoid:
+## Goal
+<!-- Required. Paragraph, 1-3 sentences: what this slice should achieve. -->
+<Task goal.>
 
-- copying the PRD or Tech Design
-- detailed implementation plan
-- horizontal tasks by technical layer
+## Scope
+<!-- Required. Bullet list: included behavior first, local non-goals when useful. -->
+- <Included behavior.>
+- <Local non-goal when useful.>
 
-**Possible sizes:** minimal task spec for a simple task, detailed task spec for a critical or ambiguous task.
+## Behavior
+<!-- Required. Paragraph or short bullets: end-to-end behavior to build in this task. -->
+<End-to-end behavior.>
 
-**Human gate:** validate granularity, verticality, order, dependencies, verifiability, and `AFK | HITL` classification.
+## Acceptance Criteria
+<!-- Required. Checklist or bullet list: observable task-level criteria. -->
+- [ ] <Task-level observable acceptance criterion.>
+- [ ] <Important edge case or error state.>
 
-**Important:** A task spec is not a detailed implementation plan. Exact files, commands, and code sequence remain in the `Build Preflight`. A blocked task must not be taken as AFK.
+## Verification
+<!-- Required. Bullet list: expected command, check, browser flow, test, or manual signal. -->
+- <Expected verification signal.>
 
-Prefer several small reviewable slices over one large task that becomes testable only at the end. A narrow slice that crosses the system is better than a batch of layer-separated tasks.
+## References
+<!-- Conditional. Bullet list: PRD requirement, Tech Design section, ADR, issue, or code area. -->
+- <Reference.>
 
-Do not implicitly close, rewrite, or modify the parent issue when creating slices.
+## Likely Touchpoints
+<!-- Conditional. Bullet list: likely areas, without imposing a detailed implementation plan. -->
+- <Likely area or module.>
+```
+
+**Possible sizes:** XS task for a tiny verifiable change; S task for one narrow behavior; M task for a normal vertical slice; L task only when the slice cannot be split without losing useful feedback.
+
+**Verification:** Every task has behavior, task-level acceptance criteria, dependencies, expected verification, and enough context to start `Build` without copying the full PRD or Tech Design.
+
+**Human gate:** Validate granularity, verticality, order, dependencies, verifiability, and `AFK | HITL` classification.

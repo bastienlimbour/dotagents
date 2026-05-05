@@ -1,52 +1,73 @@
 # Zoom Out
 
-**Skill:** `zoom-out`
+**Skill name:** `zoom-out`
 
-**Status:** On-demand step.
+**Step type:** On-demand step.
 
-**Role:** Move up one abstraction level to understand how a code area fits into the system before editing it.
+**Role:** Map how a scoped code area fits into the system before editing it.
 
-**When to use:** Unknown code area, stack trace crossing multiple modules, imminent refactor, domain onboarding, uncertainty about callers or seams.
+**When to use:** Unknown code area, stack trace crossing multiple modules, imminent refactor, domain onboarding, uncertainty about callers, data flow, seams, or risks.
 
-**Possible inputs:** file, directory, symbol, stack trace, issue, PRD, task spec, modification intent, `CONTEXT.md`, durable decisions.
+**Possible inputs:** File, directory, symbol, stack trace, issue, PRD, task spec, modification intent, `CONTEXT.md`, `CONTEXT-MAP.md`, ADRs, relevant tests.
 
-**Actions:**
+**Process:**
 
-- limit the map to the requested intent or area
-- read domain vocabulary and relevant decisions when available
-- map relevant modules, callers, data flows, seams, and adapters
-- explain responsibilities in domain language rather than only file names
-- flag coupling, ambiguity, or risk areas
-- indicate confidence level and remaining unknowns when needed
-- recommend the next step: `Build`, `Grill With Docs`, `Tech Design`, `Diagnose`, or `Improve Codebase Architecture`
+1. Define the area and modification intent before mapping.
+2. Read durable vocabulary and decisions when they exist.
+3. Map relevant modules, callers, callees, data flows, seams, adapters, and ownership.
+4. Locate relevant tests or verification seams when useful.
+5. Explain responsibilities in domain language, not just filenames.
+6. Flag coupling, ambiguity, risk areas, and remaining unknowns.
+7. Recommend the next step: `Build`, `Grill With Docs`, `Tech Design`, `Diagnose`, or `Improve Codebase Architecture`.
 
-**Output:** concise area map, relevant modules and callers, seams to preserve, risks, and recommended next step.
+**Rules:**
 
-**Artifact publication:** By default, keep the map in session. If it supports an active initiative, propose a comment on the parent issue or relevant sub-issue; in local Markdown mode, propose a file in `.initiatives/<initiative>/` only if the map will be reused during the initiative.
+- `Zoom Out` reduces modification risk; implementation belongs in `Build`.
+- Limit exploration to the requested intent or affected area.
+- Do not list unrelated files just because they were discovered.
+- Use durable vocabulary when available.
+- Route structural concerns to `Improve Codebase Architecture` instead of solving them inside the map.
 
-**Output contents:**
+**Output:** Concise area map with responsibilities, flows, seams, risks, unknowns, and recommended next step.
 
-Required content:
+**Output location:** Check `.agents/workflow/output-locations.md` when it exists. Recommended default: session summary. If it supports an active initiative, publish a tracker comment or local `.initiatives/<initiative>/` note only when the map will be reused.
 
-- area studied
-- main responsibilities in domain language
-- relevant callers, callees, or flows
-- seams, adapters, or interfaces to preserve
-- risks, coupling points, or ambiguities
-- recommended next step
+**Output template:**
 
-Conditional content:
+```markdown
+## Area Map
 
-- applicable domain terms or durable decisions
-- external dependencies or known ownership
-- confidence level and remaining unknowns
+## Scope Studied
+<!-- Required. Paragraph, 1-3 sentences: file, directory, symbol, flow, or modification intent. -->
+<Scope studied.>
 
-Avoid:
+## Responsibilities
+<!-- Required. Bullet list: domain responsibility and owning module/code area. -->
+- **<Module or area>:** <Domain responsibility.>
 
-- full repository map unrelated to the intent
-- detailed implementation plan
-- proposed refactor without human gate
+## Relevant Flows
+<!-- Required when flow matters. Bullet list: caller -> module -> callee, data flow, or lifecycle. -->
+- <Caller or event> -> <module/area> -> <callee or outcome.>
 
-**Human gate:** confirm that the map matches the intent before a sensitive change.
+## Seams & Interfaces
+<!-- Conditional. Bullet list: interface, adapter, boundary, test seam, or invariant to preserve. -->
+- <Seam, interface, boundary, or invariant.>
 
-**Important:** `Zoom Out` does not implement. It reduces the risk of modifying an area without understanding its system context.
+## Verification Seams
+<!-- Conditional. Bullet list: tests, commands, fixtures, browser path, or missing signal. -->
+- <Verification seam.>
+
+## Risks & Unknowns
+<!-- Conditional. Bullet list: coupling, ambiguity, ownership gap, or confidence note. -->
+- <Risk, unknown, or confidence note.>
+
+## Recommended Next Step
+<!-- Required. One sentence: Build / Grill With Docs / Tech Design / Diagnose / Improve Codebase Architecture, with rationale. -->
+<Recommended next step and rationale.>
+```
+
+**Possible sizes:** Micro-map for one symbol or stack trace; standard map for one feature area; full map for a sensitive refactor or unfamiliar subsystem.
+
+**Verification:** The map explains how the area fits into the system, what seams to preserve, what feedback exists, and what remains unknown without listing unrelated files.
+
+**Human gate:** Confirm that the map matches the intent before sensitive modification.

@@ -1,56 +1,62 @@
 # 007 - Review
 
-**Skill:** `review`
+**Skill name:** `review`
 
-**Status:** Recommended core step.
+**Step type:** Core workflow step (recommended).
 
-**Role:** Cold code review, separate from implementation.
+**Role:** Evaluate code independently from implementation, prioritizing bugs, regressions, risks, and deviations from the agreed contract.
 
-**When to use:** Any non-trivial task, complex logic, sensitive change, architecture, security, performance, or need for a fresh review.
+**When to use:** Any non-trivial task, complex logic, sensitive change, architecture, security, performance, migration, or need for a fresh review.
 
-**Possible inputs:** diff, commits, PRD, task spec, Tech Design, tests, verification results.
+**Possible inputs:** Diff, commits, PR, PRD, task spec, Tech Design, tests, verification results, project standards.
 
-**Actions:**
+**Process:**
 
-- ideally start from a fresh context, possibly with a different LLM than the one that implemented the code
-- explicitly provide useful project standards to the reviewer
-- compare code, PRD/task spec, Tech Design, and acceptance criteria
-- review tests and verification
-- look for divergences, omissions, bugs, and regressions
-- check for out-of-scope changes, secrets, accidental config changes, and missed migrations
-- evaluate correctness, readability, architecture, security, and performance
-- verify that tests cover real behavior and important edge cases
-- flag dead code and obvious simplifications
-- explicitly report unreviewed areas or confidence level when needed
+1. Start from a fresh review mindset, ideally a fresh context.
+2. Understand intended behavior before judging implementation.
+3. Compare code against PRD, task spec, Tech Design, and task-level acceptance criteria.
+4. Review tests and verification evidence.
+5. Focus review on correctness, regressions, scope drift, security, performance, accessibility, migrations, dependencies, and config when triggered.
+6. Check for secrets, accidental config changes, missed migrations, and out-of-scope edits.
+7. Verify that tests cover real behavior and important edge cases.
+8. State findings first, ordered by severity, with file/line references when possible.
+9. Report unreviewed areas or confidence level when useful.
 
-**Output:** session feedback, or review comment in the tracker/PR.
+**Rules:**
 
-**Artifact publication:** If a PR exists, propose publishing the review as a PR comment by default. Otherwise, if an active sub-issue or tracker issue exists, propose a comment there. Without an active artifact location, keep the review in session; do not create a local file by default.
+- `Review` evaluates code. It is not manual QA.
+- Do not silently fix code before stating findings.
+- Findings are the primary output; summaries are secondary.
+- Prioritize bugs, risks, behavioral regressions, and contract deviations over style preferences.
 
-**Output contents:**
+**Output:** Findings-first code review verdict in session, PR comment, or tracker comment.
 
-Required content:
+**Output location:** Check `.agents/workflow/output-locations.md` when it exists. Recommended default: session review. If a PR exists, use a PR review/comment when useful; if an active task issue exists, use a tracker comment when coordination matters.
 
-- verdict
-- findings by severity, or explicit `No findings`
-- file/line references when possible
-- test and verification coverage
+**Output template:**
 
-Conditional content:
+```markdown
+## Verdict
+<!-- Required. Single line. -->
+Approved / Changes requested / No findings
 
-- deviations from PRD, task spec, or Tech Design
-- regression risks
-- fix suggestions
-- unreviewed areas or confidence level
+## Findings
+<!-- Required. Findings-first bullet list. Use `No findings` when empty. -->
+- **Critical:** `<file>:<line>` - <Bug or release blocker.>
+- **Important:** `<file>:<line>` - <Likely defect, regression, or contract deviation.>
+- **Suggestion:** `<file>:<line>` - <Optional improvement with clear value.>
 
-Avoid:
+## Verification Reviewed
+<!-- Required. Bullet list: tests, commands, CI, browser checks, or evidence reviewed. -->
+- <Verification evidence reviewed.>
 
-- optimistic summary before findings
-- code fixes before stating the problems
-- non-actionable style comments
+## Residual Risks
+<!-- Conditional. Bullet list: unreviewed area, confidence note, or remaining risk. -->
+- <Residual risk or unreviewed area.>
+```
 
-**Possible sizes:** short review for a simple change, full review for a sensitive change.
+**Possible sizes:** Short review for a simple diff; standard review for a normal task; focused deep review for security, performance, migration, public API, or architecture-sensitive changes.
 
-**Human gate:** accept the task or send it back for correction.
+**Verification:** The review makes a clear verdict and ties findings to specific behavior, files, lines, tests, or risks.
 
-**Important:** `Review` evaluates code. It is not a manual functional validation checklist. The reviewer lists findings first; they do not modify code before stating the problems.
+**Human gate:** Accept the task, request fixes, or route back to `Build`.

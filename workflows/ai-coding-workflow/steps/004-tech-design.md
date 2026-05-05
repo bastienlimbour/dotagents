@@ -1,84 +1,89 @@
 # 004 - Tech Design
 
-**Skill:** `tech-design`
+**Skill name:** `tech-design`
 
-**Status:** Core step when technical impact is non-trivial.
+**Step type:** Core workflow step (required, except for trivial changes).
 
-**Role:** Technical source of truth. Tech Design defines how to build the product and formalizes structural decisions.
+**Role:** Define the technical approach, interfaces, trade-offs, and verification strategy needed to build the accepted product behavior.
 
-**When to use:** Non-trivial technical impact: architecture, data model, integration, migration, security, performance, scalability, observability, structural refactor, durable stack or library choice.
+**When to use:** Architecture change, data model, integration, migration, security, performance, scalability, observability, structural refactor, durable stack choice, or non-trivial implementation uncertainty.
 
-**Possible inputs:** `prd.md`, `grill-me` or `grill-with-docs` summary, repository context, existing architecture, existing technical docs, ADRs, conventions, external services, stack constraints, non-functional requirements.
+**Possible inputs:** PRD, grill summary, repository context, current architecture, existing technical docs, ADRs, conventions, external services, stack constraints, non-functional requirements.
 
-**Actions:**
+**Process:**
 
-- choose the useful Tech Design depth: lite or full
-- explore the repository and existing patterns
-- read `CONTEXT.md`, `CONTEXT-MAP.md`, and relevant decisions when available
-- verify official documentation when a decision depends on a framework or library
-- document relevant current state, constraints, and technical requirements
-- propose architecture, modules, and patterns
-- identify possible deep modules: simple interface, encapsulated behavior, clear test boundary
-- apply the deletion test to suspicious modules: if deleting the module removes the complexity, it was probably shallow; if complexity reappears in callers, it provides locality
-- make seams and adapters explicit only when they map to real variation
-- separate technical decisions from the immediate implementation plan
-- decide stack, libraries, services, data model, interfaces/API, migrations, and test strategy
-- identify impact on existing behavior, risks, rollback, and possible debt
-- compare alternatives and formalize trade-offs
-- create or reference ADRs when needed
+1. Choose Tech Design size before writing.
+2. Confirm PRD scope and unresolved product questions.
+3. Explore relevant repository patterns, tests, and feedback commands.
+4. Read durable vocabulary, context maps, and ADRs when available.
+5. Document relevant current state, constraints, and technical requirements.
+6. Propose target architecture, modules, interfaces, seams, data model, integrations, and migrations when relevant.
+7. Identify stable invariants, error modes, compatibility expectations, and rollback considerations.
+8. Compare alternatives when a decision has real trade-offs.
+9. Define technical testing and verification strategy.
+10. Propose ADRs for durable, surprising, or hard-to-reverse decisions.
 
-**Output:** Tech Design summary in the parent issue by default, detailed comment when needed, or local `tech-design.md` when local Markdown mode is selected, with ADRs if needed.
+**Rules:**
 
-**Artifact publication:** If a parent issue exists, propose consolidating a Tech Design Lite section into its body. For non-trivial Tech Design, propose a detailed comment linked from the canonical body. In local Markdown mode, propose `.initiatives/<initiative>/tech-design.md`. Durable decisions should be proposed as ADRs or project documentation, not only as comments.
+- Tech Design usually follows PRD.
+- If technical feasibility is the main uncertainty, run a lightweight spike first, then complete the Tech Design after product scope is clear.
+- Check official documentation for version-sensitive framework or library decisions.
+- Explain how to build the PRD safely without turning the design into task sequencing.
+- Propose ADRs only for durable decisions with useful long-term context.
 
-**Output contents:**
+**Output:** Markdown Tech Design that explains how to build the PRD safely without turning the design into task sequencing.
 
-Required content:
+**Output location:** Check `.agents/workflow/output-locations.md` when it exists. Recommended default: short Tech Design section in the parent issue body for lite designs; detailed parent issue comment for non-trivial designs. Local Markdown alternative: `.initiatives/<initiative>/tech-design.md`. Durable decisions may also become ADRs.
 
-- technical context and relevant current state
-- constraints and non-functional requirements
-- approach or target architecture
-- key technical decisions
-- modules touched or created
-- technical testing strategy
-- technical risks
-- open questions
+**Output template:**
 
-Conditional content:
+```markdown
+# <Initiative> Tech Design
 
-- stable interfaces, seams, and adapters when relevant
-- test boundaries and test surface
-- opportunities for depth, leverage, and locality
-- integrations and external services
-- data model
-- interfaces/API
-- migrations and compatibility
-- security
-- performance and scalability
-- accessibility if technically impacted
-- observability, monitoring, logs
-- rollback plan when relevant
-- alternatives considered
-- accepted trade-offs
-- ADRs to create or update
+## Summary
+<!-- Required. Paragraph, 2-5 sentences: technical approach and why it fits the PRD. -->
+<Technical summary.>
 
-Avoid:
+## Current State
+<!-- Required. Paragraph or bullet list: relevant architecture, modules, constraints, and existing behavior. -->
+<Current technical state.>
 
-- rewriting the PRD
-- file-by-file code plan
-- exhaustive repository inventory
-- security, performance, or observability sections without real impact
+## Technical Constraints
+<!-- Required when constraints shape the design. Bullet list. -->
+- <Non-functional requirement, platform constraint, compatibility need, or project convention.>
 
-**Possible sizes:** Tech Design Lite for a limited change, full Tech Design for architecture, migration, or structural initiative.
+## Proposed Approach
+<!-- Required. Paragraph plus optional bullets: target architecture and main implementation strategy. -->
+<Proposed technical approach.>
 
-**Human gate:** validate technical trade-offs, module boundaries, and structural interfaces before `Slice` or `Build`.
+## Interfaces, Data & Boundaries
+<!-- Conditional. Bullet list: include only important interfaces, modules, data objects, seams, or boundaries. -->
+- **<Interface / module / data object>:** <Responsibility, invariants, callers, and ownership.>
 
-**Important:** By default, Tech Design comes after PRD. If technical feasibility is the main uncertainty, run a lightweight spike before PRD, then complete Tech Design after PRD.
+## Key Decisions
+<!-- Required for non-obvious choices. Decision list; include trade-off and source when useful. -->
+- **Decision:** <Choice>
+  **Rationale:** <Trade-off and source when useful.>
 
-An ADR is useful only when the decision is hard to reverse, surprising without context, and based on a real trade-off.
+## Testing & Verification
+<!-- Required. Bullet list: technical feedback loops expected during Build and release. -->
+- <Unit, integration, e2e, migration, browser, performance, or observability check.>
 
-Recommended vocabulary: `module`, `interface`, `implementation`, `seam`, `adapter`, `depth`, `leverage`, `locality`. Here, an interface is not only a type signature: it is everything a caller must know to use the module correctly.
+## Risks, Rollback & Compatibility
+<!-- Conditional. Bullet list: include risk, mitigation, rollback path, or compatibility note. -->
+- **<Risk>:** <Mitigation, rollback path, or compatibility note.>
 
-Depth is an interface property: a lot of useful behavior behind little surface area to learn. The interface is also the test surface; if a test must bypass the interface, the module shape is probably wrong.
+## Open Questions
+<!-- Conditional. Bullet list: technical questions that block or shape execution. -->
+- <Technical question that blocks or shapes execution.>
 
-Locality keeps changes, bugs, and knowledge in one place instead of scattering them across callers. A single seam or adapter often indicates a hypothetical abstraction; two real variants justify the seam better.
+## References
+<!-- Conditional. Bullet list: PRD, ADR, official docs, issue, or relevant code area. -->
+- <Reference.>
+```
+
+**Possible sizes:** Tech Design Lite for a limited implementation choice; standard Tech Design for a multi-module feature; full Tech Design for architecture, migration, security, performance, or structural refactor work.
+
+**Verification:** The design identifies current state, target approach, important interfaces, technical decisions, test strategy, risks, rollback/compatibility concerns, and open questions enough for `Slice` or `Build` to proceed.
+
+**Human gate:** Validate technical trade-offs, module boundaries, public interfaces, migrations, and durable decisions before `Slice` or `Build`.
