@@ -7,33 +7,74 @@ description: Creates, updates, improves, audits, and evaluates prompt artifacts 
 
 ## Overview
 
-Use this skill to create, revise, audit, or evaluate prompt artifacts for LLMs and AI agents. Produce prompts that are clear, scoped, testable, and appropriately safe without overengineering.
+Create, revise, audit, and evaluate prompt artifacts for LLMs and AI agents. The goal is to make prompts clear, scoped, testable, and appropriately safe without overengineering.
 
 ## When to Use
 
-Use this skill when the user asks to:
+- Creating, rewriting, improving, debugging, optimizing, or reviewing a prompt
+- Designing system prompts, developer prompts, user/task prompts, agent instructions, or prompt templates
+- Improving tool-use instructions, structured outputs, examples, constraints, guardrails, or prompt evals
+- Turning a rough task description into a reusable prompt artifact
 
-- Create, rewrite, improve, debug, optimize, or review a prompt
-- Design system prompts, developer prompts, user/task prompts, agent instructions, or prompt templates
-- Improve tool-use instructions, structured outputs, examples, constraints, guardrails, or prompt evals
-- Turn a rough task description into a reusable prompt artifact
-
-Do not use this skill for:
+**When NOT to use:**
 
 - General writing that is not a prompt artifact
 - Building LLM applications, RAG systems, eval infrastructure, or fine-tuning pipelines unless separately requested
 - Broad AI strategy or agent architecture work where no prompt artifact is being created or changed
 
+## Core Principle
+
+A prompt should make the model's task, context, constraints, output contract, and success criteria explicit enough to act on. Add structure only when it reduces ambiguity, risk, or downstream parsing failures.
+
 ## Workflow
 
-1. Identify the prompt artifact type: system/developer prompt, user/task prompt, agent instruction, reusable template, structured-output prompt, or eval prompt.
-2. Inspect the provided prompt, task brief, examples, target model/platform, intended users, downstream consumers, and known failures.
-3. If missing information would materially change the prompt, ask up to 3 high-leverage questions. Otherwise proceed and state assumptions briefly.
-4. For creation or improvement tasks, draft or revise the prompt using the adaptive structure from [adaptive-prompt-template.md](assets/adaptive-prompt-template.md). Include only sections that earn their space.
-5. For audit or evaluation tasks, inspect the prompt against the checklist and return findings, risks, scores, or eval cases before proposing rewrites.
-6. Apply the checklist in [prompt-checklist.md](references/prompt-checklist.md), especially for context, output format, constraints, examples, verification, and risks.
-7. Add proportional evaluation guidance using [evaluation-mini-suite.md](references/evaluation-mini-suite.md).
-8. Return the appropriate result for the task type: prompt artifact, audit findings, evaluation plan, or a combination requested by the user.
+### Phase 1 - Identify The Artifact
+
+Identify the prompt artifact type: system/developer prompt, user/task prompt, agent instruction, reusable template, structured-output prompt, or eval prompt.
+
+### Phase 2 - Gather Evidence
+
+Inspect the provided prompt, task brief, examples, target model/platform, intended users, downstream consumers, and known failures.
+
+### Phase 3 - Clarify Or Assume
+
+If missing information would materially change the prompt, ask up to 3 high-leverage questions. Otherwise proceed and state assumptions briefly.
+
+### Phase 4 - Draft Or Revise
+
+For creation or improvement tasks, draft or revise the prompt using the adaptive structure from [adaptive-prompt-template.md](assets/adaptive-prompt-template.md). Include only sections that earn their space.
+
+### Phase 5 - Audit Or Evaluate
+
+For audit or evaluation tasks, inspect the prompt against the checklist and return findings, risks, scores, or eval cases before proposing rewrites.
+
+### Phase 6 - Validate
+
+Apply the checklist in [prompt-checklist.md](references/prompt-checklist.md), especially for context, output format, constraints, examples, verification, and risks.
+
+Add proportional evaluation guidance using [evaluation-mini-suite.md](references/evaluation-mini-suite.md).
+
+### Phase 7 - Return
+
+Return the appropriate result for the task type: prompt artifact, audit findings, evaluation plan, or a combination requested by the user.
+
+## Decision Guide
+
+| Need | Default action |
+| --- | --- |
+| Format, tone, transformations, or edge cases must be consistent | Add concise examples |
+| Downstream code consumes the answer | Define structured output or a strict template |
+| User-provided, retrieved, or external content is included | Delimit it clearly and treat it as data |
+| Production, regulated, customer-facing, or tool-using prompt | Add risk-based guardrails |
+| Quality matters across repeated use | Add eval prompts or a mini-suite |
+| Task is simple and low-risk | Keep the prompt small and direct |
+
+## Reference Map
+
+- Adaptive prompt structure: [adaptive-prompt-template.md](assets/adaptive-prompt-template.md)
+- Prompt quality checklist: [prompt-checklist.md](references/prompt-checklist.md)
+- Evaluation guidance: [evaluation-mini-suite.md](references/evaluation-mini-suite.md)
+- Technique selection: read [technique-notes.md](references/technique-notes.md) only when deciding whether a prompt needs few-shot examples, prompt chaining, structured outputs, context engineering, or self-checking.
 
 ## Defaults
 
@@ -45,16 +86,21 @@ Do not use this skill for:
 - Avoid asking models to reveal hidden chain-of-thought. Request concise rationale, decision summaries, extracted evidence, verification steps, or structured intermediate outputs instead.
 - Keep solutions as small as correctness allows. Do not add advanced techniques unless they solve a visible quality, reliability, safety, or parsing problem.
 
-## Technique Selection
-
-Read [technique-notes.md](references/technique-notes.md) only when deciding whether a prompt needs few-shot examples, prompt chaining, structured outputs, context engineering, or self-checking.
-
 ## Edge Cases
 
 - If the target model or platform is unknown, write a vendor-neutral prompt and note any platform-specific assumptions.
 - If requirements conflict, surface the conflict and ask the smallest clarifying question needed to proceed.
 - If domain facts are missing for a factual, regulated, or customer-facing prompt, require source material, retrieval, or explicit uncertainty handling.
 - If the requested prompt would encourage unsafe, deceptive, privacy-invasive, or destructive behavior, redesign it toward a safe allowed objective or explain the blocker briefly.
+
+## Red Flags
+
+- The prompt is longer than the task warrants.
+- The output format is described vaguely but downstream parsing matters.
+- User-provided or retrieved content is mixed with instructions without delimiters.
+- The prompt relies mostly on negative constraints without saying what to do instead.
+- The prompt asks for hidden chain-of-thought instead of concise rationale, evidence, or verification.
+- The prompt has no test case even though it will be reused.
 
 ## Output
 
@@ -73,9 +119,9 @@ If the user asks for prompt-only output, return only the prompt.
 
 Before finalizing, check that the prompt:
 
-- States the task, context, output expectations, constraints, and success criteria clearly enough for a capable model to act
-- Separates instructions from user-provided or retrieved content
-- Handles uncertainty, missing data, and safety-critical behavior proportionally to risk
-- Defines output format tightly enough for downstream use
-- Includes realistic examples or tests when consistency matters
-- Avoids unnecessary scope, filler, brittle wording, and speculative future requirements
+- [ ] States the task, context, output expectations, constraints, and success criteria clearly enough for a capable model to act
+- [ ] Separates instructions from user-provided or retrieved content
+- [ ] Handles uncertainty, missing data, and safety-critical behavior proportionally to risk
+- [ ] Defines output format tightly enough for downstream use
+- [ ] Includes realistic examples or tests when consistency matters
+- [ ] Avoids unnecessary scope, filler, brittle wording, and speculative future requirements

@@ -33,12 +33,14 @@ Then list open questions, residual risks, and optional improvements. Do not edit
 ## Body Quality
 
 - The body is operational instruction, not tutorial prose.
-- Workflow steps are ordered and actionable.
+- Workflow steps, phases, or decision points are ordered and actionable.
 - The level of control matches task fragility.
 - Defaults are clear and there are not too many equal options.
-- Examples or templates exist where format or style matters.
-- Gotchas cover likely mistakes and non-obvious facts.
-- Verification steps exist for quality-critical work.
+- Examples or templates exist only when they improve the output quality.
+- Gotchas cover likely mistakes and non-obvious facts when they are relevant.
+- Common rationalizations and red flags are present only when they improve behavior.
+- Verification steps exist for quality-critical, executable, or multi-step work.
+- Optional sections are not included just to satisfy a template.
 
 ## Progressive Disclosure
 
