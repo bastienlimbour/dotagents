@@ -2,7 +2,7 @@
 
 Read this file ONLY when designing `name`, `description`, and discovery boundaries.
 
-The frontmatter drives skill activation. Put it at the top of `SKILL.md` and include both `name` and `description`.
+The YAML frontmatter drives skill activation. Put it at the top of `SKILL.md` and include both `name` and `description`.
 
 ## `name`
 

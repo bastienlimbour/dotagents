@@ -7,7 +7,7 @@ Read this file ONLY when shaping the body of a skill.
 - [Choose the lightest body shape that works](#choose-the-lightest-body-shape-that-works)
 - [Common sections](#common-sections)
 - [Writing rules](#writing-rules)
-- [Concision rule](#concision-rule)
+- [Concision rules](#concision-rules)
 - [Workflow patterns](#workflow-patterns)
 - [High-value content patterns](#high-value-content-patterns)
 - [Calibrate control](#calibrate-control)
@@ -46,11 +46,14 @@ Use only the sections that help the agent act:
 - Aim for moderate detail: enough to guide, not enough to drown the task
 - Keep examples short and concrete
 
-## Concision rule
+## Concision rules
 
 - Add only context the agent is unlikely to already know
-- Ask: does this earn its token cost?
-- Ask: would removing this change the agent's behavior?
+
+For each piece of context, ask yourself:
+
+- Does this earn its token cost?
+- Would removing this change the agent's behavior?
 
 ## Workflow patterns
 
@@ -69,7 +72,7 @@ Use ordered steps when the work must happen in sequence:
 
 ### Feedback loop
 
-For quality-sensitive work, use:
+For quality-sensitive work, use this pattern:
 
 1. do the work
 2. run validation
@@ -129,7 +132,7 @@ Give one default path. Add one explicit fallback only when it solves a real edge
 
 ```markdown
 Use `pdfplumber` by default.
-For scanned PDFs, use OCR instead.
+For scanned PDFs, use `OCR` instead.
 ```
 
 ### Old patterns

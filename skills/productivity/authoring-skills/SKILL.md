@@ -69,7 +69,7 @@ If any of the above details are unclear, ask targeted questions to the user unti
 
 Before designing the trigger surface, read [naming-and-discovery.md](references/naming-and-discovery.md).
 
-- choose a precise `name` that clearly describes the skill's purpose
+- draft a precise `name` that clearly describes the skill's purpose
 - draft a `description` that states what the skill does and when to use it
 - optimize `description` for correct activation, not completeness
 For new skills:
@@ -87,7 +87,7 @@ Write the smallest skill that can do the job:
 - pick the lightest body shape that fits the task
 - write the SKILL.md body instructions as a prompt, not as documentation
 - prefer numbered workflows, short rules, and explicit verification
-- keep `SKILL.md` focused and move rare detail to `references/`, `scripts/`, or `assets/`
+- keep `SKILL.md` focused and move rare detail to bundled files
 - do not force a default template; adapt the structure to the task
 
 If the skill needs bundled files or `SKILL.md` is getting large, read [skill-files-and-disclosure.md](references/skill-files-and-disclosure.md).

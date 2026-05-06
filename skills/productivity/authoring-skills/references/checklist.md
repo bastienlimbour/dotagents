@@ -26,9 +26,9 @@ Use this checklist for a final skill audit before deployment. Every item must pa
 
 ## 4. Bundled Files & References (skip if the skill doesn't have bundled files or references)
 
-* [ ] Bundled files are referenced only one level deep from `SKILL.md` (no deep indirection; e.g., SKILL.md → reference.md → actual info).
-* [ ] Bundled files are referenced using relative paths from `SKILL.md` (e.g. [reference.md](references/reference.md)).
+* [ ] Bundled files are referenced only one level deep from `SKILL.md` (no deep indirection; e.g., SKILL.md → reference.md → api.md → actual info).
 * [ ] Bundled files are referenced from `SKILL.md` with clear "when to read" guidance.
+* [ ] Bundled files are referenced using relative paths from `SKILL.md` (e.g. `[reference.md](references/reference.md)`).
 * [ ] Reference files over ~100 lines include a table of contents.
 * [ ] Table of contents in reference files is up to date and matches current file content.
 
@@ -38,7 +38,7 @@ Use this checklist for a final skill audit before deployment. Every item must pa
 * [ ] Instructions use imperative mood and direct commands (e.g., "Extract", "Run", "Validate").
 * [ ] The default path is clear; alternatives appear only as escape hatches for real edge cases.
 * [ ] Workflows use numbered, chronological steps with clear decision trees.
-* [ ] Specific terminology consistent throughout (e.g., "component" not "file").
+* [ ] Specific terminology consistent throughout.
 * [ ] No time-sensitive content. Content does not depend on dates, versions, or changing external state.
 * [ ] Examples are concrete, included only if they aid judgment or formatting.
 * [ ] Command examples include required setup steps and preconditions.
