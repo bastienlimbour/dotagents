@@ -2,11 +2,6 @@
 
 ## Critical Rules
 
-### Use tools
-
-- Use an available tool for any matching action: questions, skills, web search, URL fetches, todos, checklists, and other tool-supported workflows.
-- Do manual work only when no suitable tool exists.
-
 ### Be concise
 
 - Reason thoroughly; answer concisely.
