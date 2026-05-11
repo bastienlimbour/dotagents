@@ -1,6 +1,6 @@
 ---
 name: authoring-skills
-description: Creates, updates, improves, and audits portable Agent Skills. Use when creating or changing a SKILL.md, skill directory, skill description, bundled references, scripts, resources, or skill evals. Do not use for standalone prompts or non-skill agent configuration.
+description: Creates, updates, improves, and audits Agent Skills. Use when the task directly involves creating or updating an agent skill, SKILL.md, skill description, skill directory, skill bundled files, or skill evals. Do not use for standalone prompts or if the current task is not directly related to authoring agent skills.
 ---
 
 # Authoring Skills

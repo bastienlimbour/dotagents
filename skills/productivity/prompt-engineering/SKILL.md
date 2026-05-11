@@ -1,6 +1,6 @@
 ---
 name: prompt-engineering
-description: Creates, updates, improves, audits, and evaluates prompt artifacts for LLMs and AI agents. Use when working on prompts, system prompts, developer prompts, agent instructions, prompt templates, structured-output prompts, or eval prompts.
+description: Creates, updates, improves, and audits prompt artifacts for LLMs and AI agents. Use when the task directly involves writing or editing prompts, system prompts, developer prompts, agent instructions, prompt templates, structured-output prompts, or eval prompts. Do not use for general writing or any task unrelated to prompt engineering.
 ---
 
 # Prompt Engineering
