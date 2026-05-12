@@ -32,6 +32,7 @@ Synthétiser le contexte connu en spec canonique.
 - Chercher des opportunités de deep modules.
 - Identifier les modules ou interfaces clés à créer, modifier ou préserver.
 - Confirmer avec l'utilisateur les modules/interfaces clés et les zones principales à tester avant publication.
+- Produire une liste longue mais non artificielle de user stories avec IDs stables et immuables.
 - Si une information critique manque, poser des questions ciblées.
 - Si une incertitude est acceptable, la documenter dans `Risks And Open Questions`.
 - Produire un draft complet de spec en conversation.
@@ -43,7 +44,7 @@ Synthétiser le contexte connu en spec canonique.
 Sortie par défaut :
 
 ```text
-Issue GitHub de spec
+Issue de spec dans le tracker distant GitHub ou GitLab
 ```
 
 Fallback ou sortie locale explicite :
@@ -54,11 +55,11 @@ Fallback ou sortie locale explicite :
 
 ## Issue de spec
 
-La spec est une issue GitHub par défaut.
+La spec est une issue dans le tracker distant configuré par défaut : GitHub ou GitLab.
 
 Elle est l'issue parente logique de l'initiative ou de la feature.
 
-La GitHub CLI ne crée pas de relation parent/enfant native entre issues. Les relations sont donc représentées par des liens explicites.
+Les CLI des trackers distant (Github ou Gitlab) ne permettent pas de relation parent/enfant native entre issues. Les relations sont donc représentées par des liens explicites.
 
 Responsabilités de l'issue de spec :
 
@@ -79,41 +80,75 @@ Ne pas inclure :
 - Pseudo-code détaillé sauf nécessité forte.
 - Micro-étapes que les implémenteurs de tâches pourront décider plus tard.
 
+La spec ne contient pas de section `Acceptance Criteria` par défaut. Les acceptance criteria détaillés sont créés au niveau task pendant `/split`, à partir des user stories, du scope, des décisions et des contraintes pertinentes.
+
+Règles des user stories :
+
+- Utiliser des IDs stables et immuables : `US-001`, `US-002`, etc.
+- Ne jamais renuméroter les IDs existants.
+- Si une user story n'est plus valide, la marquer comme `Deprecated` ou `Replaced by US-0XX`.
+- Les nouvelles user stories prennent le prochain ID disponible.
+- Format : `US-001 - As a <actor>, I want <capability>, so that <benefit>.`
+- La liste doit couvrir les acteurs, cas d'usage, variantes, edge cases produit et bénéfices importants, sans créer de stories artificielles.
+
+Règle de durabilité :
+
+- Ne pas inclure de plan fichier par fichier, numéros de lignes ou snippets de code fragiles.
+- Exception : si un prototype a produit un snippet qui encode une décision plus précisément que la prose, par exemple state machine, reducer, schema ou type shape, l'inclure dans la section pertinente et noter brièvement qu'il vient d'un prototype.
+
 Template :
+
+Les lignes de guidance dans le template sont des placeholders à remplacer dans l'artefact généré.
 
 ```markdown
 # Spec: <title>
 
-## Problem
-Quel problème est résolu, pourquoi il compte, et quel contexte est pertinent.
+## Problem Statement
+Describe the problem from the user's perspective, why it matters, and the relevant context.
 
 ## Solution
-Solution retenue, comportement attendu et compromis importants.
+Describe the selected solution, expected behavior, and important tradeoffs.
 
-## Users And Use Cases
-Utilisateurs, personas si utile, cas d'usage et user stories lorsque pertinent.
+## User Stories
+Long list of stable user stories using: `US-001 - As a <actor>, I want <capability>, so that <benefit>.`
+
+US-001 - As a <actor>, I want <capability>, so that <benefit>.
+US-002 - As a <actor>, I want <capability>, so that <benefit>.
 
 ## Scope
-Ce qui est inclus.
+List what is included in this spec.
 
 ## Out Of Scope
-Ce qui est explicitement exclu.
+List what is explicitly excluded from this spec.
 
 ## Product Decisions
-Décisions produit et fonctionnelles importantes déjà clarifiées.
+Record important product and functional decisions already clarified.
 
 ## Implementation Decisions
-Direction technique durable, interfaces ou modules importants, deep modules visés, contraintes d'architecture.
+Record durable technical direction, key interfaces or modules, deep modules targeted, and architecture constraints.
 
 ## Testing Decisions
-Comportements à tester, stratégie de test, risques de régression et feedback loops importantes.
-
-## Acceptance Criteria
-Critères globaux vérifiables pour l'initiative ou la feature.
+Record behaviors to test, testing strategy, regression risks, and important feedback loops.
 
 ## Risks And Open Questions
-Incertitudes restantes, risques et hypothèses.
+List remaining uncertainties, risks, assumptions, and questions that are acceptable to carry forward.
+
+## Further Notes
+Add only useful notes that do not fit elsewhere.
 ```
+
+Règles de sections :
+
+- `Problem Statement` : required.
+- `Solution` : required.
+- `User Stories` : required.
+- `Scope` : required.
+- `Out Of Scope` : required.
+- `Product Decisions` : required.
+- `Implementation Decisions` : required.
+- `Testing Decisions` : required.
+- `Risks And Open Questions` : required.
+- `Further Notes` : optional.
 
 ## Règles de confirmation
 
@@ -123,13 +158,14 @@ Incertitudes restantes, risques et hypothèses.
 
 ## Vérification finale
 
-- La spec a une source de vérité claire : issue GitHub ou fichier local.
+- La spec a une source de vérité claire : issue GitHub/GitLab ou fichier local.
 - Le scope et le out of scope sont explicites.
-- Les critères d'acceptation sont vérifiables.
+- Les user stories ont des IDs stables et couvrent les cas d'usage importants.
 - Les risques et questions ouvertes acceptables sont documentés.
 
 ## Limites
 
 - Ne pas faire une grosse interview par défaut.
 - Ne pas inclure de plan d'implémentation fragile fichier par fichier.
+- Ne pas créer de section `Acceptance Criteria` par défaut.
 - Ne pas créer d'issues de tâches. C'est le rôle de `/split`.

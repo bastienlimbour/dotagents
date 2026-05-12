@@ -58,7 +58,7 @@ Un skill peut recevoir du contexte depuis :
 - La conversation courante.
 - Le prompt utilisateur.
 - Un artefact local.
-- Une issue GitHub.
+- Une issue GitHub ou GitLab.
 - Une spec.
 - Une tâche.
 - Des notes de recherche.
@@ -98,7 +98,7 @@ Les actions importantes demandent une confirmation explicite :
 
 - Prendre une décision importante.
 - Créer un artefact structurant.
-- Publier une spec dans GitHub.
+- Publier une spec dans l'issue tracker.
 - Créer des issues de tâches.
 - Écrire de la documentation globale.
 - Créer un ADR.
@@ -116,13 +116,13 @@ Règle par défaut :
 
 ```text
 .initiatives/<id>/ = mémoire locale d'exploration
-GitHub Issues = surface d'exécution et de collaboration
+GitHub ou GitLab Issues = surface d'exécution et de collaboration
 ```
 
-Dans le workflow GitHub par défaut :
+Dans le workflow issue tracker distant par défaut :
 
 - `brief.md`, `brainstorming.md`, `validation.md` et les recherches liées à une initiative restent en local dans `.initiatives/<id>/`.
-- `spec` et `tasks` vivent dans GitHub Issues.
+- `spec` et `tasks` vivent dans GitHub Issues ou GitLab Issues.
 - `qa` et les résumés d'implémentation peuvent être des commentaires ou checklists sur les issues concernées.
 
 Dans le fallback markdown local :
@@ -194,6 +194,7 @@ Le workflow s'appuie sur les principes suivants : deep modules, seams, locality 
 ### Inclus En V1
 
 - GitHub Issues via `gh`.
+- GitLab Issues via `glab`.
 - Fallback markdown local dans `.initiatives/`.
 - Artefacts d'exploration d'initiative.
 - Specs et découpage en tâches.
@@ -211,7 +212,7 @@ Le workflow s'appuie sur les principes suivants : deep modules, seams, locality 
 - Boucles d'automatisation agent.
 - Ralph Loop ou implémentation autonome continue.
 - Fermeture automatique d'issues.
-- Support officiel GitLab, Linear ou Jira.
+- Support officiel Linear ou Jira.
 - Skill `/research` dédié.
 - Index persistant des initiatives locales.
 - Fichier local `decision-log.md`.
@@ -229,11 +230,11 @@ Ces éléments peuvent être mentionnés comme améliorations futures, mais ils 
 | `validation.md` | `.initiatives/<id>/validation.md` | Non | Pendant la validation | Réduit l'incertitude, ne remplace pas une spec |
 | Recherche d'initiative | `.initiatives/<id>/research/*.md` | Non | Pour une extraction liée à l'initiative | Longue conversation, recherche ou exploration |
 | Recherche globale | `docs/research/*.md` | Oui | Pour une recherche réutilisable au niveau projet | Stack, architecture, fournisseur, réglementation, contrainte durable |
-| Spec | Issue GitHub par défaut | Oui via tracker | Après publication | Source de vérité de ce qui doit être construit |
+| Spec | Issue GitHub/GitLab par défaut | Oui via tracker | Après publication | Source de vérité de ce qui doit être construit |
 | Spec locale fallback | `.initiatives/<id>/spec.md` | Non | Si pas de tracker ou choix local | Mode solo/local |
-| Issues de tâches | Issues GitHub par défaut | Oui via tracker | Pendant l'implémentation | Tranches verticales liées à la spec parente |
+| Issues de tâches | Issues GitHub/GitLab par défaut | Oui via tracker | Pendant l'implémentation | Tranches verticales liées à la spec parente |
 | Tâches locales fallback | `.initiatives/<id>/tasks/*.md` | Non | Si pas de tracker ou choix local | Miroir de la structure des issues de tâches |
-| Checklist QA | Commentaire/checklist GitHub ou fichier local | Selon emplacement | Pendant la validation manuelle | Support de QA humaine |
+| Checklist QA | Commentaire/checklist GitHub/GitLab ou fichier local | Selon emplacement | Pendant la validation manuelle | Support de QA humaine |
 | `CONTEXT.md` | Racine ou racine de contexte | Oui | Toujours pour le langage de domaine | Glossaire strict et langage partagé |
 | `CONTEXT-MAP.md` | Racine du projet | Oui | Monorepos ou projets multi-contextes | Pointe les agents vers les contextes |
 | ADR | `docs/adr/*.md` | Oui | Décisions globales durables | Critères ADR stricts |
@@ -282,7 +283,7 @@ Structure locale par défaut :
         └── 002-task-slug.md
 ```
 
-`spec.md` et `tasks/` ne sont présents que si l'utilisateur choisit explicitement de créer des artefacts locaux en markdown à la place de GitHub Issues.
+`spec.md` et `tasks/` ne sont présents que si l'utilisateur choisit explicitement de créer des artefacts locaux en markdown à la place d'un issue tracker distant.
 
 ### Format Des Artefacts Locaux
 
@@ -326,10 +327,10 @@ Avant la spec :
 .initiatives/<id>/ = source de vérité de l'exploration
 ```
 
-Après publication d'une spec GitHub :
+Après publication d'une spec dans l'issue tracker distant :
 
 ```text
-issue GitHub de spec = source de vérité de ce qui doit être construit
+issue GitHub ou GitLab de spec = source de vérité de ce qui doit être construit
 .initiatives/<id>/ = archive locale non canonique de l'exploration
 ```
 
@@ -350,7 +351,7 @@ draft en conversation -> validation utilisateur -> écriture ou publication
 Cela s'applique à :
 
 - Création ou mise à jour substantielle de `brief.md`.
-- Publication d'une spec GitHub.
+- Publication d'une spec dans l'issue tracker.
 - Création d'une `spec.md` locale.
 - Création d'issues de tâches depuis un split.
 - Création de documentation globale.
@@ -448,9 +449,19 @@ Les ADRs ne servent pas pour :
 Format ADR minimal :
 
 ```markdown
-# Short Decision Title
+# ADR: <short decision title>
 
-1 à 3 courts paragraphes couvrant le contexte, la décision et la raison.
+## Context
+Explain the situation, forces, constraints, and why a decision is needed.
+
+## Decision
+State the chosen decision clearly.
+
+## Consequences
+Describe expected benefits, costs, risks, and follow-up implications.
+
+## Alternatives Considered
+List the serious alternatives considered and why they were not chosen.
 ```
 
 ### Emplacements De Recherche
@@ -499,6 +510,7 @@ Support officiel v1 :
 
 ```text
 GitHub Issues via gh
+GitLab Issues via glab
 ```
 
 Fallback :
@@ -507,7 +519,7 @@ Fallback :
 Markdown local dans .initiatives/
 ```
 
-Les autres issue trackers peuvent être décrits manuellement dans `docs/agents/issue-tracker.md`, mais ils ne sont pas officiellement supportés en v1.
+Les autres issue trackers, comme Linear ou Jira, peuvent être décrits manuellement dans `docs/agents/issue-tracker.md`, mais ils ne sont pas officiellement supportés en v1.
 
 ### Pas De Triage En V1
 
@@ -573,6 +585,40 @@ Chaque fichier de step reste une spécification autonome, pas une implémentatio
 - [`/zoom-out`](steps/zoom-out.md)
 - [`/improve-codebase-architecture`](steps/improve-codebase-architecture.md)
 
+## Exemples D'Utilisation
+
+Ces exemples ne sont pas des flows obligatoires.
+
+### Greenfield Ou Grosse Initiative
+
+```text
+setup -> brainstorm -> grill/recherche -> capture -> brief -> validate -> prototype -> grill/recherche -> to-spec -> split -> implement -> review -> qa
+```
+
+### Feature Substantielle
+
+```text
+grill/exploration -> brief optionnel -> capture optionnel -> to-spec -> split -> implement -> review -> qa
+```
+
+### Petite Feature
+
+```text
+grill/exploration -> to-spec ou execution contract direct -> implement -> qa/review si utile
+```
+
+### Bug Ou Régression
+
+```text
+diagnose -> test de régression -> review si utile -> qa si visible utilisateur
+```
+
+### Sujet D'Architecture
+
+```text
+zoom-out -> improve-codebase-architecture -> prototype si besoin -> implement ou implement-tdd
+```
+
 ## Skills Non Inclus En V1
 
 ### Pas De `/research`
@@ -624,40 +670,6 @@ Les futures versions pourront aussi ajouter :
 - Workflow `ready-for-agent` automatisé.
 - Boucles d'automatisation.
 - Fermeture automatique d'issues.
-
-## Exemples D'Utilisation
-
-Ces exemples ne sont pas des flows obligatoires.
-
-### Greenfield Ou Grosse Initiative
-
-```text
-setup -> brainstorm -> grill/recherche -> capture -> brief -> validate -> prototype -> grill/recherche -> to-spec -> split -> implement -> review -> qa
-```
-
-### Feature Substantielle
-
-```text
-grill/exploration -> brief optionnel -> capture optionnel -> to-spec -> split -> implement -> review -> qa
-```
-
-### Petite Feature
-
-```text
-grill/exploration -> to-spec ou execution contract direct -> implement -> qa/review si utile
-```
-
-### Bug Ou Régression
-
-```text
-diagnose -> test de régression -> review si utile -> qa si visible utilisateur
-```
-
-### Sujet D'Architecture
-
-```text
-zoom-out -> improve-codebase-architecture -> prototype si besoin -> implement ou implement-tdd
-```
 
 ## Notes De Design Ouvertes
 

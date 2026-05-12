@@ -41,47 +41,70 @@ S'il existe, il est l'artefact canonique d'exploration produit avant la spec.
 
 Après publication d'une spec, le brief devient une archive locale non canonique.
 
+Le brief est produit-first. Il peut conserver une trace légère de signaux techniques dans `Technical Notes`, mais les décisions techniques durables appartiennent à la spec ou aux ADRs.
+
 Template :
+
+Les lignes de guidance dans le template sont des placeholders à remplacer dans l'artefact généré.
 
 ```markdown
 # Brief: <title>
 
 ## Problem
-Quel problème doit être résolu.
+Describe the user, product, business, or domain problem to solve.
 
-## Target Users
-Pour qui le problème est résolu.
+## Users And Use Cases
+Identify the target users and the main situations where the problem appears.
 
 ## Context
-Contexte produit, business, domaine ou stratégique pertinent.
+Capture relevant product, business, domain, strategic, or timing context.
 
-## Proposed Solution
-Direction de solution actuelle.
+## Solution Direction
+Describe the current solution direction without over-specifying implementation details.
 
 ## Value Proposition
-Pourquoi cette solution crée de la valeur.
+Explain why this direction creates value for users or the business.
 
-## Use Cases
-Cas d'usage principaux.
-
-## Product Decisions
-Décisions produit déjà clarifiées.
-
-## Constraints
-Contraintes connues : business, UX, techniques, timing, budget, légales ou autres.
-
-## Risks
-Risques principaux.
-
-## Open Questions
-Questions non résolues.
+## Scope
+List what is included in the initiative at the product level.
 
 ## Out Of Scope
-Ce qui est exclu pour le moment.
+List what is intentionally excluded for now.
+
+## Product Decisions
+Record product or functional decisions already clarified.
+
+## Technical Notes
+Capture lightweight technical constraints, dependencies, or implementation signals mentioned during exploration.
+
+## Constraints
+List known business, UX, timing, budget, legal, operational, or technical constraints.
+
+## Risks
+List the main product, adoption, execution, business, or technical risks.
+
+## Open Questions
+List unresolved questions that should be answered before spec, validation, or implementation.
 
 ## References
-Liens vers `brainstorming.md`, `research/*.md`, issues ou documents externes.
+Link to brainstorming notes, validation notes, research, issues, docs, or external references.
 ```
+
+Règles de sections :
+
+- `Problem` : required.
+- `Users And Use Cases` : required.
+- `Context` : required.
+- `Solution Direction` : required.
+- `Value Proposition` : required.
+- `Scope` : required.
+- `Out Of Scope` : required.
+- `Product Decisions` : required.
+- `Technical Notes` : optional.
+- `Constraints` : required.
+- `Risks` : required.
+- `Open Questions` : required.
+- `References` : optional.
 
 ## Règles de confirmation
 

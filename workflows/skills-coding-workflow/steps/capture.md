@@ -36,34 +36,17 @@ docs/research/<slug>.md
 
 ## Format
 
-Pour une session de grilling, extraire :
+Pas de template canonique.
 
-- Faits.
-- Hypothèses.
-- Décisions clarifiées.
-- Options comparées.
-- Raisons des choix.
-- Questions ouvertes.
+La structure doit être choisie par l'agent selon ce qui est capturé : session de grilling, recherche, exploration codebase, longue discussion, comparaison d'options ou autre contexte durable.
 
-Pour une session de recherche, structurer la sortie selon le sujet et les preuves, pas selon un template rigide de décisions.
+Règles :
 
-Template adaptable :
-
-```markdown
-# <title>
-
-## Context
-
-## Key Findings
-
-## Decisions Or Strong Signals
-
-## Options Considered
-
-## Open Questions
-
-## Sources Or References
-```
+- Garder un titre clair.
+- Structurer le document selon le sujet, pas selon un template rigide.
+- Lorsque c'est utile (après une session de gilling par exemple), extraire et séparer faits, hypothèses, interprétations, décisions, options, raisons des choix, et questions ouvertes
+- Citer les sources ou références importantes lorsqu'elles existent.
+- Ne pas créer automatiquement d'ADR, de spec ou de brief depuis une capture.
 
 ## Règles de confirmation
 
@@ -77,4 +60,4 @@ L'agent n'a pas besoin de montrer tout le document en draft, sauf demande explic
 
 - Ne pas mettre à jour `brief.md` automatiquement.
 - Ne pas créer d'ADR automatiquement.
-- Ne pas publier dans GitHub par défaut.
+- Ne pas publier dans l'issue tracker distant par défaut.

@@ -39,17 +39,51 @@ Après confirmation, les findings peuvent être créés comme commentaire d'issu
 
 ## Format
 
-Format d'un finding :
+Template :
+
+Les lignes de guidance dans le template sont des placeholders à remplacer dans l'artefact généré.
+
+```markdown
+# Review: <title>
+
+Source: <issue, spec, task, PR, diff, or local path>
+
+## Findings
+List findings first, sorted by severity. If there are no findings, write `No findings.`
+
+### <Severity>: <title>
+
+Location: <file and line if available>
+
+What is wrong:
+Why it matters:
+Suggested fix:
+Related source item:
+
+## Residual Risks And Missing Tests
+List residual risks, missing tests, or verification gaps even when there are no findings.
+
+## Reviewed Scope
+Describe what source material, diff, files, or behavior was reviewed.
+
+## Checks Reviewed
+List tests, builds, lint, typecheck, QA notes, or other checks considered during review.
+```
+
+S'il n'y a aucun finding, `## Findings` doit contenir explicitement :
 
 ```text
-Severity: Critical | High | Medium | Low
-Title
-Location
-What is wrong
-Why it matters
-Suggested fix direction
-Related acceptance criteria, if relevant
+No findings.
 ```
+
+Règles de sections :
+
+- `Source` : required.
+- `Findings` : required.
+- Champs d'un finding : required lorsqu'un finding existe.
+- `Residual Risks And Missing Tests` : required.
+- `Reviewed Scope` : required.
+- `Checks Reviewed` : required.
 
 ## Vérification finale
 

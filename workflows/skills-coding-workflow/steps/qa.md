@@ -22,10 +22,10 @@ Générer une checklist de QA humaine pour une tâche, spec ou implémentation.
 ## Comportement
 
 - Lire la source de vérité.
-- Lire les critères d'acceptation.
+- Lire les critères d'acceptation, user stories, scope items ou exigences explicites selon la source.
 - Inspecter les changements pertinents.
 - Identifier les parcours utilisateur à valider.
-- Mapper les checks aux critères d'acceptation.
+- Mapper les checks à la source de vérité : user stories, critères d'acceptation, scope items ou exigences explicites selon le contexte.
 - Inclure les préconditions et données de test.
 - Inclure les checks de régression.
 - Inclure les checks techniques : tests, build, lint ou typecheck lorsque pertinent.
@@ -44,39 +44,55 @@ La QA est orientée validation humaine du produit, pas seulement checks techniqu
 
 Template :
 
+Les lignes de guidance dans le template sont des placeholders à remplacer dans l'artefact généré.
+
 ```markdown
 # QA Checklist: <task or spec>
 
-## Context
-Source de vérité relue, scope testé et limites.
+Source: <issue, spec, task, PR, or local path>
+
+## Scope
+Describe what this checklist validates and any important limits.
 
 ## Preconditions
-État initial, données requises, comptes, flags, environnement ou setup.
+List required environment, data, accounts, flags, setup, or initial state.
 
 ## User Flows To Validate
-- [ ] Parcours principal.
-- [ ] Parcours alternatif important.
-- [ ] Erreur ou edge case important.
+Checklist of user-facing flows to verify manually.
+- [ ] <Primary flow>
+- [ ] <Important alternate flow>
+- [ ] <Important error or edge case>
 
-## Acceptance Criteria Mapping
-- [ ] AC1: ...
-- [ ] AC2: ...
+## Source Coverage
+Map checks to the relevant user stories, acceptance criteria, scope items, or explicit requirements.
+- [ ] <Source item covered>
 
 ## Regression Checks
-- [ ] Zone existante qui pourrait avoir été cassée.
+Checklist of existing behavior or areas that could regress.
+- [ ] <Existing behavior or area that could regress>
 
 ## Technical Checks
-- [ ] Tests automatisés à lancer.
-- [ ] Build, lint, typecheck ou autres commandes pertinentes.
-- [ ] Logs, monitoring ou checks runtime si pertinent.
+Checklist of automated tests, build, lint, typecheck, runtime, or monitoring checks to run.
+- [ ] <Automated test, build, lint, typecheck, or runtime check>
 
 ## Open Risks
-Risques non entièrement couverts par cette checklist.
+List risks not fully covered by this checklist.
 ```
+
+Règles de sections :
+
+- `Source` : required.
+- `Scope` : required.
+- `Preconditions` : required.
+- `User Flows To Validate` : required quand un comportement utilisateur existe.
+- `Source Coverage` : required.
+- `Regression Checks` : required.
+- `Technical Checks` : required.
+- `Open Risks` : required.
 
 ## Vérification finale
 
-- Les checks couvrent les critères d'acceptation pertinents.
+- Les checks couvrent les éléments pertinents de la source de vérité.
 - Les préconditions et données de test nécessaires sont indiquées.
 - Les risques ouverts sont explicites.
 - L'agent ne prétend pas avoir exécuté la QA humaine.

@@ -24,8 +24,13 @@ Interviewer l'utilisateur de manière insistante pour clarifier un plan, une id�
 - Fournir une recommandation pour chaque question.
 - Explorer le codebase si la réponse se trouve dans le repo.
 - Parcourir les dépendances entre décisions une par une.
+- Ne pas s'arrêter parce que le plan semble "assez clair" ; continuer tant qu'il reste des branches critiques, ambiguïtés ou hypothèses faibles.
+- Creuser la réponse reçue avant de passer à une nouvelle branche.
+- Traiter les réponses vagues ou provisoires comme des signaux à clarifier.
+- Challenger les contradictions, compromis cachés, alternatives non considérées et décisions difficiles à inverser.
+- Utiliser des angles de questionnement adaptés au contexte : intention, contraintes, non-objectifs, alternatives, hypothèses, modes d'échec, dépendances, réversibilité et impacts downstream.
 - Continuer jusqu'à obtenir une compréhension partagée.
-- Résumer les décisions clarifiées lorsque cela aide à stabiliser la suite.
+- Résumer une branche lorsqu'elle est résolue, sans remplacer le grilling par de la synthèse prématurée.
 
 ## Sorties
 
@@ -38,8 +43,15 @@ Un artefact peut être créé seulement si l'utilisateur le demande explicitemen
 - Les questions critiques ont reçu une réponse ou sont explicitement restées ouvertes.
 - Les décisions dépendantes ont été traitées dans un ordre cohérent.
 - Les recommandations de l'agent sont séparées des décisions utilisateur.
+- Les hypothèses importantes ont été rendues explicites.
+- Les alternatives sérieuses ont été considérées ou volontairement écartées.
+- Les risques, modes d'échec et décisions difficiles à inverser ont été examinés.
+- L'utilisateur confirme que la compréhension partagée est suffisante pour passer à la suite, ou les questions ouvertes sont explicitement listées.
 
 ## Limites
 
 - Pas de mise à jour automatique de documentation.
 - Pas de création d'artefact sauf demande explicite.
+- Pas d'implémentation pendant la session.
+- Pas de log ou capture automatique ; utiliser `/capture` seulement après demande ou confirmation.
+- Si la session révèle un besoin de documentation durable, proposer `/grill-with-docs` au lieu de mettre à jour les docs depuis `/grill-me`.

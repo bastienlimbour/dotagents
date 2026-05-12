@@ -54,6 +54,39 @@ Ce skill est un outil d'analyse architecturale, pas un refactor automatique.
 - ADR proposé seulement si les critères ADR sont remplis.
 - Refactor implémenté seulement après décision explicite.
 
+## Format
+
+### ADR
+
+Créer un ADR seulement si les critères stricts sont remplis : décision difficile à inverser, surprenante sans contexte, et impliquant un vrai compromis entre options.
+
+Template :
+
+Les lignes de guidance dans le template sont des placeholders à remplacer dans l'artefact généré.
+
+```markdown
+# ADR: <short decision title>
+
+## Context
+Explain the situation, forces, constraints, and why a decision is needed.
+
+## Decision
+State the chosen decision clearly.
+
+## Consequences
+Describe expected benefits, costs, risks, and follow-up implications.
+
+## Alternatives Considered
+List the serious alternatives considered and why they were not chosen.
+```
+
+Règles de sections :
+
+- `Context` : required.
+- `Decision` : required.
+- `Consequences` : required.
+- `Alternatives Considered` : required.
+
 ## Deletion test
 
 ```text
