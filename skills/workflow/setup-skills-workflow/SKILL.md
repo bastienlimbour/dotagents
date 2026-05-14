@@ -15,7 +15,7 @@ This is a prompt-driven skill, not a deterministic script. Explore, present what
 - Existing agent rules need an audit, cleanup, or realignment with the workflow.
 - The user asks to setup agent workflow, configure workflow conventions, install workflow docs, or define conventions for issues, local artifacts, documentation, domain context, or ADRs.
 
-Do not use this skill to create feature specs, split tasks, implement code, run triage automation, or create initiative artifacts such as `brief.md`, `brainstorming.md`, or `validation.md` unless the user separately asks for those artifacts.
+Do not use this skill to create feature specs, split tasks, implement code, run triage automation, or create initiative artifacts such as `product-brief.md`, `brainstorming.md`, or `validation.md` unless the user separately asks for those artifacts.
 
 ## Workflow
 

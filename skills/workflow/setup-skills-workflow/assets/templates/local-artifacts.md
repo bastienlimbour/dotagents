@@ -22,7 +22,7 @@ Rules:
 Examples:
 
 - `.initiatives/<initiative>/brainstorming.md`
-- `.initiatives/<initiative>/brief.md`
+- `.initiatives/<initiative>/product-brief.md`
 - `.initiatives/<initiative>/validation.md`
 - `.initiatives/<initiative>/spec.md`
 - `.initiatives/<initiative>/tasks/*.md`
