@@ -25,17 +25,21 @@ Divergence by default. Treat each user answer as material to expand into more po
 
 ### 1. Establish The Artifact
 
-Resolve the initiative and brainstorming artifact before writing. Use the project's local artifact conventions for paths, naming, and creation rules.
+Resolve the initiative and `brainstorming` artifact before writing. Use the project's local artifact conventions for paths, naming, and creation rules.
 
 - Start from any user-provided initiative or artifact path; otherwise inspect existing initiatives and artifacts for a match to the current context.
-- If nothing matches, propose a new initiative and a `brainstorming.md` artifact.
+- If nothing matches, propose a new initiative and a `brainstorming.md` artifact, unless the project conventions use a different artifact filename.
 - Report findings: matched initiative, matched artifact, proposed create/update action, and any ambiguity.
-- Ask for confirmation before creating an initiative, creating an artifact, or updating an existing artifact.
-- After confirmation, create or update the artifact as needed using [brainstorming.md](assets/templates/brainstorming.md) template. For new artifacts, summarize the starting context in `## Starting Context`, and never rewrite it after the session starts.
+- Ask for confirmation before creating an initiative or selecting an artifact path. This confirmation approves the target only.
+- After target confirmation, continue to the next step of this workflow. Do not create the artifact or draft substantive content during this step.
+
+If the user explicitly declines an artifact, continue in conversation only and clearly state that no persistent `brainstorming` will be maintained.
+
+### 2. Create / Update The Artifact
+
+After target confirmation, create or update the artifact as needed using [brainstorming.md](assets/templates/brainstorming.md) template. For new artifacts, summarize the starting context in `## Starting Context`, and never rewrite it after the session starts.
 
 Update the confirmed brainstorming artifact throughout the session without asking again for each write; the initial confirmation covers live brainstorming updates.
-
-If the user explicitly declines an artifact, continue in conversation only and clearly state that no persistent brainstorming source will be maintained.
 
 ### 2. Frame Lightly Before Diverging
 
@@ -127,9 +131,6 @@ There are several ways the product could help users: X can ..., Y can ..., Z can
 
 ## Output
 
-During the run, provide:
+At the end of the task, provide:
 
-- The proposed initiative and brainstorming artifact, then one confirmation question before writing.
-- One brainstorming question at a time, with options or recommendations when useful.
-- Periodic concise summaries when a branch is resolved or the artifact has materially changed.
-- A concise closing summary of the main explored themes and any explicit `[Current scope]`, `[Later]`, or `[Rejected]` ideas, with the artifact updated.
+A concise closing summary of the main explored themes, the key ideas captured, and any remaining `[Explore]` ideas.

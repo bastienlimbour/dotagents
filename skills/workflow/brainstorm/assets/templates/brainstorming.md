@@ -1,17 +1,17 @@
-# Brainstorming: <title>
+# Brainstorming: {{ title }}
 
 ## Starting Context
 
-<initial idea, prompt, initiative context, known constraints, and assumptions>
+{{ initial idea, prompt, initiative context, known constraints, and assumptions }}
 
 ## Ideas
 
-### <Theme Or Exploration Angle>
+### {{ theme or exploration angle }}
 
-- [Explore] <idea>
-  Note: <source, context, nuance, variation, or unresolved question>
+- [Explore] {{ idea }}
+  Note: {{ source, context, nuance, variation, or unresolved question }}
 
-- [Current scope] <idea>
+- [Current scope] {{ idea }}
   Note: <why this belongs in the current scope, if explicitly confirmed>
 
 - [Later] <idea>
