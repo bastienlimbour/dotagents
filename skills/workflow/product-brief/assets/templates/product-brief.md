@@ -1,56 +1,72 @@
 # Product Brief: {{ title }}
 
-## Problem
+## Problem / Opportunity
 
-{{ user, product, business, or domain problem to solve }}
+{{ user, product, business, or domain problem/opportunity to solve; avoid framing the problem as missing a specific feature }}
 
-## Users And Use Cases
+## Target Users
 
-{{ target users and main situations where the problem appears }}
+{{ primary and ssecondary users, prioritized if possible }}
+
+## Core Scenarios
+
+{{ main situations where the product creates value; focus on user goals and pains, not detailed user stories }}
 
 ## Context
 
-{{ relevant product, business, domain, strategic, timing, or existing-system context }}
+{{ relevant product, business, domain, strategic, timing, current journey, landscape, or existing-system context }}
 
 ## Solution Direction
 
-{{ current solution direction without over-specifying implementation details }}
+{{ product-level direction; may describe the broader product direction, but clearly label what applies to the current scope versus near-term or future scope }}
 
 ## Value Proposition
 
-{{ why this direction creates value for users or the business }}
+{{ top 2-3 value props tied to target users and core scenarios }}
 
-## Success Measures
+## Current Scope
 
-{{ expected outcomes or lightweight signals that would indicate the initiative is valuable }}
+{{ what is included in the current scope (initiative, release, MVP, or feature iteration); group by scenario, journey, capability, or lifecycle }}
 
-## Scope
+## Later Scope
 
-{{ what is included in the initiative at the product level }}
+{{ important capabilities not included in the current scope }}
 
-## Deferred / Future Scope
+**Near-term follow-up:**
 
-{{ what is not included now but might be considered later }}
+- {{ likely next iteration or immediately adjacent capability }}
+
+**Future possibilities:**
+
+- {{ later ideas or expansion paths }}
 
 ## Out Of Scope
 
-{{ what is explicitly excluded unless revisited by a later decision }}
+{{ explicit exclusions; things intentionally not being solved unless a later decision changes this }}
 
-## Product Decisions
+## Product Model
 
-{{ product or functional decisions already clarified }}
+{{ key conceptual objects, entities, statuses, relationships, and domain distinctions; include current-scope model first, and label future model extensions when relevant }}
+
+## Product Rules
+
+{{ durable product behavior rules already decided; label current, near-term, or future when needed }}
+
+## Success Measures
+
+{{ concise goals, signals, metrics, or targets; use TBD only when the metric itself still needs deciding }}
 
 ## Assumptions To Validate
 
-{{ important assumptions, bets, or kill risks already identified }}
+{{ important assumptions or bets; prefer testable wording and mention validation method when known }}
 
 ## Constraints
 
 {{ known business, UX, timing, budget, legal, operational, or technical constraints }}
 
-## Technical Notes
+## Technical / Architecture Handoff Notes
 
-{{ lightweight technical constraints, dependencies, existing-system facts, or implementation signals mentioned during exploration }}
+{{ lightweight technical decisions, constraints, dependencies, architecture implications, or technical questions mentioned during framing; avoid detailed schemas, API contracts, or implementation plans }}
 
 ## Risks
 
@@ -58,4 +74,4 @@
 
 ## Open Questions
 
-{{ unresolved questions that should be answered before spec, validation, or implementation }}
+{{ unresolved decisions that should be answered before validation, architecture, spec, or implementation }}
