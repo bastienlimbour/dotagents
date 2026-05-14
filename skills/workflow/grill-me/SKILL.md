@@ -22,7 +22,7 @@ Do not use this skill for simple Q&A, code implementation, ordinary code review,
 2. Use available evidence before asking. If codebase, documentation, issues, specs, briefs, ADRs, or notes can answer a question, inspect them instead of making the user restate known facts.
 3. Build a decision tree of the material branches to test: intent, scope, non-goals, constraints, alternatives, assumptions, dependencies, failure modes, reversibility, rollout, ownership, and downstream impact.
 4. Ask exactly one question at a time. Wait for the user's answer before continuing.
-5. For each question, provide your recommended answer or default, clearly separated from the question.
+5. For each question, suggest multiple options and provide your recommended answer.
 6. When an answer is vague, provisional, contradictory, or overloaded, stay on that branch and dig deeper before moving on.
 7. Challenge hidden tradeoffs, unexamined alternatives, contradictions with existing sources of truth, optimistic assumptions, and decisions that would be expensive to reverse.
 8. Briefly summarize a branch once it is resolved, then continue to the next material branch.
