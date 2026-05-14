@@ -1,8 +1,8 @@
 # Spécification Du Skill-Based Coding Workflow
 
-Ce document est la spécification interne du futur workflow de coding IA basé sur des Agent Skills. Il ne s'agit pas d'un fichier de règles runtime et il n'est pas destiné à être copié tel quel dans les projets utilisateurs.
+Ce document est la spécification interne du workflow de coding IA basé sur des Agent Skills. Il ne s'agit pas d'un fichier de règles runtime et il n'est pas destiné à être copié tel quel dans les projets utilisateurs.
 
-Son rôle est de décrire précisément le workflow, les artefacts, les conventions et les futurs skills afin de pouvoir créer les `SKILL.md` plus tard.
+Son rôle est de décrire les conventions stables, les artefacts et les invariants du workflow afin de créer les futurs `SKILL.md` et de garder les skills existants cohérents.
 
 ## Objectif
 
@@ -51,21 +51,22 @@ Concrètement, les agents doivent :
 
 ### Autonomie Des Skills
 
-Les futurs skills ne doivent pas dépendre du fait qu'un autre skill ait été exécuté avant.
+Les skills ne doivent pas dépendre du fait qu'un autre skill ait été exécuté avant.
 
 Un skill peut recevoir du contexte depuis :
 
 - La conversation courante.
 - Le prompt utilisateur.
 - Un artefact local.
-- Une issue GitHub ou GitLab.
+- Une issue GitHub/GitLab ou un fichier d'issue markdown local.
 - Une spec.
 - Une tâche.
 - Des notes de recherche.
 - La documentation projet.
+- Les conventions projet déjà injectées dans le contexte agent par le setup.
 - L'exploration du codebase.
 
-Les skills ne doivent pas imposer de dépendances directes du type "lance `/brief` avant" ou "lance `/to-spec` après".
+Les skills ne doivent pas imposer de dépendances directes du type "lance `product-brief` avant" ou "lance `to-spec` après".
 
 Ils peuvent dire qu'il manque du contexte, poser des questions ciblées, recommander de mieux cadrer la demande, ou proposer un artefact pertinent, mais chaque `SKILL.md` doit rester une routine autonome.
 
@@ -115,20 +116,19 @@ Si un contenu équivalent existe ailleurs, la version non canonique doit être u
 Règle par défaut :
 
 ```text
-.initiatives/<id>/ = mémoire locale d'exploration
-GitHub ou GitLab Issues = surface d'exécution et de collaboration
+docs/agents/*.md = artefacts sources des conventions du workflow pour le repo
+.initiatives/<id>/ = mémoire locale d'exploration et d'artefacts locaux
+issue tracker choisi = surface d'exécution et de collaboration
 ```
 
-Dans le workflow issue tracker distant par défaut :
+L'issue tracker choisi peut être GitHub Issues, GitLab Issues ou markdown local sous `.initiatives/`, selon la convention projet.
 
-- `brief.md`, `brainstorming.md`, `validation.md` et les recherches liées à une initiative restent en local dans `.initiatives/<id>/`.
-- `spec` et `tasks` vivent dans GitHub Issues ou GitLab Issues.
-- `qa` et les résumés d'implémentation peuvent être des commentaires ou checklists sur les issues concernées.
+Règles par artefact :
 
-Dans le fallback markdown local :
-
-- `spec.md` et `tasks/*.md` vivent dans `.initiatives/<id>/`.
-- Ces fichiers ne sont pas versionnés, sauf si l'utilisateur modifie explicitement la convention.
+- `product-brief.md`, `brainstorming.md`, `validation.md` et les recherches liées à une initiative restent en local dans `.initiatives/<id>/`.
+- Si le tracker choisi est GitHub ou GitLab, `spec` et `tasks` vivent dans les issues du tracker.
+- Si le tracker choisi est markdown local, `spec.md` et `tasks/*.md` vivent dans `.initiatives/<id>/` et suivent les conventions d'artefacts locaux du setup.
+- `qa`, commentaires et résumés d'implémentation vivent avec l'issue ou le fichier markdown concerné.
 
 ### Documentation Durable Mais Légère
 
@@ -193,9 +193,7 @@ Le workflow s'appuie sur les principes suivants : deep modules, seams, locality 
 
 ### Inclus En V1
 
-- GitHub Issues via `gh`.
-- GitLab Issues via `glab`.
-- Fallback markdown local dans `.initiatives/`.
+- GitHub Issues via `gh`, GitLab Issues via `glab`, ou markdown local sous `.initiatives/` comme issue tracker choisi.
 - Artefacts d'exploration d'initiative.
 - Specs et découpage en tâches.
 - Implémentation avec ou sans TDD.
@@ -203,7 +201,7 @@ Le workflow s'appuie sur les principes suivants : deep modules, seams, locality 
 - Prototypage.
 - Review et génération de checklist QA.
 - Documentation projet via `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/` et `docs/research/`.
-- Setup des règles agent propres à un projet via `CLAUDE.md` ou `AGENTS.md`.
+- Conventions agent propres à un projet via `CLAUDE.md` ou `AGENTS.md`, avec détails dans `docs/agents/`.
 
 ### Hors Scope En V1
 
@@ -212,8 +210,8 @@ Le workflow s'appuie sur les principes suivants : deep modules, seams, locality 
 - Boucles d'automatisation agent.
 - Ralph Loop ou implémentation autonome continue.
 - Fermeture automatique d'issues.
-- Support officiel Linear ou Jira.
-- Skill `/research` dédié.
+- Support officiel d'autres trackers comme Linear ou Jira.
+- Skill `research` dédié.
 - Index persistant des initiatives locales.
 - Fichier local `decision-log.md`.
 
@@ -225,16 +223,17 @@ Ces éléments peuvent être mentionnés comme améliorations futures, mais ils 
 
 | Artefact | Emplacement par défaut | Versionné | Canonique quand | Notes |
 | --- | --- | --- | --- | --- |
-| `brief.md` | `.initiatives/<id>/brief.md` | Non | Avant la spec, si un brief est utilisé | Source de vérité de l'exploration produit |
+| `product-brief.md` | `.initiatives/<id>/product-brief.md` | Non | Avant la spec, si un brief produit est utilisé | Source de vérité de l'exploration produit cadrée |
 | `brainstorming.md` | `.initiatives/<id>/brainstorming.md` | Non | Pendant le brainstorming | Exploration divergente capturée au fil de l'eau |
 | `validation.md` | `.initiatives/<id>/validation.md` | Non | Pendant la validation | Réduit l'incertitude, ne remplace pas une spec |
 | Recherche d'initiative | `.initiatives/<id>/research/*.md` | Non | Pour une extraction liée à l'initiative | Longue conversation, recherche ou exploration |
 | Recherche globale | `docs/research/*.md` | Oui | Pour une recherche réutilisable au niveau projet | Stack, architecture, fournisseur, réglementation, contrainte durable |
-| Spec | Issue GitHub/GitLab par défaut | Oui via tracker | Après publication | Source de vérité de ce qui doit être construit |
-| Spec locale fallback | `.initiatives/<id>/spec.md` | Non | Si pas de tracker ou choix local | Mode solo/local |
-| Issues de tâches | Issues GitHub/GitLab par défaut | Oui via tracker | Pendant l'implémentation | Tranches verticales liées à la spec parente |
-| Tâches locales fallback | `.initiatives/<id>/tasks/*.md` | Non | Si pas de tracker ou choix local | Miroir de la structure des issues de tâches |
+| Spec | Issue GitHub/GitLab ou `.initiatives/<id>/spec.md` | Selon tracker | Après publication ou création | Source de vérité de ce qui doit être construit |
+| Issues de tâches | Issues GitHub/GitLab ou `.initiatives/<id>/tasks/*.md` | Selon tracker | Pendant l'implémentation | Tranches verticales liées à la spec parente |
 | Checklist QA | Commentaire/checklist GitHub/GitLab ou fichier local | Selon emplacement | Pendant la validation manuelle | Support de QA humaine |
+| `docs/agents/issue-tracker.md` | `docs/agents/issue-tracker.md` | Oui | Toujours pour les opérations d'issues | Décrit le tracker choisi et les commandes/conventions associées |
+| `docs/agents/local-artifacts.md` | `docs/agents/local-artifacts.md` | Oui | Toujours pour les artefacts locaux | Décrit `.initiatives/`, chemins, noms et règles d'écriture |
+| `docs/agents/documentation.md` | `docs/agents/documentation.md` | Oui | Toujours pour la consommation de docs projet | Indique quand lire `CONTEXT.md`, `CONTEXT-MAP.md`, ADRs et docs associées |
 | `CONTEXT.md` | Racine ou racine de contexte | Oui | Toujours pour le langage de domaine | Glossaire strict et langage partagé |
 | `CONTEXT-MAP.md` | Racine du projet | Oui | Monorepos ou projets multi-contextes | Pointe les agents vers les contextes |
 | ADR | `docs/adr/*.md` | Oui | Décisions globales durables | Critères ADR stricts |
@@ -271,7 +270,7 @@ Structure locale par défaut :
 ```text
 .initiatives/
 └── 001-initiative-slug/
-    ├── brief.md
+    ├── product-brief.md
     ├── brainstorming.md
     ├── validation.md
     ├── research/
@@ -283,7 +282,7 @@ Structure locale par défaut :
         └── 002-task-slug.md
 ```
 
-`spec.md` et `tasks/` ne sont présents que si l'utilisateur choisit explicitement de créer des artefacts locaux en markdown à la place d'un issue tracker distant.
+`spec.md` et `tasks/` ne sont présents que si le tracker choisi est markdown local, ou si l'utilisateur demande explicitement des artefacts locaux équivalents.
 
 ### Format Des Artefacts Locaux
 
@@ -292,10 +291,39 @@ Les artefacts markdown locaux doivent rester simples.
 Règles :
 
 - Pas de frontmatter.
-- Pas d'en-tête de métadonnées.
 - Un titre markdown classique suffit.
-- Noms fixes pour les artefacts principaux.
-- Noms en kebab-case pour les fichiers `research/*.md`.
+- Respecter le nom et le chemin fournis par l'utilisateur lorsqu'ils existent.
+- Si aucun chemin n'est fourni, proposer un chemin selon les conventions d'artefacts locaux du setup.
+- Noms par défaut pour les artefacts principaux : `brainstorming.md`, `product-brief.md`, `validation.md`, `spec.md`.
+- Noms en kebab-case pour les fichiers `research/*.md`, `tasks/*.md` et les artefacts spécifiques.
+
+Exception : les issues markdown locales peuvent avoir des lignes légères comme `Status:`, `Labels:` et `Parent issue:` ainsi qu'une section `## Comments`, si c'est la convention du tracker local.
+
+### Conventions De `brainstorming.md`
+
+`brainstorming.md` sert à capturer une exploration divergente, pas à produire une spec ou un plan.
+
+Règles utiles aux futurs skills :
+
+- Utiliser `## Starting Context` pour le contexte de départ et ne plus le réécrire une fois la session lancée.
+- Garder les idées sous `## Ideas`, organisées par thèmes ou angles d'exploration adaptés au sujet.
+- Utiliser des tags inline seulement quand ils clarifient le statut : `[Explore]`, `[Current scope]`, `[Later]`, `[Rejected]`.
+- Ne pas dupliquer une idée dans plusieurs sections de type MVP, later, rejected, questions ou assumptions.
+- Attacher les nuances, risques, raisons ou questions comme notes sous l'idée concernée.
+- Ne pas ajouter de synthèse finale ou de convergence produit sauf demande explicite.
+
+### Conventions De `product-brief.md`
+
+`product-brief.md` est un brief produit léger. Il cadre le problème, les utilisateurs, les scénarios, la valeur, les horizons de scope, les règles produit, les risques et les questions ouvertes sans devenir une PRD complète, une spec technique ou une task list.
+
+Règles utiles aux futurs skills :
+
+- Distinguer clairement `Current Scope`, `Near-term follow-up`, `Future possibilities`, `Out Of Scope` et `Open Questions`.
+- Capturer les exclusions explicites dans `Out Of Scope`, pas dans `Later Scope`.
+- Marquer les inconnues importantes par `Not known yet` au lieu de les inventer.
+- Marquer les sections non pertinentes par `Not relevant` avec une courte raison au lieu de les supprimer silencieusement.
+- Garder `Technical / Architecture Handoff Notes` léger : contraintes, dépendances, implications ou questions, pas schémas détaillés ni contrats d'API.
+- Ne pas transformer le brief en backlog, PRD exhaustive, plan d'implémentation, ADR ou spec.
 
 ### Confidentialité
 
@@ -327,14 +355,14 @@ Avant la spec :
 .initiatives/<id>/ = source de vérité de l'exploration
 ```
 
-Après publication d'une spec dans l'issue tracker distant :
+Après publication ou création d'une spec dans le tracker choisi :
 
 ```text
-issue GitHub ou GitLab de spec = source de vérité de ce qui doit être construit
+spec du tracker choisi = source de vérité de ce qui doit être construit
 .initiatives/<id>/ = archive locale non canonique de l'exploration
 ```
 
-L'agent ne doit plus traiter le brief local comme canonique après publication de la spec.
+L'agent ne doit plus traiter le `product-brief.md` local comme canonique après publication ou création de la spec.
 
 Le dossier local d'initiative n'est pas supprimé automatiquement. L'utilisateur choisit de le conserver, l'archiver ou le supprimer.
 
@@ -342,15 +370,15 @@ Le dossier local d'initiative n'est pas supprimé automatiquement. L'utilisateur
 
 ### Artefacts Structurants
 
-Pour les artefacts structurants comme les specs ou les mises à jour substantielles du brief :
+Pour les artefacts structurants comme les specs ou les mises à jour substantielles du brief produit :
 
 ```text
-draft en conversation -> validation utilisateur -> écriture ou publication
+confirmation de la cible -> draft en conversation -> validation du contenu -> écriture ou publication
 ```
 
 Cela s'applique à :
 
-- Création ou mise à jour substantielle de `brief.md`.
+- Création ou mise à jour substantielle de `product-brief.md`.
 - Publication d'une spec dans l'issue tracker.
 - Création d'une `spec.md` locale.
 - Création d'issues de tâches depuis un split.
@@ -367,11 +395,33 @@ confirmation du chemin -> écriture du fichier -> résumé du résultat
 
 L'agent n'a pas besoin de montrer tout le document en draft, sauf demande explicite de l'utilisateur.
 
-### Exception De Capture Live Pour `/brainstorm`
+### Exception De Capture Live Pour `brainstorm`
 
-`/brainstorm` peut écrire au fil de l'eau pendant la session.
+`brainstorm` peut écrire au fil de l'eau pendant la session après confirmation initiale de l'initiative et du chemin de l'artefact.
 
 ## Règles De Documentation
+
+### `docs/agents/`
+
+`docs/agents/` contient les conventions projet produites par le setup. Ces conventions sont ensuite exposées aux agents via `CLAUDE.md` ou `AGENTS.md`, donc les futurs skills doivent les considérer comme déjà disponibles dans le contexte agent après setup.
+
+Fichiers attendus après setup :
+
+- `docs/agents/issue-tracker.md` : tracker choisi, commandes et conventions pour créer, lire, commenter, lier ou fermer des issues.
+- `docs/agents/local-artifacts.md` : conventions `.initiatives/`, noms de dossiers, chemins d'artefacts locaux et règles d'écriture.
+- `docs/agents/documentation.md` : règles de consommation de `CONTEXT.md`, `CONTEXT-MAP.md`, ADRs et documentation projet.
+
+`CLAUDE.md` ou `AGENTS.md` doit rester court et fournir aux agents les conventions nécessaires, directement ou par référence aux fichiers de `docs/agents/`. Les détails ne doivent pas être dupliqués inutilement dans le fichier agent racine.
+
+Les futurs skills doivent :
+
+- Respecter les conventions d'issue tracker déjà présentes dans le contexte agent avant toute opération d'issue ou de tracker.
+- Respecter les conventions d'artefacts locaux déjà présentes dans le contexte agent avant de créer, lire ou modifier un artefact local.
+- Respecter les conventions de documentation déjà présentes dans le contexte agent lorsqu'une exploration ou un travail peut dépendre de la documentation projet.
+- Procéder silencieusement si les fichiers optionnels comme `CONTEXT.md`, `CONTEXT-MAP.md` ou `docs/adr/` n'existent pas.
+- Signaler explicitement une contradiction avec une convention ou un ADR existant au lieu de l'écraser silencieusement.
+
+Le setup ne doit pas utiliser de marqueurs de blocs gérés. Il met à jour des sections Markdown naturelles, préserve les règles utilisateur non liées et évite les duplications.
 
 ### `CONTEXT.md`
 
@@ -399,9 +449,9 @@ Mettre à jour `CONTEXT.md` uniquement lorsqu'un terme, concept, lien de domaine
 
 ### `CONTEXT-MAP.md`
 
-Utiliser `CONTEXT-MAP.md` lorsqu'un repo contient plusieurs contextes, packages, domaines ou sous-projets.
+Utiliser `CONTEXT-MAP.md` lorsqu'un repo contient plusieurs contextes, packages, domaines, apps ou sous-projets.
 
-Il pointe les agents vers les bons fichiers `CONTEXT.md` et la documentation associée.
+Il pointe les agents vers les bons fichiers `CONTEXT.md` et la documentation associée. Ce n'est pas une carte d'architecture générale.
 
 ### ADRs
 
@@ -409,11 +459,13 @@ Il pointe les agents vers les bons fichiers `CONTEXT.md` et la documentation ass
 
 ADR signifie Architecture Decision Record.
 
-Les ADRs vivent dans :
+Les ADRs vivent par défaut dans :
 
 ```text
 docs/adr/
 ```
+
+Dans un repo multi-contextes, des ADRs spécifiques peuvent aussi vivre sous un contexte, par exemple `src/billing/docs/adr/`.
 
 Convention de nommage :
 
@@ -511,15 +563,33 @@ Support officiel v1 :
 ```text
 GitHub Issues via gh
 GitLab Issues via glab
-```
-
-Fallback :
-
-```text
 Markdown local dans .initiatives/
 ```
 
+La convention choisie est définie par le setup et exposée dans le contexte agent. Sa trace durable peut vivre dans `docs/agents/issue-tracker.md`. Le tracker recommandé suit le remote détecté : GitHub pour un remote GitHub, GitLab pour un remote GitLab, markdown local sinon. L'utilisateur peut choisir markdown local même lorsqu'un tracker distant existe.
+
+Si `gh` ou `glab` est absent ou non authentifié, l'agent doit le signaler et recommander l'action concrète suivante. Il ne doit pas basculer silencieusement vers un autre tracker.
+
 Les autres issue trackers, comme Linear ou Jira, peuvent être décrits manuellement dans `docs/agents/issue-tracker.md`, mais ils ne sont pas officiellement supportés en v1.
+
+### Conventions Communes
+
+Les futurs skills qui créent ou découpent des issues doivent respecter les conventions du tracker choisi.
+
+Règles communes :
+
+- Utiliser `gh` pour GitHub et `glab` pour GitLab.
+- Utiliser les fichiers `.initiatives/<initiative>/spec.md` et `.initiatives/<initiative>/tasks/*.md` lorsque le tracker choisi est markdown local.
+- Lier explicitement les tâches à leur spec parente, car les CLIs `gh` et `glab` ne fournissent pas une relation parent/enfant native fiable pour ce workflow.
+- Ne jamais fermer une issue sauf instruction ou autorisation explicite de l'utilisateur.
+- Ne jamais écrire de secrets, tokens, credentials, données personnelles brutes ou exports clients sensibles dans les issues, fichiers markdown locaux ou commentaires.
+
+Pour markdown local, les issues peuvent utiliser :
+
+- `Status:` près du haut du fichier.
+- `Labels:` près du haut du fichier.
+- `Parent issue:` près du haut du fichier pour les tâches issues d'une spec.
+- Un séparateur `---` puis une section `## Comments` pour simuler les commentaires.
 
 ### Pas De Triage En V1
 
@@ -551,7 +621,7 @@ L'execution contract n'est pas un document séparé. C'est l'ensemble minimal d'
 - Acceptance criteria : comment savoir que c'est terminé.
 - Constraints : contraintes produit, UX, techniques, architecture, temps, légales ou business.
 - Feedback loop : test, build, lint, repro, commande, check manuel ou autre vérification.
-- Source of truth : issue, spec, brief, prompt, fichier local ou autre contexte.
+- Source of truth : issue, spec, product brief, prompt, fichier local ou autre contexte.
 
 Si l'execution contract est incomplet, l'agent doit :
 
@@ -561,29 +631,23 @@ Si l'execution contract est incomplet, l'agent doit :
 
 L'agent ne doit pas implémenter silencieusement à partir d'hypothèses floues.
 
-## Skills (étapes du workflow)
+## Skills Et Brouillons De Steps
 
-Les steps actifs du workflow sont maintenant documentés dans `steps/`.
+Cette spec ne maintient pas d'inventaire détaillé des skills déjà créés. Quand un fichier `skills/workflow/<name>/SKILL.md` existe, il est la référence de comportement pour ce skill.
 
-Chaque fichier de step reste une spécification autonome, pas une implémentation finale de `SKILL.md`.
+Les fichiers dans `workflows/skills-coding-workflow/steps/` sont des brouillons d'authoring pour les skills qui ne sont pas encore implémentés. Ils peuvent servir de contexte, mais ils doivent être réalignés avec cette spec et avec les skills existants avant de créer un nouveau `SKILL.md`.
 
-- [`/setup-skills-workflow`](steps/setup-skills-workflow.md)
-- [`/brainstorm`](steps/brainstorm.md)
-- [`/grill-me`](steps/grill-me.md)
-- [`/grill-with-docs`](steps/grill-with-docs.md)
-- [`/capture`](steps/capture.md)
-- [`/brief`](steps/brief.md)
-- [`/validate`](steps/validate.md)
-- [`/prototype`](steps/prototype.md)
-- [`/to-spec`](steps/to-spec.md)
-- [`/split`](steps/split.md)
-- [`/implement`](steps/implement.md)
-- [`/implement-tdd`](steps/implement-tdd.md)
-- [`/review`](steps/review.md)
-- [`/qa`](steps/qa.md)
-- [`/diagnose`](steps/diagnose.md)
-- [`/zoom-out`](steps/zoom-out.md)
-- [`/improve-codebase-architecture`](steps/improve-codebase-architecture.md)
+Règles pour créer un futur skill :
+
+- Décrire une routine claire, autonome et activable indépendamment.
+- Ne pas imposer l'exécution préalable d'un autre skill.
+- Respecter les conventions projet pertinentes déjà présentes dans le contexte agent avant toute opération d'issue, d'artefact local ou de documentation.
+- Explorer le repo et la documentation avant de demander une information qui peut s'y trouver.
+- Si le skill écrit un artefact local, confirmer d'abord l'initiative et le chemin cible.
+- Si le skill écrit un artefact structurant, montrer un draft en conversation et attendre validation du contenu avant écriture.
+- Si le skill écrit au fil de l'eau, documenter explicitement l'exception et la confirmation initiale qui l'autorise.
+- Ne pas créer d'artefacts additionnels, d'issues, de commentaires tracker ou de documentation globale sans demande ou confirmation explicite.
+- S'appuyer sur des feedback loops réelles lorsque le skill implémente, diagnostique, prototype ou review.
 
 ## Exemples D'Utilisation
 
@@ -592,19 +656,19 @@ Ces exemples ne sont pas des flows obligatoires.
 ### Greenfield Ou Grosse Initiative
 
 ```text
-setup -> brainstorm -> grill/recherche -> capture -> brief -> validate -> prototype -> grill/recherche -> to-spec -> split -> implement -> review -> qa
+setup-skills-workflow -> brainstorm -> grill-me/recherche -> capture -> product-brief -> validate -> prototype -> grill-me/recherche -> to-spec -> split -> implement -> review -> qa
 ```
 
 ### Feature Substantielle
 
 ```text
-grill/exploration -> brief optionnel -> capture optionnel -> to-spec -> split -> implement -> review -> qa
+grill-me/exploration -> product-brief optionnel -> capture optionnel -> to-spec -> split -> implement -> review -> qa
 ```
 
 ### Petite Feature
 
 ```text
-grill/exploration -> to-spec ou execution contract direct -> implement -> qa/review si utile
+grill-me/exploration -> to-spec ou execution contract direct -> implement -> qa/review si utile
 ```
 
 ### Bug Ou Régression
@@ -621,62 +685,33 @@ zoom-out -> improve-codebase-architecture -> prototype si besoin -> implement ou
 
 ## Skills Non Inclus En V1
 
-### Pas De `/research`
+### Pas De Skill `research` Dédié
 
 La recherche peut se faire directement dans une session normale avec un prompt.
 
 Utiliser :
 
-- `/capture` pour conserver le résultat.
-- `/validate` si la recherche sert une décision de validation.
+- `capture` pour conserver le résultat.
+- `validate` si la recherche sert une décision de validation.
 
-### Pas De `/triage`
+### Pas De Skill `triage`
 
 Pas de système de triage d'issues en v1.
 
-Concepts utiles à conserver pour une future version :
+Les futurs skills ne doivent pas créer :
 
-- Un triage peut distinguer au minimum les catégories `bug` et `enhancement`.
-- Un triage peut utiliser des états comme `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human` et `wontfix`.
-- Une issue triagée devrait idéalement avoir une seule catégorie et un seul état.
-- `ready-for-agent` ne doit pas être un simple label. Cela signifie que l'issue contient un contrat d'exécution assez clair pour qu'un agent puisse travailler avec peu ou pas d'interaction humaine.
-- `ready-for-human` signifie qu'une décision, review, validation ou action humaine est nécessaire avant de continuer.
-- Un agent brief peut être généré lorsqu'une issue devient `ready-for-agent`.
-
-Structure possible d'un futur agent brief :
-
-```text
-Category
-Summary
-Current behavior
-Desired behavior
-Key interfaces
-Acceptance criteria
-Out of scope
-```
-
-Principes d'un agent brief :
-
-- Durable plutôt que trop précis.
-- Comportemental plutôt que procédural.
-- Pas de chemins de fichiers fragiles.
-- Pas de numéros de lignes.
-- Critères d'acceptation vérifiables.
-- Frontières de scope explicites.
-
-Les futures versions pourront aussi ajouter :
-
-- Labels d'état.
-- Workflow `ready-for-agent` automatisé.
-- Boucles d'automatisation.
+- `docs/agents/triage-labels.md`.
+- Labels obligatoires de triage.
+- Workflow automatisé `ready-for-agent`.
+- Agent briefs de triage.
 - Fermeture automatique d'issues.
 
 ## Notes De Design Ouvertes
 
-Le workflow est maintenant assez spécifié pour permettre la future création des skills.
+Le workflow est assez spécifié pour permettre la création progressive des futurs skills.
 
 Les décisions restantes pourront être prises pendant l'authoring des skills :
 
-- Formulation exacte de chaque `SKILL.md`.
-- Contenu exact généré dans `docs/agents/*.md`.
-- Quantité de cette spécification à conserver une fois les vrais skills créés.
+- Formulation exacte de chaque futur `SKILL.md`.
+- Templates précis des futurs artefacts non encore implémentés.
+- Exceptions spécifiques qu'un futur skill devra documenter dans son propre `SKILL.md`.
