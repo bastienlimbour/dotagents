@@ -200,7 +200,7 @@ Cette table sert d'inventaire de création des skills du workflow. Quand un skil
 | `grill-me` | Stress-tester une idée ou décision, une question à la fois | Oui | `skills/workflow/grill-me/SKILL.md` |
 | `product-brief` | Cadrer le problème, les utilisateurs et le scope produit | Oui | `skills/workflow/product-brief/SKILL.md` |
 | `grill-with-docs` | Grilling appuyé sur code, docs, domaine et ADRs | Non | `workflows/skills-coding-workflow/steps/grill-with-docs.md` |
-| `capture` | Extraire une longue session en note durable | Non | `workflows/skills-coding-workflow/steps/capture.md` |
+| `capture` | Extraire une longue session en note durable | Oui | `skills/workflow/capture/SKILL.md` |
 | `validate` | Réduire l'incertitude par preuves, risques et prochain test | Non | `workflows/skills-coding-workflow/steps/validate.md` |
 | `prototype` | Tester une hypothèse avec du code jetable | Non | `workflows/skills-coding-workflow/steps/prototype.md` |
 | `to-spec` | Transformer le contexte en spec canonique | Non | `workflows/skills-coding-workflow/steps/to-spec.md` |
@@ -335,32 +335,6 @@ Règles :
 - Noms en kebab-case pour les fichiers `research/*.md`, `tasks/*.md` et les artefacts spécifiques.
 
 Exception : les issues markdown locales peuvent avoir des lignes légères comme `Status:`, `Labels:` et `Parent issue:` ainsi qu'une section `## Comments`, si c'est la convention du tracker local.
-
-### Conventions De `brainstorming.md`
-
-`brainstorming.md` sert à capturer une exploration divergente, pas à produire une spec ou un plan.
-
-Règles utiles aux futurs skills :
-
-- Utiliser `## Starting Context` pour le contexte de départ et ne plus le réécrire une fois la session lancée.
-- Garder les idées sous `## Ideas`, organisées par thèmes ou angles d'exploration adaptés au sujet.
-- Utiliser des tags inline seulement quand ils clarifient le statut : `[Explore]`, `[Current scope]`, `[Later]`, `[Rejected]`.
-- Ne pas dupliquer une idée dans plusieurs sections de type MVP, later, rejected, questions ou assumptions.
-- Attacher les nuances, risques, raisons ou questions comme notes sous l'idée concernée.
-- Ne pas ajouter de synthèse finale ou de convergence produit sauf demande explicite.
-
-### Conventions De `product-brief.md`
-
-`product-brief.md` est un brief produit léger. Il cadre le problème, les utilisateurs, les scénarios, la valeur, les horizons de scope, les règles produit, les risques et les questions ouvertes sans devenir une PRD complète, une spec technique ou une task list.
-
-Règles utiles aux futurs skills :
-
-- Distinguer clairement `Current Scope`, `Near-term follow-up`, `Future possibilities`, `Out Of Scope` et `Open Questions`.
-- Capturer les exclusions explicites dans `Out Of Scope`, pas dans `Later Scope`.
-- Marquer les inconnues importantes par `Not known yet` au lieu de les inventer.
-- Marquer les sections non pertinentes par `Not relevant` avec une courte raison au lieu de les supprimer silencieusement.
-- Garder `Technical / Architecture Handoff Notes` léger : contraintes, dépendances, implications ou questions, pas schémas détaillés ni contrats d'API.
-- Ne pas transformer le brief en backlog, PRD exhaustive, plan d'implémentation, ADR ou spec.
 
 ### Confidentialité
 
