@@ -12,10 +12,10 @@
   Note: {{ source, context, nuance, variation, or unresolved question }}
 
 - [Current scope] {{ idea }}
-  Note: <why this belongs in the current scope, if explicitly confirmed>
+  Note: {{ why this belongs in the current scope, if explicitly confirmed }}
 
-- [Later] <idea>
-  Note: <why this is useful but intentionally deferred>
+- [Later] {{ idea }}
+  Note: {{ why this is useful but intentionally deferred }}
 
-- [Rejected] <idea>
-  Note: <why this was explicitly rejected>
+- [Rejected] {{ idea }}
+  Note: {{ why this was explicitly rejected }}
