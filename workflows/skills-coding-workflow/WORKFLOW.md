@@ -13,7 +13,7 @@ Il vise surtout à transformer une idée, une intention ou un problème encore f
 La forme générale recherchée est :
 
 ```text
-idée -> exploration -> décisions -> spec -> tâches verticales -> implémentation -> review/QA
+idée -> exploration -> validation -> décisions -> spec -> tâches verticales -> implémentation -> review/QA
 ```
 
 Cette séquence n'est pas obligatoire. Chaque skill doit rester utilisable indépendamment avec le contexte fourni par l'utilisateur.
@@ -188,6 +188,43 @@ Shallow module = interface presque aussi complexe que l'implémentation.
 ```
 
 Le workflow s'appuie sur les principes suivants : deep modules, seams, locality et deletion test.
+
+## Skills (étapes du workflow)
+
+Cette table sert d'inventaire de création des skills du workflow. Quand un skill existe dans `skills/`, son `SKILL.md` est la référence de comportement. Quand il n'existe pas encore, le fichier `steps/` correspondant est un brouillon d'authoring à réaligner avec cette spec et les skills existants avant création du `SKILL.md`.
+
+| Skill | Rôle | Créé | Path |
+| --- | --- | --- | --- |
+| `setup-skills-workflow` | Configurer les conventions agent du repo | Oui | `skills/workflow/setup-skills-workflow/SKILL.md` |
+| `brainstorm` | Explorer une idée largement et capturer l'exploration | Oui | `skills/workflow/brainstorm/SKILL.md` |
+| `grill-me` | Stress-tester une idée ou décision, une question à la fois | Oui | `skills/workflow/grill-me/SKILL.md` |
+| `product-brief` | Cadrer le problème, les utilisateurs et le scope produit | Oui | `skills/workflow/product-brief/SKILL.md` |
+| `grill-with-docs` | Grilling appuyé sur code, docs, domaine et ADRs | Non | `workflows/skills-coding-workflow/steps/grill-with-docs.md` |
+| `capture` | Extraire une longue session en note durable | Non | `workflows/skills-coding-workflow/steps/capture.md` |
+| `validate` | Réduire l'incertitude par preuves, risques et prochain test | Non | `workflows/skills-coding-workflow/steps/validate.md` |
+| `prototype` | Tester une hypothèse avec du code jetable | Non | `workflows/skills-coding-workflow/steps/prototype.md` |
+| `to-spec` | Transformer le contexte en spec canonique | Non | `workflows/skills-coding-workflow/steps/to-spec.md` |
+| `split` | Découper une spec en tâches verticales | Non | `workflows/skills-coding-workflow/steps/split.md` |
+| `implement` | Implémenter un changement cadré avec feedback loop | Non | `workflows/skills-coding-workflow/steps/implement.md` |
+| `implement-tdd` | Implémenter en red-green-refactor strict | Non | `workflows/skills-coding-workflow/steps/implement-tdd.md` |
+| `review` | Relire les changements pour bugs, risques et tests manquants | Non | `workflows/skills-coding-workflow/steps/review.md` |
+| `qa` | Générer une checklist de QA humaine | Non | `workflows/skills-coding-workflow/steps/qa.md` |
+| `diagnose` | Reproduire, diagnostiquer et corriger bugs ou régressions | Non | `workflows/skills-coding-workflow/steps/diagnose.md` |
+| `zoom-out` | Cartographier une zone du code à plus haut niveau | Non | `workflows/skills-coding-workflow/steps/zoom-out.md` |
+| `improve-codebase-architecture` | Identifier des améliorations architecturales | Non | `workflows/skills-coding-workflow/steps/improve-codebase-architecture.md` |
+| `handoff` | Créer un relais compact pour reprise de session | Non | `workflows/skills-coding-workflow/steps/handoff.md` |
+
+Règles pour créer un futur skill :
+
+- Décrire une routine claire, autonome et activable indépendamment.
+- Ne pas imposer l'exécution préalable d'un autre skill.
+- Respecter les conventions projet pertinentes déjà présentes dans le contexte agent avant toute opération d'issue, d'artefact local ou de documentation.
+- Explorer le repo et la documentation avant de demander une information qui peut s'y trouver.
+- Si le skill écrit un artefact local, confirmer d'abord l'initiative et le chemin cible.
+- Si le skill écrit un artefact structurant, montrer un draft en conversation et attendre validation du contenu avant écriture.
+- Si le skill écrit au fil de l'eau, documenter explicitement l'exception et la confirmation initiale qui l'autorise.
+- Ne pas créer d'artefacts additionnels, d'issues, de commentaires tracker ou de documentation globale sans demande ou confirmation explicite.
+- S'appuyer sur des feedback loops réelles lorsque le skill implémente, diagnostique, prototype ou review.
 
 ## Scope V1
 
@@ -630,24 +667,6 @@ Si l'execution contract est incomplet, l'agent doit :
 - Demander à l'utilisateur si ces hypothèses conviennent ou s'il veut fournir plus de contexte.
 
 L'agent ne doit pas implémenter silencieusement à partir d'hypothèses floues.
-
-## Skills Et Brouillons De Steps
-
-Cette spec ne maintient pas d'inventaire détaillé des skills déjà créés. Quand un fichier `skills/workflow/<name>/SKILL.md` existe, il est la référence de comportement pour ce skill.
-
-Les fichiers dans `workflows/skills-coding-workflow/steps/` sont des brouillons d'authoring pour les skills qui ne sont pas encore implémentés. Ils peuvent servir de contexte, mais ils doivent être réalignés avec cette spec et avec les skills existants avant de créer un nouveau `SKILL.md`.
-
-Règles pour créer un futur skill :
-
-- Décrire une routine claire, autonome et activable indépendamment.
-- Ne pas imposer l'exécution préalable d'un autre skill.
-- Respecter les conventions projet pertinentes déjà présentes dans le contexte agent avant toute opération d'issue, d'artefact local ou de documentation.
-- Explorer le repo et la documentation avant de demander une information qui peut s'y trouver.
-- Si le skill écrit un artefact local, confirmer d'abord l'initiative et le chemin cible.
-- Si le skill écrit un artefact structurant, montrer un draft en conversation et attendre validation du contenu avant écriture.
-- Si le skill écrit au fil de l'eau, documenter explicitement l'exception et la confirmation initiale qui l'autorise.
-- Ne pas créer d'artefacts additionnels, d'issues, de commentaires tracker ou de documentation globale sans demande ou confirmation explicite.
-- S'appuyer sur des feedback loops réelles lorsque le skill implémente, diagnostique, prototype ou review.
 
 ## Exemples D'Utilisation
 
