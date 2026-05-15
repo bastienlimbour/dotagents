@@ -28,33 +28,33 @@ A prompt should make the model's task, context, constraints, output contract, an
 
 ## Workflow
 
-### Phase 1 - Identify The Artifact
+### 1. Identify The Artifact
 
 Identify the prompt artifact type: system/developer prompt, user/task prompt, agent instruction, reusable template, structured-output prompt, or eval prompt.
 
-### Phase 2 - Gather Evidence
+### 2. Gather Evidence
 
 Inspect the provided prompt, task brief, examples, target model/platform, intended users, downstream consumers, and known failures.
 
-### Phase 3 - Clarify Or Assume
+### 3. Clarify Or Assume
 
 If missing information would materially change the prompt, ask up to 3 high-leverage questions. Otherwise proceed and state assumptions briefly.
 
-### Phase 4 - Draft Or Revise
+### 4. Draft Or Revise
 
 For creation or improvement tasks, draft or revise the prompt using the adaptive structure from [adaptive-prompt-template.md](assets/adaptive-prompt-template.md). Include only sections that earn their space.
 
-### Phase 5 - Audit Or Evaluate
+### 5. Audit Or Evaluate
 
 For audit or evaluation tasks, inspect the prompt against the checklist and return findings, risks, scores, or eval cases before proposing rewrites.
 
-### Phase 6 - Validate
+### 6. Validate
 
 Apply the checklist in [prompt-checklist.md](references/prompt-checklist.md), especially for context, output format, constraints, examples, verification, and risks.
 
 Add proportional evaluation guidance using [evaluation-mini-suite.md](references/evaluation-mini-suite.md).
 
-### Phase 7 - Return
+### 7. Return
 
 Return the appropriate result for the task type: prompt artifact, audit findings, evaluation plan, or a combination requested by the user.
 
