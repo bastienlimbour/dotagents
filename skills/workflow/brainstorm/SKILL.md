@@ -37,7 +37,7 @@ If the user explicitly declines an artifact, continue in conversation only and c
 
 ### 2. Create / Update The Artifact
 
-After target confirmation, create or update the artifact as needed using [brainstorming.md](assets/templates/brainstorming.md) template. For new artifacts, summarize the starting context in `## Starting Context`, and never rewrite it after the session starts.
+After target confirmation, create or update the artifact as needed using [brainstorming.md](assets/templates/brainstorming.md) template. For new artifacts, summarize the starting context in `## Starting Context`, and never rewrite the starting context after the session starts.
 
 Update the confirmed brainstorming artifact throughout the session without asking again for each write; the initial confirmation covers live brainstorming updates.
 
