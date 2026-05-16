@@ -27,7 +27,7 @@ Identify what should be captured and why it needs to be durable.
 - Inspect relevant repo and documentation sources when they can answer factual context questions. Ask the user only when sources are missing, contradictory, or a material scope decision remains.
 - Treat canonical artifacts as sources to reference, not content to duplicate.
 
-### 2. Confirm The Target Path
+### 2. Resolve Capture Target
 
 Use the user's explicit path when provided, after checking that it matches the intended scope and project conventions. If no path is provided, propose one target and ask for confirmation before writing.
 
@@ -45,9 +45,11 @@ Rules:
 - If the target file exists, ask for explicit confirmation before overwriting or updating it, or propose a new slug.
 - Local capture files use simple Markdown with no frontmatter.
 
-### 3. Write The Capture
+### 3. Prepare And Safety Check
 
-After target confirmation, write directly to the confirmed path. Do not show a full draft first unless the user asks.
+Prepare the capture content before writing. Do not show a full draft first unless the user asks.
+
+Prepare synthesis:
 
 - Capture synthesis, not the transcript.
 - Structure the note around the subject, not a rigid template.
@@ -57,7 +59,7 @@ After target confirmation, write directly to the confirmed path. Do not show a f
 - Summarize and point to existing canonical artifacts instead of copying their content.
 - Keep command logs, file lists, prompts, and model outputs out of the capture unless they are necessary source evidence.
 
-Possible sections, only when useful:
+Possible sections only when helpful (the structure is flexible and must be adapted to the content):
 
 - `Context`
 - `Key Findings`
@@ -69,9 +71,7 @@ Possible sections, only when useful:
 - `Open Questions`
 - `Sources And References`
 
-### 4. Safety Pass
-
-Before writing, remove anything that should not be stored in a repo-adjacent artifact:
+Safety check before writing:
 
 - Secrets, tokens, credentials, or private keys.
 - Raw personal data or sensitive customer exports.
@@ -79,6 +79,10 @@ Before writing, remove anything that should not be stored in a repo-adjacent art
 - Anything the user would not want visible to someone with repo access.
 
 Do not create or update briefs, specs, ADRs, issues, comments, tracker state, handoff prompts, or unrelated global documentation as part of capture. Write only the confirmed capture file unless the user explicitly asks for a separate artifact.
+
+### 4. Write The Capture
+
+After target confirmation and safety check, write directly to the confirmed path.
 
 ## Output
 

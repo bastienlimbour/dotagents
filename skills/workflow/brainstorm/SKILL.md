@@ -23,11 +23,16 @@ Divergence by default. Treat each user answer as material to expand into more po
 
 ## Workflow
 
-### 1. Establish The Artifact
+### 1. Resolve Brainstorming Target
 
-Resolve the initiative and `brainstorming` artifact before writing. Use the project's local artifact conventions for paths, naming, and creation rules.
+Resolve the initiative and `brainstorming` artifact before live writing.
+
+Use this step only to identify create/update mode and the artifact target; collect substantive brainstorming content in the next steps.
+
+Use the project's local artifact conventions for paths, naming, and creation rules.
 
 - Start from any user-provided initiative or artifact path; otherwise inspect existing initiatives and artifacts for a match to the current context.
+- If the user is updating an existing brainstorming artifact, inspect that artifact before updating and preserve useful content.
 - If nothing matches, propose a new initiative and a `brainstorming.md` artifact, unless the project conventions use a different artifact filename.
 - Report findings: matched initiative, matched artifact, proposed create/update action, and any ambiguity.
 - Ask for confirmation before creating an initiative or selecting an artifact path. This confirmation approves the target only.
@@ -35,25 +40,26 @@ Resolve the initiative and `brainstorming` artifact before writing. Use the proj
 
 If the user explicitly declines an artifact, continue in conversation only and clearly state that no persistent `brainstorming` will be maintained.
 
-### 2. Create / Update The Artifact
+### 2. Frame Starting Context
 
-After target confirmation, create or update the artifact as needed using [brainstorming.md](assets/templates/brainstorming.md) template. For new artifacts, summarize the starting context in `## Starting Context`, and never rewrite the starting context after the session starts.
-
-Update the confirmed brainstorming artifact throughout the session without asking again for each write; the initial confirmation covers live brainstorming updates.
-
-### 2. Frame Lightly Before Diverging
-
-Before generating lots of ideas, capture the minimum useful starting context:
+Before generating lots of ideas, capture the minimum useful starting context for the conversation and for the `## Starting Context` section of the artifact:
 
 - The initial idea.
 - The problem to solve or opportunity to capitalize on.
 - Target users or personas known so far.
 - Desired success or outcome.
 - Known constraints and non-goals.
+- Any other context that might be relevant for the brainstorming session.
 
 Use code, docs, issues, specs, briefs, ADRs, or project notes to answer factual context questions before asking the user. Ask the user only for context that cannot be inferred or where sources conflict.
 
-### 3. Diverge Actively
+### 3. Create Or Update The Artifact
+
+If an artifact is active, create or update it after target confirmation and starting-context framing using [brainstorming.md](assets/templates/brainstorming.md) template. For new artifacts, write `## Starting Context` once and never rewrite it after the session starts.
+
+Update the confirmed brainstorming artifact throughout the session without asking again for each write; the initial confirmation covers live brainstorming updates. If the user declined an artifact, continue in conversation only and skip file writes.
+
+### 4. Diverge Actively
 
 Act as a thinking partner, not a passive idea list generator. Be curious, exploratory, and divergent.
 
@@ -75,9 +81,9 @@ Use ideation angles selectively, not as a checklist:
 - 10x version: push beyond incremental improvements.
 - Decomposition: split the problem into parts and recombine ideas.
 
-### 4. Maintain The Artifact
+### 5. Maintain The Artifact
 
-Use the [brainstorming.md](assets/templates/brainstorming.md) template to guide the artifact.
+Use the [brainstorming.md](assets/templates/brainstorming.md) template to guide the artifact when one is active.
 
 - When the user gives a concrete idea or preference, keep the idea in `## Ideas`, update its inline tag or note if scope is explicit, then broaden around it. Do not immediately ask for the next decision in the chain.
 - Keep `brainstorming.md` simple Markdown with no frontmatter or metadata block. Preserve useful existing content and reorganize only when it improves clarity.
@@ -97,7 +103,7 @@ Attach short notes under ideas for source, nuance, reason, explicit user decisio
 
 Do not rewrite the artifact as a product requirements document while brainstorming.
 
-### 5. Close The Session
+### 6. Close The Session
 
 When the session naturally matures, optionally clean up `## Ideas` by merging duplicates, tightening notes, and making scope tags explicit where the user has clearly decided. Do not add a final synthesis section unless the user explicitly asks for one.
 

@@ -20,11 +20,16 @@ Do not use this skill for broad brainstorming, market validation, technical spec
 
 ## Workflow
 
-### 1. Establish The Artifact
+### 1. Resolve Brief Target
 
-Resolve the initiative and `product-brief` artifact before writing. Use the project's local artifact conventions for paths, naming, and creation rules.
+Resolve the initiative and `product-brief` artifact before writing.
+
+Use this step only to identify create/update mode and the artifact target; collect substantive product content in the next steps.
+
+Use the project's local artifact conventions for paths, naming, and creation rules.
 
 - Start from any user-provided initiative or artifact path; otherwise inspect existing initiatives and artifacts for a match to the current context.
+- If the user is updating an existing brief artifact, inspect that artifact before drafting and preserve useful content.
 - If nothing matches, propose a new initiative and a `product-brief.md` artifact, unless the project conventions use a different artifact filename.
 - Report findings: matched initiative, matched artifact, proposed create/update action, and any ambiguity.
 - Ask for confirmation before creating an initiative or selecting an artifact path. This confirmation approves the target only.
@@ -67,9 +72,11 @@ If a capability could belong to more than one horizon, do not guess. Ask one tar
 
 Do not discard future product direction. Capture important post-current-scope capabilities under `Near-term follow-up` or `Future possibilities`, not as implicit current scope.
 
-### 5. Draft The Brief
+### 5. Draft And Check The Brief
 
 Use `assets/templates/product-brief.md` as the canonical template for new product briefs and as a structural guide for updates.
+
+Prepare the draft:
 
 - Align on what to build, why, for whom, the current scope, and what must be clarified next.
 - Keep template sections visible. If a section is not relevant for the current context or adds no useful information, write `Not relevant` with a short explanation instead of deleting.
@@ -80,11 +87,7 @@ Use `assets/templates/product-brief.md` as the canonical template for new produc
 - Keep the brief concise enough to guide future work. Prefer crisp bullets over long narrative when detail is uncertain.
 - Do not turn the brief into a full PRD. Avoid exhaustive user stories, detailed requirements, backlog items, implementation plans, design specifics, detailed telemetry plans, or architecture design.
 
-Show the draft in conversation and obtain explicit content validation before writing or updating the artifact.
-
-### 6. Check Coherence
-
-Before showing the draft, run a coherence pass:
+Coherence check before showing the draft:
 
 - No capability appears as current in one section and later or excluded in another.
 - `Solution Direction` does not implicitly promise capabilities outside `Current Scope` unless labelled as near-term or future.
@@ -93,7 +96,9 @@ Before showing the draft, run a coherence pass:
 - `Assumptions To Validate` are phrased as testable bets when possible.
 - `Open Questions` are unresolved decisions, not parking-lot ideas.
 
-### 7. Write Safely
+Then show the draft in conversation and obtain explicit content validation before writing or updating the artifact.
+
+### 6. Write The Brief
 
 After explicit content validation, create or update only the approved artifact path.
 
