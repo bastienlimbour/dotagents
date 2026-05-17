@@ -79,6 +79,9 @@ Use `assets/templates/product-brief.md` as the canonical template for new produc
 Prepare the draft:
 
 - Align on what to build, why, for whom, the current scope, and what must be clarified next.
+- Use the opening sections to build a clear narrative chain: `Problem / Opportunity` -> `Target Users & Use Cases` -> `Current Journey / Context` -> `Proposed Solution` -> `Value Proposition`.
+- Keep each opening section single-purpose: problem/opportunity explains the pain and why it matters; target users/use cases identifies who has the pain and in which situations; current journey/context explains what happens today; proposed solution gives the product response and current-scope boundary; value proposition explains the user benefits.
+- Do not use the opening sections to repeatedly restate the same promise, detailed scope, product rules, implementation details, or future roadmap.
 - Keep template sections visible. If a section is not relevant for the current context or adds no useful information, write `Not relevant` with a short explanation instead of deleting.
 - Clearly label items as current, near-term, or future when horizon ambiguity would matter.
 - If an important section is not known yet, write `Not known yet` and flag it to the user for clarification.
@@ -90,7 +93,8 @@ Prepare the draft:
 Coherence check before showing the draft:
 
 - No capability appears as current in one section and later or excluded in another.
-- `Solution Direction` does not implicitly promise capabilities outside `Current Scope` unless labelled as near-term or future.
+- Opening sections do not duplicate the same idea across problem, users/use cases, context, proposed solution, and value proposition.
+- `Proposed Solution` does not implicitly promise capabilities outside `Current Scope` unless labelled as near-term or future.
 - Information about current, near-term, or future items are clearly labeled when horizon ambiguity would matter.
 - `Later Scope` does not contain explicit exclusions, and `Out Of Scope` does not contain ordinary future ideas.
 - `Assumptions To Validate` are phrased as testable bets when possible.
@@ -130,7 +134,8 @@ Before finalizing, verify:
 - [ ] Unknowns are marked `Not known yet` instead of invented.
 - [ ] Sections that lack useful content are marked `Not relevant` or `Not known yet` with a short explanation instead of being silently deleted or filled with placeholder prose.
 - [ ] Scope horizons are clear: current scope, near-term follow-up, future possibilities, explicit exclusions, and open questions are not mixed.
-- [ ] `Solution Direction` does not promise unlabelled capabilities outside the current scope.
+- [ ] Opening sections form a non-redundant narrative from problem to users/use cases to current journey/context to proposed solution to value proposition.
+- [ ] `Proposed Solution` does not promise unlabelled capabilities outside the current scope.
 - [ ] `Product Model`, `Product Rules`, `Decisions Made`, `Assumptions To Validate`, and `Open Questions` use the right category and do not duplicate each other.
 - [ ] Technical handoff notes remain lightweight and do not become a spec, detailed architecture doc, or ADR.
 - [ ] No secrets, credentials, sensitive raw personal data, unsupported tracker automation, triage workflow, spec, task list, or implementation artifact was created as part of this skill.

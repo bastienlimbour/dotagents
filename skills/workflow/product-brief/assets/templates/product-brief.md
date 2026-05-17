@@ -2,27 +2,43 @@
 
 ## Problem / Opportunity
 
-{{ user, product, business, or domain problem/opportunity to solve; avoid framing the problem as missing a specific feature }}
+{{ crisp user, product, business, or domain problem/opportunity; name who has the problem and why it matters; avoid framing the problem as missing a specific feature; do not mention the proposed solution yet }}
 
-## Target Users
+- {{ current pain, friction, unmet need, or opportunity }}
+- {{ why existing behavior, tools, or workarounds are insufficient }}
+- {{ why this is worth solving now, if known }}
 
-{{ primary and ssecondary users, prioritized if possible }}
+## Target Users & Use Cases
 
-## Core Scenarios
+{{ primary and secondary users tied to concrete use cases; prioritize the most important users/use cases; avoid generic persona lists }}
 
-{{ main situations where the product creates value; focus on user goals and pains, not detailed user stories }}
+1. As a {{ primary user }}, I want to {{ goal or use case }}, because {{ pain or desired outcome }}.
+2. As a {{ secondary user }}, I want to {{ goal or use case }}, because {{ pain or desired outcome }}.
 
-## Context
+## Current Journey / Context
 
-{{ relevant product, business, domain, strategic, timing, current journey, landscape, or existing-system context }}
+{{ what users do today, where friction appears, what alternatives or workarounds exist, and any relevant product, business, domain, strategic, timing, landscape, or existing-system context; keep it short and include only context that makes the problem clearer }}
 
-## Solution Direction
+## Proposed Solution
 
-{{ product-level direction; may describe the broader product direction, but clearly label what applies to the current scope versus near-term or future scope }}
+{{ 1-2 sentence elevator pitch for the proposed product or initiative; describe the product response after the problem, users, and current journey are clear }}
+
+Current-scope direction:
+
+- {{ what the current initiative, MVP, release, or feature iteration actually solves }}
+- {{ important current-scope boundary, if the broader vision is larger }}
+
+Broader direction, if relevant:
+
+- {{ future-facing product direction, clearly labelled as not current scope }}
 
 ## Value Proposition
 
-{{ top 2-3 value props tied to target users and core scenarios }}
+{{ top 2-3 reasons this solution is valuable, tied directly to the target users and use cases; focus on user benefit, not a repeated feature list }}
+
+1. **{{ value prop }}**: {{ user benefit }}
+2. **{{ value prop }}**: {{ user benefit }}
+3. **{{ value prop }}**: {{ user benefit }}
 
 ## Current Scope
 
