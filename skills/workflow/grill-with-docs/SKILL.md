@@ -7,115 +7,91 @@ description: Runs a grill-me session with project documentation awareness. Use w
 
 ## Overview
 
-Run the `grill-me` skill as the primary workflow, with documentation awareness layered in only when needed. The job is to reach shared understanding first; documentation updates are secondary and happen only after useful domain language or durable decisions crystallize.
+Run the `grill-me` skill as the primary workflow with documentation awareness layered in only when useful. The job is shared understanding first; documentation updates are secondary and only follow resolved language or durable decisions.
 
 ## Core Priority
 
-`grill-me` is the authority. Documentation work supports the interview; it must not take over the session.
+`grill-me` is the authority. Documentation supports the interview; it must not take over the session.
 
 ## Workflow
 
-### 1. Start The Grilling Session
+### 1. Start Grilling
 
-When this skill is activated, immediately load or invoke `grill-me` skill and follow it as the primary workflow.
+Immediately follow the `grill-me` workflow: identify the target, build the decision tree, ask exactly one question at a time, and wait for each answer.
 
-- Identify the plan, idea, or design being tested.
-- If the target is unclear, ask one clarifying question before exploring documentation.
-- Build the decision tree using `grill-me` branches.
-- Ask exactly one question at a time and wait for the user's answer.
+### 2. Use Documentation As Evidence
 
-### 2. Inspect Documentation Only When Useful
-
-Use documentation as evidence when it can answer a question, reveal a contradiction, or prevent language drift.
+Inspect documentation only when it can answer a question, reveal a contradiction, or prevent language drift.
 
 Prefer these sources when present:
 
-- `docs/agents/documentation.md` for the project's documentation conventions.
-- Root `CONTEXT-MAP.md` when multiple domains, packages, apps, bounded contexts, or sub-projects may exist.
-- The relevant `CONTEXT.md` for canonical terms, terms to avoid, domain relationships, examples, and resolved ambiguities.
-- `docs/decisions/` at the repo root or relevant `**/docs/decisions/` directories for durable decisions.
-- Nearby README files, domain docs, code, tests, schemas, routes, APIs, or configuration when they can answer factual questions.
+- `docs/agents/documentation.md`.
+- Root `CONTEXT-MAP.md`.
+- Relevant `CONTEXT.md`.
+- Root or contextual `docs/decisions/`.
+- Nearby README/domain docs, code, tests, schemas, routes, APIs, or config.
 
-If these files do not exist, proceed silently. Do not treat their absence as a setup problem during grilling.
-
-### 3. Use Domain Language As Interview Evidence
+If these files do not exist, proceed silently.
 
 During the interview:
 
-- If the user uses a term that conflicts with `CONTEXT.md`, call out the conflict immediately and ask which meaning should win.
-- If a term is vague, overloaded, or absent from the glossary but material to the plan, propose a precise canonical term and ask whether it is correct.
-- If domain relationships are unclear, stress-test them with concrete scenarios and edge cases. Invent scenarios that probe edge cases and force the user to be precise about the boundaries between concepts.
-- If code or docs contradict the user's claim, surface the contradiction before continuing.
-- If an existing ADR constrains or contradicts the plan, name the conflict and ask before assuming the ADR should change.
+- Call out conflicts with `CONTEXT.md`, ADRs, docs, or code as soon as they matter.
+- If a term is vague, overloaded, or absent from the glossary but material, propose a precise term and ask whether it is correct.
+- Stress-test unclear domain relationships with concrete scenarios and edge cases.
+- Keep contradictions inside the one-question-at-a-time rhythm.
 
-Keep this inside the one-question-at-a-time rhythm. A contradiction can be the next question; it is not a reason to batch a documentation review.
+### 3. Offer Documentation Updates Sparingly
 
-### 4. Capture Documentation Updates Sparingly
-
-Only consider documentation updates after a branch is resolved or a contradiction makes the next grilling question depend on a documented source of truth.
+Only consider updates after a branch is resolved or a contradiction blocks the next question.
 
 | Situation | Default action |
 | --- | --- |
-| A domain term, avoided synonym, relationship, example, or ambiguity is resolved | Offer to update the relevant `CONTEXT.md` |
-| The repo has `CONTEXT-MAP.md` and the relevant context is clear | Update only that context's `CONTEXT.md` |
-| Multiple contexts may be affected and routing is unclear | Ask which context owns the term before proposing edits |
-| No `CONTEXT.md` exists and a real domain term has been resolved | Offer to create the smallest useful `CONTEXT.md` |
-| A durable architecture decision is hard to reverse, surprising without context, and the result of a real trade-off | Offer to create or update an ADR |
-| The session produced broad useful notes but no canonical glossary or ADR change | Suggest `capture` instead of writing global docs |
+| Domain term, avoided synonym, relationship, example, or ambiguity is resolved | Offer to update the relevant `CONTEXT.md` |
+| Multiple contexts may be affected | Ask which context owns the term |
+| No `CONTEXT.md` exists and a real domain term is resolved | Offer the smallest useful `CONTEXT.md` |
+| Decision is hard to reverse, surprising without context, and trade-off based | Offer an ADR |
+| Useful notes are broad but not canonical glossary or ADR material | Suggest `capture` |
 
-Before writing any documentation, show the exact proposed path and concise content change, then wait for explicit confirmation. Do not create empty, speculative, or placeholder documentation.
+Before writing documentation, show the exact path and concise content change, then wait for explicit confirmation. Create files lazily; never create empty, speculative, or placeholder docs.
 
-Create files lazily — only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no `docs/decisions/` exists, create it when the first ADR is needed.
+### 4. Write Safely When Confirmed
 
-### 5. Write Documentation Safely When Confirmed
+- Keep `CONTEXT.md` focused on canonical domain language: approved terms, terms to avoid, relationships, examples, and resolved ambiguities.
+- Do not put implementation details, specs, task lists, brainstorming, status, or architecture decisions in `CONTEXT.md`.
+- Use existing structure when present; otherwise use `Canonical Terms`, `Terms To Avoid`, `Domain Relationships`, `Examples`, and `Resolved Ambiguities`.
+- Put ADRs in the relevant `docs/decisions/` using existing style; for new numbered ADR directories, use the next `NNNN-short-slug.md`.
+- Keep ADRs short unless alternatives or consequences are useful to future readers.
+- Do not include secrets, credentials, raw personal data, sensitive customer data, or confidential material.
 
-When the user confirms a documentation update:
-
-- Keep `CONTEXT.md` focused on canonical domain language only: approved terms, terms to avoid, domain relationships, examples, and resolved ambiguities.
-- Do not put implementation details, specs, task lists, open brainstorming, status updates, or architecture decisions in `CONTEXT.md`.
-- Use the project's existing `CONTEXT.md` structure if present; otherwise use the workflow template shape: `Canonical Terms`, `Terms To Avoid`, `Domain Relationships`, `Examples`, and `Resolved Ambiguities`.
-- Put ADRs in the relevant `docs/decisions/` directory using the project's existing style if present.
-- For new ADRs, use the next sequential `NNNN-short-slug.md` filename when the directory already follows that convention.
-- Keep ADRs short unless alternatives or consequences are genuinely useful to future readers.
-- Never include secrets, credentials, raw personal data, sensitive customer data, or confidential material in documentation.
-
-After the write, return to the active grilling branch unless the user asks to stop.
+After writing, return to the active grilling branch unless the user asks to stop.
 
 ## Guardrails
 
-- Do not let documentation discovery become a general documentation audit.
-- Do not stop grilling just because documentation could be improved.
-- Do not batch multiple interview questions behind a documentation summary.
-- Do not update docs merely because a term was mentioned; update only when a meaning is resolved and useful as future source of truth.
-- Do not create or update product briefs, specs, task issues, local initiative artifacts, or capture notes from this skill unless the user explicitly invokes the relevant workflow.
-- If the user declines documentation updates, continue the grilling session without pressure.
+- Do not let documentation discovery become a documentation audit.
+- Do not stop grilling just because documentation could improve.
+- Do not update docs merely because a term was mentioned; update only when the meaning is resolved and useful as future source of truth.
+- Do not create product briefs, specs, task issues, local initiative artifacts, or capture notes unless the user explicitly invokes that workflow.
+- If the user declines documentation updates, continue grilling without pressure.
 
 ## Output
 
-During the session:
+During the session, ask one decision question at a time with relevant evidence, options, and a recommendation.
 
-- Ask one decision question at a time.
-- Include relevant evidence, options, and your recommended answer with each question.
-- Surface contradictions with `CONTEXT.md`, ADRs, docs, or code as soon as they matter.
-- Propose documentation updates only when they are secondary to a resolved grilling branch.
+End with:
 
-When ending the session, summarize:
-
-- Critical branches resolved, deferred, or still open.
-- Domain terms or ambiguities clarified.
-- Documentation files created or updated, if any.
-- ADRs created or suggested, if any.
+- Resolved, deferred, or still-open branches.
+- Clarified domain terms.
+- Docs or ADRs created or suggested.
 - Remaining contradictions or source-of-truth gaps.
 
 ## Validation
 
 Before finishing, verify:
 
-- [ ] `grill-me` was loaded or its workflow was followed as the primary process.
-- [ ] Exactly one grilling question was asked per turn.
-- [ ] Documentation lookup answered questions or surfaced contradictions instead of replacing the interview.
-- [ ] Existing `docs/agents/documentation.md`, `CONTEXT-MAP.md`, `CONTEXT.md`, and ADR conventions were respected when present.
-- [ ] No documentation was created empty, speculatively, or without explicit confirmation.
-- [ ] `CONTEXT.md` updates stayed focused on domain language, not implementation or planning.
-- [ ] ADRs were offered only for hard-to-reverse, surprising, trade-off-based decisions.
-- [ ] No secrets, credentials, sensitive data, unrelated artifacts, specs, briefs, tasks, or broad docs audits were introduced.
+- `grill-me` stayed primary.
+- Docs answered questions or surfaced contradictions instead of replacing the interview.
+- Existing documentation conventions were respected.
+- No docs were created without confirmation.
+- `CONTEXT.md` stayed domain-language-only.
+- ADRs met the durability criteria.
+- No unrelated artifacts or sensitive data were introduced.
