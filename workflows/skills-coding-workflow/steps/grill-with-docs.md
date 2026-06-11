@@ -136,7 +136,7 @@ Créer un ADR seulement si les critères stricts sont remplis : décision diffic
 
 Les ADRs doivent rester courts. Chaque section doit apporter de l'information utile ; ne pas remplir le template mécaniquement.
 
-Les ADRs vivent dans `docs/adr/` avec une numérotation séquentielle `0001-short-slug.md`, `0002-short-slug.md`, etc. Pour créer un nouvel ADR, scanner les ADRs existants et incrémenter le plus grand numéro.
+Les ADRs vivent dans `docs/decisions/` avec une numérotation séquentielle `0001-short-slug.md`, `0002-short-slug.md`, etc. Pour créer un nouvel ADR, scanner les ADRs existants et incrémenter le plus grand numéro.
 
 Template :
 

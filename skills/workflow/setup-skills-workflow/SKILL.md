@@ -28,7 +28,7 @@ Inspect the repo and the files before recommending changes:
 - Does `CLAUDE.md` or `AGENTS.md` exist at the repo root? Is there already a `## Workflow Conventions` section in one of these AGENTS files?
 - Does this skill's prior output `docs/agents/` exists ? And what is its content?
 - Does `CONTEXT.md` or `CONTEXT-MAP.md` exist at the repo root?
-- Does `docs/adr/` or `**/docs/adr/` exist in the codebase?
+- Does `docs/decisions/` or `**/docs/decisions/` exist in the codebase?
 - Does `.initiatives/` exist at repo root?
 - Do project or workflow conventions already exist in docs or agent instruction files?
 
@@ -56,7 +56,7 @@ Cover only decisions that are not already clear from the repo or still need conf
 - Local artifacts: always configure guidance for local artifacts; decide only whether to create `.initiatives/` now.
 - Domain context: whether to create `CONTEXT.md` when useful domain vocabulary is known and the file is absent.
 - Context map: whether to create `CONTEXT-MAP.md` for repos with multiple packages, domains, apps, or bounded contexts.
-- ADRs: whether durable architecture decisions should live in `docs/adr/`.
+- ADRs: whether durable architecture decisions should live in `docs/decisions/`.
 - AGENTS file: use existing canonical AGENTS file, or ask whether to create `CLAUDE.md` or `AGENTS.md` when neither exists.
 
 Default tracker recommendation follows the detected remote: GitHub for GitHub remotes, GitLab for GitLab remotes, local markdown otherwise. The user may still choose local markdown as the tracker even when a remote tracker exists.

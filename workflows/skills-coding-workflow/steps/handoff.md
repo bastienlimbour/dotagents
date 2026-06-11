@@ -137,5 +137,5 @@ L'agent n'a pas besoin de montrer tout le document en draft, sauf demande explic
 - Ne pas créer de continuation prompt séparé.
 - Ne pas créer de handoff chain, index persistant, scaffold script, validation script ou système de score.
 - Ne pas publier dans l'issue tracker distant par défaut.
-- Ne pas mettre à jour `.gitignore`, `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/` ou `docs/research/` sans demande explicite.
+- Ne pas mettre à jour `.gitignore`, `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/decisions/` ou `docs/research/` sans demande explicite.
 - Ne pas créer de post-mortem ou de retro automatiquement.

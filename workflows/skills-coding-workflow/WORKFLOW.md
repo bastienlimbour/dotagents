@@ -237,7 +237,7 @@ Règles pour créer un futur skill :
 - Diagnostic.
 - Prototypage.
 - Review et génération de checklist QA.
-- Documentation projet via `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/` et `docs/research/`.
+- Documentation projet via `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/decisions/` et `docs/research/`.
 - Conventions agent propres à un projet via `CLAUDE.md` ou `AGENTS.md`, avec détails dans `docs/agents/`.
 
 ### Hors Scope En V1
@@ -273,7 +273,7 @@ Ces éléments peuvent être mentionnés comme améliorations futures, mais ils 
 | `docs/agents/documentation.md` | `docs/agents/documentation.md` | Oui | Toujours pour la consommation de docs projet | Indique quand lire `CONTEXT.md`, `CONTEXT-MAP.md`, ADRs et docs associées |
 | `CONTEXT.md` | Racine ou racine de contexte | Oui | Toujours pour le langage de domaine | Glossaire strict et langage partagé |
 | `CONTEXT-MAP.md` | Racine du projet | Oui | Monorepos ou projets multi-contextes | Pointe les agents vers les contextes |
-| ADR | `docs/adr/*.md` | Oui | Décisions globales durables | Critères ADR stricts |
+| ADR | `docs/decisions/*.md` | Oui | Décisions globales durables | Critères ADR stricts |
 
 ### Dossier Local D'Initiative
 
@@ -429,7 +429,7 @@ Les futurs skills doivent :
 - Respecter les conventions d'issue tracker déjà présentes dans le contexte agent avant toute opération d'issue ou de tracker.
 - Respecter les conventions d'artefacts locaux déjà présentes dans le contexte agent avant de créer, lire ou modifier un artefact local.
 - Respecter les conventions de documentation déjà présentes dans le contexte agent lorsqu'une exploration ou un travail peut dépendre de la documentation projet.
-- Procéder silencieusement si les fichiers optionnels comme `CONTEXT.md`, `CONTEXT-MAP.md` ou `docs/adr/` n'existent pas.
+- Procéder silencieusement si les fichiers optionnels comme `CONTEXT.md`, `CONTEXT-MAP.md` ou `docs/decisions/` n'existent pas.
 - Signaler explicitement une contradiction avec une convention ou un ADR existant au lieu de l'écraser silencieusement.
 
 Le setup ne doit pas utiliser de marqueurs de blocs gérés. Il met à jour des sections Markdown naturelles, préserve les règles utilisateur non liées et évite les duplications.
@@ -473,16 +473,16 @@ ADR signifie Architecture Decision Record.
 Les ADRs vivent par défaut dans :
 
 ```text
-docs/adr/
+docs/decisions/
 ```
 
-Dans un repo multi-contextes, des ADRs spécifiques peuvent aussi vivre sous un contexte, par exemple `src/billing/docs/adr/`.
+Dans un repo multi-contextes, des ADRs spécifiques peuvent aussi vivre sous un contexte, par exemple `src/billing/docs/decisions/`.
 
 Convention de nommage :
 
 ```text
-docs/adr/0001-short-slug.md
-docs/adr/0002-short-slug.md
+docs/decisions/0001-short-slug.md
+docs/decisions/0002-short-slug.md
 ```
 
 Le numéro est incrémental, sur 4 chiffres. Le slug est court, descriptif et en kebab-case.
