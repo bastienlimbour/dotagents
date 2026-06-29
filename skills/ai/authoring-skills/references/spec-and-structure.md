@@ -6,7 +6,7 @@ Use this reference when creating or changing a skill package, frontmatter, direc
 
 A portable Agent Skill is a directory containing `SKILL.md` with YAML frontmatter and Markdown instructions.
 
-```text
+```
 skill-name/
 ├── SKILL.md
 ├── references/
@@ -21,7 +21,7 @@ Only `SKILL.md` is required. Add other directories only when they solve a real n
 
 Use minimal frontmatter by default:
 
-```markdown
+```md
 ---
 name: skill-name
 description: Does a specific job. Use when the user asks for the matching task or context.

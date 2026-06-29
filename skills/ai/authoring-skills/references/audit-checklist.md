@@ -6,7 +6,7 @@ Use this reference for final review, quality checks, or audits of existing skill
 
 For audits, report findings first:
 
-```markdown
+```md
 - Severity: `path:line` - Issue and impact. Suggested fix.
 ```
 

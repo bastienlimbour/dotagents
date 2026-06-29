@@ -43,7 +43,7 @@ Template :
 
 Les lignes de guidance dans le template sont des placeholders à remplacer dans l'artefact généré.
 
-```markdown
+```md
 # Review: <title>
 
 Source: <issue, spec, task, PR, diff, or local path>
@@ -72,7 +72,7 @@ List tests, builds, lint, typecheck, QA notes, or other checks considered during
 
 S'il n'y a aucun finding, `## Findings` doit contenir explicitement :
 
-```text
+```
 No findings.
 ```
 

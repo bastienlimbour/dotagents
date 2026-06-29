@@ -12,7 +12,7 @@ Il vise surtout à transformer une idée, une intention ou un problème encore f
 
 La forme générale recherchée est :
 
-```text
+```
 idée -> exploration -> validation -> décisions -> spec -> tâches verticales -> implémentation -> review/QA
 ```
 
@@ -78,7 +78,7 @@ La conversation peut être incomplète, imprécise ou obsolète. Le code, les is
 
 Règle pratique :
 
-```text
+```
 Si le repo peut répondre, explorer le repo.
 Si le repo ne répond pas ou révèle une contradiction, questionner l'utilisateur.
 ```
@@ -115,7 +115,7 @@ Si un contenu équivalent existe ailleurs, la version non canonique doit être u
 
 Règle par défaut :
 
-```text
+```
 docs/agents/*.md = artefacts sources des conventions du workflow pour le repo
 .initiatives/<id>/ = mémoire locale d'exploration et d'artefacts locaux
 issue tracker choisi = surface d'exécution et de collaboration
@@ -166,13 +166,13 @@ Le travail doit être découpé en petites tranches verticales, indépendantes e
 
 À éviter :
 
-```text
+```
 database -> API -> UI -> tests
 ```
 
 À privilégier :
 
-```text
+```
 petit comportement end-to-end -> vérification -> comportement suivant
 ```
 
@@ -182,7 +182,7 @@ Chaque tâche doit idéalement traverser les couches nécessaires pour livrer un
 
 Lors de la rédaction des specs, du découpage, de l'implémentation ou de l'amélioration d'architecture, il faut privilégier les deep modules :
 
-```text
+```
 Deep module = petite interface, comportement significatif caché derrière.
 Shallow module = interface presque aussi complexe que l'implémentation.
 ```
@@ -279,13 +279,13 @@ Ces éléments peuvent être mentionnés comme améliorations futures, mais ils 
 
 Les initiatives locales vivent dans :
 
-```text
+```
 .initiatives/<NNN-slug>/
 ```
 
 Exemples :
 
-```text
+```
 .initiatives/001-mvp/
 .initiatives/002-dark-mode/
 .initiatives/003-billing-redesign/
@@ -304,7 +304,7 @@ Règles :
 
 Structure locale par défaut :
 
-```text
+```
 .initiatives/
 └── 001-initiative-slug/
     ├── product-brief.md
@@ -362,13 +362,13 @@ Interdit :
 
 Avant la spec :
 
-```text
+```
 .initiatives/<id>/ = source de vérité de l'exploration
 ```
 
 Après publication ou création d'une spec dans le tracker choisi :
 
-```text
+```
 spec du tracker choisi = source de vérité de ce qui doit être construit
 .initiatives/<id>/ = archive locale non canonique de l'exploration
 ```
@@ -383,7 +383,7 @@ Le dossier local d'initiative n'est pas supprimé automatiquement. L'utilisateur
 
 Pour les artefacts structurants comme les specs ou les mises à jour substantielles du brief produit :
 
-```text
+```
 confirmation de la cible -> draft en conversation -> validation du contenu -> écriture ou publication
 ```
 
@@ -400,7 +400,7 @@ Cela s'applique à :
 
 Pour les artefacts d'extraction comme les notes de capture :
 
-```text
+```
 confirmation du chemin -> écriture du fichier -> résumé du résultat
 ```
 
@@ -472,7 +472,7 @@ ADR signifie Architecture Decision Record.
 
 Les ADRs vivent par défaut dans :
 
-```text
+```
 docs/decisions/
 ```
 
@@ -480,7 +480,7 @@ Dans un repo multi-contextes, des ADRs spécifiques peuvent aussi vivre sous un 
 
 Convention de nommage :
 
-```text
+```
 docs/decisions/0001-short-slug.md
 docs/decisions/0002-short-slug.md
 ```
@@ -511,7 +511,7 @@ Les ADRs ne servent pas pour :
 
 Format ADR minimal :
 
-```markdown
+```md
 # ADR: <short decision title>
 
 ## Context
@@ -533,7 +533,7 @@ Il existe deux emplacements pour les recherches.
 
 Recherche liée à une initiative :
 
-```text
+```
 .initiatives/<id>/research/*.md
 ```
 
@@ -547,7 +547,7 @@ Recherche liée à une initiative :
 
 Recherche globale projet :
 
-```text
+```
 docs/research/*.md
 ```
 
@@ -561,7 +561,7 @@ docs/research/*.md
 
 Règle par défaut :
 
-```text
+```
 Utiliser .initiatives/<id>/research/ sauf si la recherche est réutilisable au-delà de l'initiative courante ou peut être utile au projet dans son ensemble.
 ```
 
@@ -571,7 +571,7 @@ Utiliser .initiatives/<id>/research/ sauf si la recherche est réutilisable au-d
 
 Support officiel v1 :
 
-```text
+```
 GitHub Issues via gh
 GitLab Issues via glab
 Markdown local dans .initiatives/
@@ -648,31 +648,31 @@ Ces exemples ne sont pas des flows obligatoires.
 
 ### Greenfield Ou Grosse Initiative
 
-```text
+```
 setup-skills-workflow -> brainstorm -> grill-me/recherche -> capture -> product-brief -> validate -> prototype -> grill-me/recherche -> to-spec -> split -> implement -> review -> qa
 ```
 
 ### Feature Substantielle
 
-```text
+```
 grill-me/exploration -> product-brief optionnel -> capture optionnel -> to-spec -> split -> implement -> review -> qa
 ```
 
 ### Petite Feature
 
-```text
+```
 grill-me/exploration -> to-spec ou execution contract direct -> implement -> qa/review si utile
 ```
 
 ### Bug Ou Régression
 
-```text
+```
 diagnose -> test de régression -> review si utile -> qa si visible utilisateur
 ```
 
 ### Sujet D'Architecture
 
-```text
+```
 zoom-out -> improve-codebase-architecture -> prototype si besoin -> implement ou implement-tdd
 ```
 

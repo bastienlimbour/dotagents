@@ -42,7 +42,7 @@ La carte peut couvrir :
 
 ## Prompt mental de référence
 
-```text
+```
 Go up a layer of abstraction.
 Give me a map of relevant modules and callers,
 using the project domain glossary vocabulary.

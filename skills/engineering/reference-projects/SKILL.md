@@ -1,21 +1,11 @@
 ---
 name: reference-projects
-description: Manages local reference project repositories for feature, architecture, stack, and implementation comparisons. Use when the user asks how reference repos, similar projects, inspirations, or competitors implement something, or asks to add, update, search, explore, or compare reference repos. Do not use for ordinary package documentation lookup or for editing files inside reference repos.
+description: Manages local reference project repositories for feature, architecture, stack, and implementation comparisons. Use when the user asks how reference repos, similar projects, inspirations, or competitors implement something, or asks to add, update, search, explore, or compare reference repos.
 ---
 
 # Reference Projects
 
-## Overview
-
 Manage and analyze local read-only reference repositories inside the user's project. Use them to compare how similar projects implement features, architecture, stack patterns, or product behavior.
-
-## When To Use
-
-- The user asks how a named project or reference repo implements a feature, pattern, API, UI, workflow, or architecture.
-- The user asks to add, update, search, explore, list, or compare reference projects.
-- The user asks how project references handle auth, routing, billing, tests, config, data models, deployment, or similar concerns.
-
-Do not use for ordinary web research, package docs lookup, dependency installation, implementation-only tasks, or comparisons limited to the main project.
 
 ## Core Rules
 

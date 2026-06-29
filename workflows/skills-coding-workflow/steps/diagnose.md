@@ -22,7 +22,7 @@ Diagnostiquer et corriger bugs, régressions difficiles et problèmes de perform
 
 ## Boucle centrale
 
-```text
+```
 reproduce -> minimise -> hypothesise -> instrument -> fix -> regression-test
 ```
 

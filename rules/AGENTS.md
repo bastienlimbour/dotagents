@@ -1,4 +1,4 @@
-# Instructions for AI Agents
+# Global AI Agents Instructions
 
 ## Critical Rules
 

@@ -21,7 +21,7 @@ Implémenter en red-green-refactor strict.
 
 ## Boucle centrale
 
-```text
+```
 red -> green -> refactor
 ```
 

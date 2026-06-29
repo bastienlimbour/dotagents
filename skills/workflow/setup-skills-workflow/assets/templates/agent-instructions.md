@@ -1,4 +1,4 @@
-## Workflow Conventions
+## Skills Workflow
 
 ### Documentation
 

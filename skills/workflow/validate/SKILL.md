@@ -5,8 +5,6 @@ description: Reduces uncertainty around a product, technical, market, or busines
 
 # Validate
 
-## Overview
-
 Validate an idea, solution, feature, technical direction, market bet, or business hypothesis before deeper investment. Make evidence, uncertainty, risks, confidence, and the cheapest useful next test explicit without deciding for the user.
 
 ## When To Use

@@ -5,9 +5,38 @@ How the workflow skills should consume this repo's documentation when exploring 
 ## Before exploring or working on a task
 
 - **If the domain language matters for the task at hand**: read relevant `CONTEXT.md` or `CONTEXT-MAP.md` at the repo root.
-- **If some ADRs (in `docs/decisions/` at the repo root or in any `**/docs/decisions/` in the codebase) touch the area you're about to work on**: read them.
+- **If some ADRs (`docs/decisions/` or `**/docs/decisions/`) touch the area you're about to work on**: read them.
 
 If any of these files don't exist, **proceed silently**. Don't flag their absence.
+
+## File Structure
+
+Single-context repo (most repos):
+
+```
+/
+├── CONTEXT.md
+├── docs/decisions/
+│   ├── 0001-decision-short-slug.md
+│   ├── 0002-event-sourced-orders.md
+│   └── 0003-postgres-for-write-model.md
+└── src/
+```
+
+Multi-context repo (presence of `CONTEXT-MAP.md` at the root):
+
+```
+/
+├── CONTEXT-MAP.md
+├── docs/decisions/             # system-wide decisions
+└── src/
+    ├── billing/
+    │   ├── CONTEXT.md
+    │   └── docs/decisions/     # context-specific decisions
+    └── customers/
+        ├── CONTEXT.md
+        └── docs/decisions/
+```
 
 ## Domain Context
 
@@ -27,34 +56,6 @@ If the concept you need isn't in the glossary yet, that's a signal, either you'r
 
 If your output or a proposed change contradicts an existing ADR, flag the conflict explicitly to the user instead of silently overriding the decision.
 
-## File Structure
-
-Single domain context (most repos):
-
-```text
-/
-├── CONTEXT.md
-├── docs/decisions/
-│   ├── 0001-decision-short-slug.md
-│   └── 0002-decision-short-slug.md
-└── src/
-```
-
-Multi-domain context (presence of `CONTEXT-MAP.md` at the repo root):
-
-```text
-/
-├── CONTEXT-MAP.md
-├── docs/decisions/             # system-wide decisions
-└── src/
-    ├── billing/
-    │   ├── CONTEXT.md
-    │   └── docs/decisions/     # context-specific decisions
-    └── customers/
-        ├── CONTEXT.md
-        └── docs/decisions/
-```
-
 ## Security And Privacy
 
-NEVER include secrets, tokens, credentials, raw personal data, sensitive customer data, or confidential material in project documentation.
+NEVER include sensitive information like secrets, tokens, credentials, raw personal data, sensitive customer data, or confidential material in project documentation.

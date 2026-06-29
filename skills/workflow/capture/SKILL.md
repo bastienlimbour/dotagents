@@ -1,11 +1,9 @@
 ---
 name: capture
-description: Captures long conversations, research sessions, grilling output, or code/docs exploration into a durable Markdown note. Use when useful conclusions, decisions, assumptions, findings, options, or open questions should be preserved outside chat. Do not use to create specs, ADRs, product briefs, task issues, QA checklists, or handoff prompts.
+description: Captures long conversations, research sessions, grilling output, or code/docs exploration into a durable Markdown note. Use when useful conclusions, decisions, assumptions, findings, options, or open questions should be preserved outside chat.
 ---
 
 # Capture
-
-## Overview
 
 Condense useful context from a long conversation, research session, grilling session, or code/docs exploration into a durable Markdown note. Preserve actionable synthesis, source references, and unresolved questions, not raw transcripts.
 

@@ -30,7 +30,7 @@ Prefer one naming style across a collection. Use lowercase hyphenated names that
 
 Use this shape as a default, then trim:
 
-```yaml
+```yml
 description: Does [specific capability]. Use when [user intent, artifacts, file types, or workflow context]. Do not use when [likely near-miss, only if needed].
 ```
 

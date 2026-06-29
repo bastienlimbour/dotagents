@@ -43,7 +43,7 @@ Pin dependencies when possible. State runtime prerequisites in the skill body or
 
 Reference scripts by relative path from the skill root:
 
-```markdown
+```md
 Run `python scripts/validate.py input.json`.
 ```
 

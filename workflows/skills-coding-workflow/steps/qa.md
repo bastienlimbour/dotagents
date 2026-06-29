@@ -46,7 +46,7 @@ Template :
 
 Les lignes de guidance dans le template sont des placeholders à remplacer dans l'artefact généré.
 
-```markdown
+```md
 # QA Checklist: <task or spec>
 
 Source: <issue, spec, task, PR, or local path>

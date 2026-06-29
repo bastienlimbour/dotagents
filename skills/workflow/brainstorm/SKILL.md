@@ -5,8 +5,6 @@ description: Runs divergent brainstorming for an early idea, project, feature, o
 
 # Brainstorm
 
-## Overview
-
 Explore an open idea broadly while preserving useful context in a lightweight local brainstorming artifact. Optimize for more and better options, not premature convergence.
 
 ## When To Use

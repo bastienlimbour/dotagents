@@ -4,7 +4,7 @@ The default issue tracker for this repo is GitLab. Use `glab` CLI for all issue 
 
 ## Conventions
 
-- Create an issue: `glab issue create --title "<title>" --description "<description>"`
+- Create an issue: `glab issue create --title "<title>" --description "<description>"`. Use a heredoc for multi-line descriptions.
 - Read an issue: `glab issue view <number> --comments -F json --jq '{number, title, labels: [.labels[].name], body, comments: [.comments[].body]}'`
 - List issues (without body or comments): `glab issue list -F json --jq 'map({number, title, labels: [.labels[].name]})'`
 - List issues (with body and comments): `glab issue list -F json --jq 'map({number, title, labels: [.labels[].name], body, comments: [.comments[].body]})'`
@@ -17,7 +17,7 @@ The default issue tracker for this repo is GitLab. Use `glab` CLI for all issue 
 
 The `glab` CLI does not support native parent/child relationships between issues. Use explicit link in the child issue body, near the top of the file:
 
-```markdown
+```md
 # <title>
 
 Parent issue: #<parent-issue-number>

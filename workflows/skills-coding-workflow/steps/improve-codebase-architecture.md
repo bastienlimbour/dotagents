@@ -64,7 +64,7 @@ Template :
 
 Les lignes de guidance dans le template sont des placeholders à remplacer dans l'artefact généré.
 
-```markdown
+```md
 # ADR: <short decision title>
 
 ## Context
@@ -89,7 +89,7 @@ Règles de sections :
 
 ## Deletion test
 
-```text
+```
 Si je supprime ce module, est-ce que la complexité disparaît ?
 Si oui, c'était probablement un pass-through.
 Si la complexité réapparaît dans N callers, le module justifiait probablement son existence.

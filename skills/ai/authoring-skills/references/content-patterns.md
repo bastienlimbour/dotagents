@@ -18,13 +18,13 @@ The body should tell the agent how to perform the job. It should not explain bas
 
 Prefer:
 
-```markdown
+```md
 Use `pdfplumber` for text extraction. For scanned PDFs, use OCR.
 ```
 
 Avoid:
 
-```markdown
+```md
 PDF files are a common document format that can contain text and images.
 ```
 
@@ -77,7 +77,7 @@ Keep `SKILL.md` concise. Move detail to one-level files when it is rare, long, d
 
 Good structure:
 
-```text
+```
 my-skill/
 ├── SKILL.md
 ├── references/api-errors.md
@@ -87,7 +87,7 @@ my-skill/
 
 In `SKILL.md`, add clear when-to-load guidance for each file:
 
-```markdown
+```md
 When the API returns a non-200 response, read `references/api-errors.md`.
 ```
 
@@ -99,7 +99,7 @@ For reference files over 100 lines, add a short table of contents at the top.
 
 Use checklists for workflows with sequential steps:
 
-```markdown
+```md
 Progress:
 - [ ] Inspect source files
 - [ ] Draft changes
@@ -109,13 +109,13 @@ Progress:
 
 Use feedback loops for quality-critical work:
 
-```markdown
+```md
 Run validator, fix reported issues, then rerun until validation passes.
 ```
 
 Use plan-validate-execute for destructive or batch operations:
 
-```markdown
+```md
 1. Create `changes.json`.
 2. Validate it against the source of truth.
 3. Apply changes only after validation passes.
@@ -123,7 +123,7 @@ Use plan-validate-execute for destructive or batch operations:
 
 Use tables when information is comparison-heavy:
 
-```markdown
+```md
 | Situation | Default action |
 |---|---|
 | Rare detail | Move to `references/` |
@@ -136,7 +136,7 @@ Use templates only when the output structure matters. Mark whether the template 
 
 Use `Common Rationalizations` only when the skill protects against predictable shortcuts. Pair the excuse with a concrete correction:
 
-```markdown
+```md
 ## Common Rationalizations
 | Rationalization | Reality |
 |---|---|

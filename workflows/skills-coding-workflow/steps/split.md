@@ -54,13 +54,13 @@ Après création des tâches, l'agent commente l'issue de spec avec la liste des
 
 Sortie par défaut :
 
-```text
+```
 Issues GitHub/GitLab de tâches
 ```
 
 Fallback ou sortie locale explicite :
 
-```text
+```
 .initiatives/<id>/tasks/<NNN-task-slug>.md
 ```
 
@@ -72,7 +72,7 @@ Les tâches locales sont le miroir des issues de tâches du tracker distant.
 
 Chemin :
 
-```text
+```
 .initiatives/<id>/tasks/<NNN-task-slug>.md
 ```
 
@@ -80,7 +80,7 @@ Template :
 
 Les lignes de guidance dans le template sont des placeholders à remplacer dans l'artefact généré.
 
-```markdown
+```md
 # Task: <title>
 
 Parent spec: <link or path>

@@ -23,7 +23,7 @@ Spec is like a PRD. Task issues are the implementable vertical slices from the s
 
 Use explicit link in the child issue body, near the top of the file:
 
-```markdown
+```md
 # <title>
 
 Status: closed

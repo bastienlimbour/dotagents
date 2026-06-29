@@ -55,13 +55,13 @@ Le skill ne décide pas à la place de l'utilisateur. Il rend explicites les pre
 
 Sortie par défaut :
 
-```text
+```
 .initiatives/<id>/validation.md
 ```
 
 Si la validation est utile globalement :
 
-```text
+```
 docs/research/<slug>.md
 ```
 
@@ -73,7 +73,7 @@ Template :
 
 Les lignes de guidance dans le template sont des placeholders à remplacer dans l'artefact généré.
 
-```markdown
+```md
 # Validation: {{ title }}
 
 ## Context

@@ -2,7 +2,7 @@
 
 Use this template as a menu, not a rigid form. Keep only the sections that improve the prompt.
 
-```markdown
+```md
 # Role
 
 You are [specific role or capability].

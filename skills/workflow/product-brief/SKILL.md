@@ -5,8 +5,6 @@ description: Creates, initializes, or updates a product brief for an initiative,
 
 # Product Brief
 
-## Overview
-
 Create or refine a lightweight product brief that frames an initiative before validation, architecture research, spec, or implementation. The brief is product-first and PRD-light: problem, users, scenarios, value, scope horizons, assumptions, decisions, and risks.
 
 ## When To Use

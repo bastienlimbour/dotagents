@@ -4,7 +4,7 @@ The default issue tracker for this repo is GitHub. Use `gh` CLI for all issue tr
 
 ## Conventions
 
-- Create an issue: `gh issue create --title "<title>" --body "<body>"`
+- Create an issue: `gh issue create --title "<title>" --body "<body>"`. Use a heredoc for multi-line bodies.
 - Read an issue: `gh issue view <number> --json number,title,labels,body,comments --jq '{number, title, labels: [.labels[].name], body, comments: [.comments[].body]}'`
 - List issues (without body or comments): `gh issue list --state open --json number,title,labels --jq 'map({number, title, labels: [.labels[].name]})'`
 - List issues (with body and comments): `gh issue list --state open --json number,title,labels,body,comments --jq 'map({number, title, labels: [.labels[].name], body, comments: [.comments[].body]})'`
@@ -17,7 +17,7 @@ The default issue tracker for this repo is GitHub. Use `gh` CLI for all issue tr
 
 The `gh` CLI does not support native parent/child relationships between issues. Use explicit link in the child issue body, near the top of the file:
 
-```markdown
+```md
 # <title>
 
 Parent issue: #<parent-issue-number>
